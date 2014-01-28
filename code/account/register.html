@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Groopy | Register</title>
+    <meta charset="utf-8">
+<!--Page specific css-->    
+	<link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
+    
+<!--jQuery css & js files-->
+	<link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
+	<script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
+    <script>
+		function callReturn(){
+			location.href= "../../index.html";
+		}
+	</script>
+    
+</head>
+
+<body>
+	<!-- ui-dialog -->
+    <div class="ui-overlay">
+      	<div class="ui-widget-overlay"></div>
+    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 463px; position: absolute; left: 20%; top: 15%;"></div>
+    </div>
+	<div style="position: absolute; width: 800px; height: 440px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
+        <div class="ui-dialog-content ui-widget-content" style="background: #000; border: 0;">
+			<br/>
+        	<img src="../../shared/images/logo_2D.png" id="logo">
+            <br/>
+            <h2>New Account</h2>
+            <form method="post" action="somescript.php" id="form_body">
+            	<p>
+                	<label for="form_fName">First Name: </label>
+                    <input type="text" id="form_fName" required autofocus/>
+                </p>
+                <p>
+                	<label for="form_lName">Last Name: </label>
+                    <input type="text" id="form_lName" required/>
+                </p>
+                <p>
+                	<label for="form_email">Email: </label>
+                    <input type="email" id="form_email" required/>
+                </p>
+                <p>
+                	<label for="form_password">Password: </label>
+                    <input type="password" id="form_password" required/>
+                </p>
+                <p>
+                    <input type="button" value="Cancel" id="cancelBtn" onClick="callReturn();">
+                </p>
+                <p>
+                    <input type="submit" value="Register" id="registerBtn">
+                </p>
+            </form>
+            <br/>
+		</div>
+	</div>
+</body>
+</html>

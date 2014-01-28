@@ -1,0 +1,140 @@
+		@charset "UTF-8";
+		/* CSS Document */
+		body
+		{
+			padding: 0;
+			margin: 0;
+		}
+		/*
+		 wrapper div 
+		 wrap the whole site
+		*/
+		#wrapper
+		{
+			/*width: 100%;*/
+			width: 1260px;
+			margin: 0 auto;
+			background-color:#CCC;
+			padding: 0px;
+			overflow:hidden;
+		}
+		
+	
+		/*
+		title div. Div contains only the title of the project
+		*/
+		#titleDiv
+		{
+			width: 98%;
+			background-color:#06F;
+			position:relative;
+			padding: 10px;
+		}
+		
+		/*
+		Left side div
+		Div contain the tab navigation and tab description div
+		contain the icon buttons
+		*/
+		#leftsideDiv
+		{
+			width: 64%;
+			background-color:#9F0;
+			float:left;
+			position:relative;
+			margin: 0 auto;
+			padding: 10px;
+		}
+		
+		/*
+		tab div contains the tab navigation : Tasks, Meeting, Members, Forum and
+		the tab description div
+		*/
+		#tabsDiv
+	  	{
+		  width:100%;
+		  overflow:hidden;
+		  background-color:#909;
+		  position:relative;
+		  float:left;
+		  padding-top: 2px;		 
+	 	}
+	  
+	  	#tabsDiv ul
+	  	{
+		  clear:left;
+		  float:left;
+		  list-style:none;
+		  padding:0;
+		  margin: 0;
+	  	}
+	  
+	  	#tabsDiv ul li
+	  	{
+		  display:block;
+		  float:left;
+		  margin: 0 0 0 1px;
+		  padding: 3px 10px;
+		  position: relative;
+		  text-decoration: none;
+		  background-color:#3CF;
+	  	}
+		
+		/*
+		Tab description div. Active when the tab is selected
+		*/
+	  	#tab-1, #tab-2, #tab-3, #tab-4
+	  	{
+		  float:left;
+		  position:relative;
+		  width:100%;
+		  margin: 0 0 0 1px;
+		  padding-left: 10px;
+		  background-color:#090;  
+	  	}
+		
+		/*
+		Icon div contains the icon buttons
+		*/
+		#iconDiv
+	 	{
+		  width: 30%;
+		  position:relative;
+		  float:right;
+		  margin: 0 auto;
+		  overflow:hidden;		  
+	 	}
+		
+		/*
+		wrapper for the icon button. 
+		*/
+	  	.iconContainer
+	 	{
+		  padding:2px;
+		  float: left;
+		  position:relative;
+	  	}
+		
+		/*
+		right side div
+		Div container for the divs on the right side
+		Right side divs could be member div, to do list div, completed task divs.... 
+		*/
+		#rightsideDiv
+		{
+			width: 34%;
+			background-color:#F90;
+			float:right;
+			position:relative;
+			margin: 0;
+			padding: 10px 2px 2px 2px;
+		}
+		
+		.rightContainer
+		{
+			width: 97%;
+			overflow: hidden;
+			background-color:#999;
+			padding: 5px;
+			margin: 0 0 2px 0;
+		}

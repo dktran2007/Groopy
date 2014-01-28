@@ -1,0 +1,102 @@
+/*index.html*/
+body{
+	background-color:#3399ff;
+	font-size:13px;
+}
+#logo{
+	margin-left: 80px;
+}
+input{
+	border-radius: 5px;
+	width: 230px;
+}
+#leftDiv{
+	float:left;
+	padding-right: 40px;
+	color: #fff;
+}
+#leftDiv p, #leftDiv h3{
+	padding-left: 80px;
+}
+#leftDiv a{
+	color: #549AE0;
+}
+#rightDiv{
+	width: 320px;
+	float:right;
+	color: #fff;
+}
+#signInBtn{
+	background-color: #549AE0;
+	border-color:#549AE0;
+	width: 100px;
+	height: 40px;
+	color: #fff;
+}	
+#signUpBtn{
+	background-color: #f26522;
+	border-color:#f26522;
+	width: 100px;
+	height: 40px;
+	color: #fff;
+}
+#or{
+	padding-left: 20px;
+}
+/*register.html*/
+h2{
+	padding-left: 300px;
+	color: #00a652;
+}
+#form_body{
+	padding-left: 210px;
+	color: white;
+}
+#form_body label{
+	display: inline-block;
+	width: 100px;
+}
+#registerBtn{
+	margin-left: 22px;
+	background-color: #00a652;
+	border-color:#00a652;
+	width: 100px;
+	height: 40px;
+	color: #fff;
+}
+#cancelBtn{
+	float:left;
+	margin-left: 52px;
+	background-color: #F33;
+	border-color:#F33;
+	width: 100px;
+	height: 40px;
+	color: #fff;
+}
+/*forgotpwd.html*/
+#emailNotifyBtn{
+	margin-left: 360px;
+	background-color: #821280;
+	border-color:#821280;
+	width: 100px;
+	height: 40px;
+	color: #fff;
+}
+#form_body2 {
+	padding-left: 180px;
+}
+#form_body2 label{
+	display:inline-block;
+	width: 220px;
+	color: white;
+}
+#retrieve{
+	color: #821280;
+}
+#loginBtn{
+	background-color: #00A652;
+	border-color:#00A652;
+	width: 70px;
+	height: 30px;
+	color: #fff;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Groopy</title>
+    <meta charset="utf-8">
+<!--Page specific css-->    
+    <link rel="stylesheet" type="text/css" href="shared/css/base.css">
+    
+<!--jQuery css & js files-->
+	<link href="includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+	<script src="includes/jquery/groopy/js/jquery-1.9.1.js"></script>
+	<script src="includes/jquery/groopy/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script>
+	function callRegister(){
+		window.location.href="code/account/register.html";
+	}
+	</script>
+    
+</head>
+<body>
+<!-- ui-dialog -->
+    <div class="ui-overlay">
+      	<div class="ui-widget-overlay"></div>
+    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 373px; position: absolute; left: 20%; top: 15%;"></div>
+    </div>
+	<div style="position: absolute; width: 800px; height: 350px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
+        <div class="ui-dialog-content ui-widget-content" style="background: #000; border: 0;">
+			<br/>
+        	<img src="shared/images/logo_2D.png" id="logo">
+            <br/><br/>
+            <div id="leftDiv">
+                <h3>Sign In</h3>
+                <form method="post" action="shared/php/validateAccount.php">
+                    <p> 
+                        <input type="email" id="form_userName"  placeholder=" example@yahoo.com" autofocus required/>
+                    </p>
+                    <p>
+                        <input type="password" id="form_password" placeholder=" password" required/>
+                    </p>
+                    <p>
+                        <input type="submit" id="signInBtn" value="Sign In"/> 
+                        &nbsp; &nbsp; <a href="code/account/forgotPwd.html">Forgot password</a> 
+                    </p>
+                </form>
+                <br/>
+            </div>
+            
+            <img src="shared/images/or.png" id="or"/>
+            
+            <div id="rightDiv">
+                <h3>Sign Up</h3>
+                <p>If you don't have an account yet</p>
+                <input type="submit" id="signUpBtn" value="Sign Up" onClick="callRegister()"/>
+                <br/> <br/><br/><br/><br/>
+            </div>
+		</div>
+	</div>
+</body>
+</html>
