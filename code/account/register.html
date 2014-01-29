@@ -22,9 +22,9 @@
 	<!-- ui-dialog -->
     <div class="ui-overlay">
       	<div class="ui-widget-overlay"></div>
-    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 463px; position: absolute; left: 20%; top: 15%;"></div>
+    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 508px; position: absolute; left: 20%; top: 15%;"></div>
     </div>
-	<div style="position: absolute; width: 800px; height: 440px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
+	<div style="position: absolute; width: 800px; height: 485px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
         <div class="ui-dialog-content ui-widget-content" style="background: #000; border: 0;">
 			<br/>
         	<img src="../../shared/images/logo_2D.png" id="logo">
@@ -48,13 +48,17 @@
                     <input type="password" id="form_password" required/>
                 </p>
                 <p>
+                	<label for="form_confirmPassword">Confirm Password: </label>
+                    <input type="password" id="form_confirmPassword" required/>
+                </p>
+                <p>
                     <input type="button" value="Cancel" id="cancelBtn" onClick="callReturn();">
                 </p>
                 <p>
                     <input type="submit" value="Register" id="registerBtn">
                 </p>
+                <br/>
             </form>
-            <br/>
 		</div>
 	</div>
 </body>

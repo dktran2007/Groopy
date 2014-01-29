@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Groopy | Project 1</title>
-    
-	<?php require_once("../includes.php")?>
+
+<!--For Bootstrap and jQuery imports-->
+    <?php require_once("../includes.php")?>
     
     <script>
 	$(function() {

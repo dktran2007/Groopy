@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Groopy | Home</title>
-    
+
+<!--For Bootstrap and jQuery imports-->
     <?php require_once("../includes.php")?>
+    
 	<script type="text/javascript">
 		function callDashboard(){
 			window.location = "dashboard.php";

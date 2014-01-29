@@ -15,15 +15,14 @@
 		window.location.href="code/account/register.html";
 	}
 	</script>
-    
 </head>
 <body>
 <!-- ui-dialog -->
     <div class="ui-overlay">
       	<div class="ui-widget-overlay"></div>
-    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 373px; position: absolute; left: 20%; top: 15%;"></div>
+    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 393px; position: absolute; left: 20%; top: 15%;"></div>
     </div>
-	<div style="position: absolute; width: 800px; height: 350px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
+	<div style="position: absolute; width: 800px; height: 370px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
         <div class="ui-dialog-content ui-widget-content" style="background: #000; border: 0;">
 			<br/>
         	<img src="shared/images/logo_2D.png" id="logo">
@@ -37,6 +36,7 @@
                     <p>
                         <input type="password" id="form_password" placeholder=" password" required/>
                     </p>
+                    <!--span role="alert" class="error-msg">The email or password you entered is incorrect.</span> <!-- based on how the form is validated, i need to show and hide this span-->
                     <p>
                         <input type="submit" id="signInBtn" value="Sign In"/> 
                         &nbsp; &nbsp; <a href="code/account/forgotPwd.html">Forgot password</a> 
@@ -51,8 +51,9 @@
                 <h3>Sign Up</h3>
                 <p>If you don't have an account yet</p>
                 <input type="submit" id="signUpBtn" value="Sign Up" onClick="callRegister()"/>
-                <br/> <br/><br/><br/><br/>
+                <br/> 
             </div>
+            <br/><br/>
 		</div>
 	</div>
 </body>
