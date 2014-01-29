@@ -15,7 +15,145 @@
 			location.href= "../../index.html";
 		}
 	</script>
+    <style type="text/css">
+		/*CSS for the input Error*/
+		.formInputError
+		{
+			color:#F00;
+		}
+	</style>
     
+    <script type = "text/javascript">
+		function callReturn(){
+			location.href= "../../index.html";
+		}
+		
+		/**
+		calidate input fields
+		*/
+		
+		function formValidate()
+		{
+			document.getElementById("form_fNameError").innerHTML = "";
+			document.getElementById("form_lNameError").innerHTML = "";
+			document.getElementById("form_emailError").innerHTML = "";
+			document.getElementById("form_passwordError").innerHTML = "";
+			var result = true;
+		//if browser is safari
+		//	if(Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0)
+		//	{
+		//	}
+			var firstName = document.getElementById("form_fName").value;
+			var lastName = document.getElementById("form_lName").value;
+			var email = document.getElementById("form_email").value;
+			var password = document.getElementById("form_password").value;
+			var confirmPassword = document.getElementById("form_confirmPassword").value;
+			var emptyString = new RegExp("^\\s*$"); /* $ is string empty ; \s* is string containing whitespaces only*/
+			if (emptyString.test(firstName))
+			{
+				document.getElementById("form_fNameError").innerHTML = "*";
+				result = false;
+			}
+			if (emptyString.test(lastName))
+			{
+				document.getElementById("form_lNameError").innerHTML = "*";
+				result = false;
+			}
+				
+			var emailString = new RegExp("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$");
+			if(!emailString.test(email))
+			{
+				document.getElementById("form_emailError").innerHTML = "Invalid Email";
+				result = false;
+					
+			}
+			var availability = document.getElementById("availability").value;
+			if(availability == "false")
+			{
+				result = false;
+			}
+			if(emptyString.test(password))
+			{
+				document.getElementById("form_passwordError").innerHTML = "*";
+				result = false;
+			}
+			
+			if(password !== confirmPassowrd)
+			{
+				document.getElementById("form_confirmPasswordError").innerHTML = "Password does not match";
+				result = false;
+			}
+			return result;
+		}
+		
+		/**
+		*/
+		function checkConfirmPassword()
+		{
+			var password = document.getElementById("form_password").value;
+			var confirmPassword = document.getElementById("form_confirmPassword").value;
+			if(password !== confirmPassword)
+			{
+				document.getElementById("form_confirmPasswordError").innerHTML = "Password does not match";
+			}
+			else
+				document.getElementById("form_confirmPasswordError").innerHTML = "";
+		}
+		/**
+		 Ajax to check the email availability of the user account
+		*/
+		function checkEmailAvailability()
+		{
+			var email = document.getElementById("form_email").value;
+			emailString = new RegExp("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$");
+			
+			if(!emailString.test(email))
+			{
+					document.getElementById("form_emailError").innerHTML = "Invalid Email";
+			}
+			else 
+			{
+				var ajax;
+				if(window.XMLHttpRequest)
+				{
+					//code for IE7+, Firefox, Chrome, Safari, Opera
+					ajax = new XMLHttpRequest();
+				}
+				else
+				{
+					//code for IE6, IE5
+					ajax = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				if (!ajax) 
+				{
+					 alert('Cannot create an XMLHTTP instance');
+					 return false;
+				}
+				
+				ajax.open('GET', 'http://localhost:8888/shared/php/checkEmailAvailability.php?email='+ email, true);
+				ajax.send(null);
+				ajax.onreadystatechange = function()
+				{
+					if(ajax.readyState==4 && ajax.status == 200)
+					{
+						var availability = "false";
+						availability = ajax.responseText;
+						if (availability == "false")
+						{
+							document.getElementById("form_emailError").innerHTML = "Unavailable";
+							document.getElementById("availability").value = "false";
+						}
+						else
+						{
+							document.getElementById("form_emailError").innerHTML = "<span style=\"color:green;\">"+"Available"+"</span>";
+							document.getElementById("availability").value = "true";
+						}
+					}
+					//document.getElementById("form_emailError").innerHTML = document.getElementById("availability").value;
+				}
+			}
+		}
+	</script>
 </head>
 
 <body>
@@ -30,26 +168,32 @@
         	<img src="../../shared/images/logo_2D.png" id="logo">
             <br/>
             <h2>New Account</h2>
-            <form method="post" action="somescript.php" id="form_body">
+            <form method="post" action="../../shared/php/register.php" id="form_body" onSubmit = "return formValidate()">
             	<p>
                 	<label for="form_fName">First Name: </label>
-                    <input type="text" id="form_fName" required autofocus/>
+                    <input type="text" id="form_fName" name = "firstName" required autofocus/>
+                    <label id="form_fNameError" class = "formInputError"></label>
                 </p>
                 <p>
                 	<label for="form_lName">Last Name: </label>
-                    <input type="text" id="form_lName" required/>
+                    <input type="text" id="form_lName" name="lastName" required/>
+                    <label id="form_lNameError" class = "formInputError"></label>
                 </p>
                 <p>
                 	<label for="form_email">Email: </label>
-                    <input type="email" id="form_email" required/>
+                    <input type="email" id="form_email" name="email" required onblur = "checkEmailAvailability()"/>
+                    <input  type="hidden" id="availability"  value="false" />
+                    <label id="form_emailError" class = "formInputError"></label>
                 </p>
                 <p>
                 	<label for="form_password">Password: </label>
-                    <input type="password" id="form_password" required/>
+                    <input type="password" id="form_password" name="password" required/>
+                    <label id="form_passwordError" class = "formInputError"></label>
                 </p>
                 <p>
                 	<label for="form_confirmPassword">Confirm Password: </label>
-                    <input type="password" id="form_confirmPassword" required/>
+                    <input type="password" id="form_confirmPassword" onblur= "checkConfirmPassword()" required/>
+                    <label id="form_confirmPasswordError" class = "formInputError"></label>
                 </p>
                 <p>
                     <input type="button" value="Cancel" id="cancelBtn" onClick="callReturn();">
