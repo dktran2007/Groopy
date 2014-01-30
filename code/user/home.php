@@ -4,14 +4,21 @@
     <meta charset="utf-8">
     <title>Groopy | Home</title>
 
-<!--For Bootstrap and jQuery imports-->
-    <?php require_once("../includes.php")?>
+    <!-- Bootstrap imports -->
+    <link href="../../includes/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../../includes/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    
+    <!-- jQuery imports -->
+    <link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+    <script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
+    <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
+    
     
 	<script type="text/javascript">
 		function callDashboard(){
 			window.location = "dashboard.php";
 		}
-		$(function() {
+	/*	$(function() {
 			$( "#addIcon" ).tooltip({
 			  show: {
 				effect: "slideDown",
@@ -35,35 +42,34 @@
 		$( "#addIcon" ).click(function() {
 		  $( "#dialog" ).dialog( "open" );
 		});
-	  });
+	  });*/
 	</script>
     <style type="text/css">
       body {
-        padding-top: 70px;
-        padding-bottom: 40px;
+		margin-left: 20px;
+		margin-top: 80px;
       }
 	  #project{
-		  margin-top: 20px;
 		  border: 5px solid black;
 		  border-radius: 20px;
-		  width: 1000px;
-		  height: 100px;
+		  width: 980px;
+		  height: 120px;
 		  margin-bottom: 10px;
 		  float: left;
 	  }
 	  #project h2{
-		  padding: 10px 0 0 15px;
+		  padding: 5px 0 0 20px;
 		  color: #03C;
 	  }
 	  #project h4{
-		  padding-left: 10px;
+		  padding-left: 20px;
 	  }
 	  #project #floatLeft{
 		  float: left;
 	  }
 	  #project #percentage{
-		  padding-top: 30px;
-		  padding-left: 900px;
+		  padding-top: 25px;
+		  padding-left: 830px;
 		  font-size: 40px;
 		  color: #00A652;
 	  }
@@ -71,33 +77,34 @@
 		  background-color: #FFFF80;
 	  }
 	  #rightDiv{
-		  margin-top: 20px;
 		  border: 5px solid black;
 		  border-radius: 20px;
 		  width: 300px;
 		  height: 500px;
-		  margin-left: 1015px;
+		  margin-left: 990px;
 	  }
 	  #rightDiv h3{
 		  padding-left: 7px;
 		  color: #03C;
 	  }
-	  button{
+/*	  button{
 		  border-color:transparent;
 		  background: white;
-		  margin-left: 980px;
+		  margin-left: 920px;
+		  margin-top: 50px;
+	  }*/
+	  .container{
+		  margin-left: 0px;
 	  }
     </style>
 
   </head>
 
   <body>
-    <?php require_once("../../shared/php/navbar.php"); ?>
-    <div id="dialog" title="Basic dialog">
-  <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
-    <button id="addIcon"><img src="../../shared/images/Icon_Add.png" title="New Project"></button>
-    <div class="container-fluid">
+
+	<?php require_once("../../shared/php/navbar.php"); ?>
+    
+    <div class="container">
         <div id="project" class="project" onClick="callDashboard()">
         	<div id="floatLeft">
                 <h2>Project 1</h2>
@@ -116,10 +123,10 @@
 		<div id="rightDiv">
         	<h3>ToDo list for all projects</h3>
         </div>
-        
-	<?php require_once("../../shared/php/footer.php")?>
 	</div> <!--/container fluid-->
-    
+    <script src="../../includes/bootstrap/js/bootstrap.min.js"></script>
+
+    <?php require_once("../../shared/php/footer.php")?>
 
   </body>
 </html>
