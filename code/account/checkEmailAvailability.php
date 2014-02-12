@@ -18,7 +18,7 @@
 			return;
 		}
 		//database connection
-		require_once("DBConnection.php");
+		require_once("../../shared/php/DBConnection.php");
 		$connection = DBConnection::connectDB("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
 		if ($connection != null)
 		{

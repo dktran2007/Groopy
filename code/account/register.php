@@ -31,7 +31,7 @@ php to register user
 			if ($error == false)
 			{
 				
-				require_once("DBConnection.php");
+				require_once("../../shared/php/DBConnection.php");
 				$connection = DBConnection::connectDB("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
 				$error = null;
 				if ($connection != null)
@@ -63,7 +63,7 @@ php to register user
 						"Hi ".$firstname." ".$lastname."\n".
 						"Thank you for registering as a Groopy User.\n"."Your Groopy ID is: ".$email.
 						". Please click the link below to activate your account:\n".
-						"http://localhost:8888/shared/php/activateAccount.php?email=".urlencode($email)."&key=".$activation_key.
+						"http://localhost:8888/code/account/activateAccount.php?email=".urlencode($email)."&key=".$activation_key.
 						" \nBest Regards.\nGroopy Team.";
 						$header = "From: Groopy <noreply@groopy.com>";
 						MailAgent::writeEmail($email,$subject,$message,$header);

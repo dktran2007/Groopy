@@ -5,27 +5,21 @@
     <meta charset="utf-8">
 <!--Page specific css-->    
 	<link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
-    
-<!--jQuery css & js files-->
-	<link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.css" rel="stylesheet">
-	<script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
-	<script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
-    <script>
-		function callReturn(){
-			location.href= "../../index.html";
-		}
-	</script>
+
     <style type="text/css">
 		/*CSS for the input Error*/
 		.formInputError
 		{
 			color:#F00;
 		}
+		p{
+			margin-bottom: -10px;
+		}
 	</style>
     
     <script type = "text/javascript">
 		function callReturn(){
-			location.href= "../../index.html";
+			location.href= "signIn.php";
 		}
 		
 		/**
@@ -130,7 +124,7 @@
 					 return false;
 				}
 				
-				ajax.open('GET', 'http://localhost:8888/shared/php/checkEmailAvailability.php?email='+ email, true);
+				ajax.open('GET', 'http://localhost:8888/code/account/checkEmailAvailability.php?email='+ email, true);
 				ajax.send(null);
 				ajax.onreadystatechange = function()
 				{
@@ -157,53 +151,45 @@
 </head>
 
 <body>
-	<!-- ui-dialog -->
-    <div class="ui-overlay">
-      	<div class="ui-widget-overlay"></div>
-    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 508px; position: absolute; left: 20%; top: 15%;"></div>
-    </div>
-	<div style="position: absolute; width: 800px; height: 485px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
-        <div class="ui-dialog-content ui-widget-content" style="background: #000; border: 0;">
-			<br/>
-        	<img src="../../shared/images/logo_2D.png" id="logo">
+	<div class="rect2">
+        <br/>
+        <img src="../../shared/images/logo_2D.png" id="logo">
+        <h2>New Account</h2>
+        <form method="post" action="../../code/account/register.php" id="form_body" onSubmit = "return formValidate()">
+            <p>
+                <label for="form_fName">First Name: </label>
+                <input type="text" id="form_fName" name = "firstName" required autofocus/>
+                <label id="form_fNameError" class = "formInputError"></label>
+            </p>
+            <p>
+                <label for="form_lName">Last Name: </label>
+                <input type="text" id="form_lName" name="lastName" required/>
+                <label id="form_lNameError" class = "formInputError"></label>
+            </p>
+            <p>
+                <label for="form_email">Email: </label>
+                <input type="email" id="form_email" name="email" required onblur = "checkEmailAvailability()"/>
+                <input  type="hidden" id="availability"  value="false" />
+                <label id="form_emailError" class = "formInputError"></label>
+            </p>
+            <p>
+                <label for="form_password">Password: </label>
+                <input type="password" id="form_password" name="password" required/>
+                <label id="form_passwordError" class = "formInputError"></label>
+            </p>
+            <p>
+                <label for="form_confirmPassword">Confirm Password: </label>
+                <input type="password" id="form_confirmPassword" onblur= "checkConfirmPassword()" required/>
+                <label id="form_confirmPasswordError" class = "formInputError"></label>
+            </p>
+            <p>
+                <input type="button" value="Cancel" id="cancelBtn" onClick="callReturn();">
+            </p>
+            <p>
+                <input type="submit" value="Register" id="registerBtn">
+            </p>
             <br/>
-            <h2>New Account</h2>
-            <form method="post" action="../../shared/php/register.php" id="form_body" onSubmit = "return formValidate()">
-            	<p>
-                	<label for="form_fName">First Name: </label>
-                    <input type="text" id="form_fName" name = "firstName" required autofocus/>
-                    <label id="form_fNameError" class = "formInputError"></label>
-                </p>
-                <p>
-                	<label for="form_lName">Last Name: </label>
-                    <input type="text" id="form_lName" name="lastName" required/>
-                    <label id="form_lNameError" class = "formInputError"></label>
-                </p>
-                <p>
-                	<label for="form_email">Email: </label>
-                    <input type="email" id="form_email" name="email" required onblur = "checkEmailAvailability()"/>
-                    <input  type="hidden" id="availability"  value="false" />
-                    <label id="form_emailError" class = "formInputError"></label>
-                </p>
-                <p>
-                	<label for="form_password">Password: </label>
-                    <input type="password" id="form_password" name="password" required/>
-                    <label id="form_passwordError" class = "formInputError"></label>
-                </p>
-                <p>
-                	<label for="form_confirmPassword">Confirm Password: </label>
-                    <input type="password" id="form_confirmPassword" onblur= "checkConfirmPassword()" required/>
-                    <label id="form_confirmPasswordError" class = "formInputError"></label>
-                </p>
-                <p>
-                    <input type="button" value="Cancel" id="cancelBtn" onClick="callReturn();">
-                </p>
-                <p>
-                    <input type="submit" value="Register" id="registerBtn">
-                </p>
-                <br/>
-            </form>
-		</div>
+        </form>
 	</div>
 </body>
 </html>

@@ -18,7 +18,7 @@
 			}, 10000);
 		}
 		function callLogin(){
-			location.href= "../../index.html";
+			location.href= "signIn.php";
 		}
 	</script>
     <style>
@@ -29,38 +29,32 @@
 </head>
 
 <body>
-	<!-- ui-dialog -->
-    <div class="ui-overlay">
-      	<div class="ui-widget-overlay"></div>
-    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 323px; position: absolute; left: 20%; top: 15%;"></div>
-    </div>
-	<div style="position: absolute; width: 800px; height: 300px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
-        <div class="ui-dialog-content ui-widget-content" style="background: #000; border: 0;">
-			<br/>
-        	<img src="../../shared/images/logo_2D.png" id="logo">
+	<div class="rect">
             <br/>
-            <div id="retrieveDiv">
-              <h2 id="retrieve">Retrieve Password</h2>
-              <form method="post" id="form_body2">
-                    <p>
-                        <label for="form_email">Please enter your Username: </label>
-                        <input type="email" id="form_email" required autofocus/>
-                    </p>
-                    <p>
-                        <input type="submit" value="Submit" id="emailNotifyBtn" onClick="showNotification(); return false;">
-                    </p>
-              </form>
-            </div>
-            <br/>
-            
-		</div>
+        <img src="../../shared/images/logo_2D.png" id="logo">
+
+        <div id="retrieveDiv">
+          <h2 id="retrieve">Retrieve Password</h2>
+          <form method="post" id="form_body2">
+                <p>
+                    <label for="form_email">Please enter your Username: </label>
+                    <input type="email" id="form_email" required autofocus/>
+                </p>
+                <p>
+                    <input type="submit" value="Submit" id="emailNotifyBtn" onClick="showNotification(); return false;">
+                </p>
+          </form>
+        </div>
         <br/>
-        <div class="ui-widget" id="notification"> 
-            <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
-                <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-              <strong>Hey Username!</strong> An email has been sent to your account. Please try to <input type="submit" value="Login" onClick="callLogin();" id="loginBtn"> again.</p>
-          </div>
+        
+    </div>
+    <br/>
+    <!--Following code works perfectly fine! just some css needs to be fixed!!!-->
+    <!--div class="ui-widget" id="notification">  
+        <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+            <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+          <strong>Hey Username!</strong> An email has been sent to your account. Please try to <input type="submit" value="Login" onClick="callLogin();" id="loginBtn"> again.</p>
       </div>
-	</div>
+	</div-->
 </body>
 </html>

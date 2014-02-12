@@ -1,60 +1,89 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Groopy</title>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
-<!--Page specific css-->    
-    <link rel="stylesheet" type="text/css" href="shared/css/base.css">
+    <title>Groopy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-<!--jQuery css & js files-->
-	<link href="includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
-	<script src="includes/jquery/groopy/js/jquery-1.9.1.js"></script>
-	<script src="includes/jquery/groopy/js/jquery-ui-1.10.3.custom.min.js"></script>
-	<script>
-	function callRegister(){
-		window.location.href="code/account/register.html";
-	}
-	</script>
-</head>
-<body>
-<!-- ui-dialog -->
-    <div class="ui-overlay">
-      	<div class="ui-widget-overlay"></div>
-    	<div class="ui-widget-shadow ui-corner-all" style="width: 821px; height: 393px; position: absolute; left: 20%; top: 15%;"></div>
-    </div>
-	<div style="position: absolute; width: 800px; height: 370px; left: 20%; top: 15%; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
-        <div class="ui-dialog-content ui-widget-content" style="background: #000; border: 0;">
-			<br/>
-        	<img src="shared/images/logo_2D.png" id="logo">
-            <br/><br/>
-            <div id="leftDiv">
-                <h3>Sign In</h3>
-                <form method="post" action="shared/php/validateAccount.php">
-                    <p> 
-                        <input type="email" id="form_userName"  placeholder=" example@yahoo.com" autofocus required/>
-                    </p>
-                    <p>
-                        <input type="password" id="form_password" placeholder=" password" required/>
-                    </p>
-                    <!--span role="alert" class="error-msg">The email or password you entered is incorrect.</span> <!-- based on how the form is validated, i need to show and hide this span-->
-                    <p>
-                        <input type="submit" id="signInBtn" value="Sign In"/> 
-                        &nbsp; &nbsp; <a href="code/account/forgotPwd.html">Forgot password</a> 
-                    </p>
-                </form>
-                <br/>
-            </div>
-            
-            <img src="shared/images/or.png" id="or"/>
-            
-            <div id="rightDiv">
-                <h3>Sign Up</h3>
-                <p>If you don't have an account yet</p>
-                <input type="submit" id="signUpBtn" value="Sign Up" onClick="callRegister()"/>
-                <br/> 
-            </div>
-            <br/><br/>
-		</div>
-	</div>
-</body>
+    <!--Page specific css>    
+	<link rel="stylesheet" type="text/css" href="shared/css/base.css">
+    
+    <!-- styles -->
+    <link href="includes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="includes/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <style type = "text/css">
+      div{
+        display: block;
+      }
+      .marketing-section-signup {
+        text-shadow: 0 1px 3px #222;
+        background: #202021 url("http://i.imgur.com/d2C3Saj.jpg") center no-repeat;
+      }
+      .marketing-section {
+        position: relative;
+		height: 470px;
+      }
+      .container {
+        width: 200px;
+      }
+	  #getStartedBtn{
+		font-size: 20px;
+		margin-top: 200px;
+		background-color: #F33;
+		border-color:#F33;
+		border-radius: 25px;
+		width: 200px;
+		height: 60px;
+		color: #fff;
+		}
+		#bottom{
+			text-align:center;
+			font-size: 16px;
+			padding-top: 30px;
+		}
+		#header-wrapper{
+			height: 90px;
+			padding: 25px;
+		}
+		nav{
+			float: right;
+			padding-top: 15px;
+		}
+		span{
+			font-size: 16px;
+			padding: 8px;
+		}
+		a{
+			color: #333;	
+		}
+		a:hover{
+			color: #F33;
+			text-decoration: none;
+		}
+    </style> 
+  </head>
+
+  <body>
+      <div id="header-wrapper">
+          <a class="logo" href="index.html" title="Toggle side bar"><img alt="List-icon" src="shared/images/logo_2D_small.png" /></a>
+          <nav>
+              <span class="top-links">
+              <span><a href="/about" class="link" title="About">ABOUT</a></span>
+              <span><a href="/community" class="link" title="Communities">COMMUNITIES</a></span>
+              <span><a href="/group" class="link" title="Groups">GROUPS</a></span>
+              </span>
+              <span class="sign-in-link"><a href="code/account/signIn.php" title="Sign In">SIGN IN</a></span>
+          </nav>
+      </div>
+        <div id="site-container" class="context-loader-container" data-pjax-container="">       
+          <div class="marketing-section marketing-section-signup">
+            <div class="container">
+              <input type="button" id="getStartedBtn" value="GET STARTED"/>
+            </div><!-- /.container -->
+        </div>
+        <div id="bottom">
+        	GROOPY IS WHERE COLLABORATION BEGINS - SO DIVE IN!
+        </div>
+  </body>
 </html>

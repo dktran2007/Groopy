@@ -7,7 +7,7 @@ if(isset($_GET['email']) && isset($_GET['key']))
 {
 	$email = $_GET['email'];
 	$key = $_GET['key'];
-	require_once("DBConnection.php");
+	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
 	$error = true;
 	if ($connection != null)

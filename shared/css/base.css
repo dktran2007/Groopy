@@ -1,7 +1,16 @@
 /*index.html*/
 body{
-	background-color:#3399ff;
-	font-size:13px;
+	background-color:#EAEAEA;
+	font-size:18px;
+}
+.rect{
+	width: 800px;
+	height: 370px;
+	margin: 50px auto 0px auto;
+	padding-bottom: 20px;
+	background: white;
+	border: white solid 3px;
+	border-radius: 10px;
 }
 #logo{
 	margin-left: 80px;
@@ -9,55 +18,68 @@ body{
 input{
 	border-radius: 5px;
 	width: 230px;
+	height: 30px;
 }
 #leftDiv{
 	float:left;
 	padding-right: 40px;
-	color: #fff;
+	color: #333;
 }
 #leftDiv p, #leftDiv h3{
 	padding-left: 80px;
 }
 #leftDiv a{
-	color: #549AE0;
+	color: #C0C0C0;
+	text-decoration: none;
 }
 #rightDiv{
 	width: 320px;
 	float:right;
-	color: #fff;
+	color: #333;
 }
 #signInBtn{
-	background-color: #549AE0;
-	border-color:#549AE0;
+	background-color: #fff;
+	border-color:#F33;
 	width: 100px;
 	height: 40px;
-	color: #fff;
+	color: #F33;
+	font-size: 16px;
 }	
 #signUpBtn{
-	background-color: #f26522;
-	border-color:#f26522;
+	background-color: #F33;
+	border-color:#F63;
 	width: 100px;
 	height: 40px;
 	color: #fff;
+	font-size: 16px;
 }
 #or{
 	padding-left: 20px;
 }
-.error-msg {
-	padding-left: 50px;
+.formInputError {
+	padding-left: 75px;
 	display: block;
 	color: #dd4b39;
-	line-height: 13px;
-	font-size:13px;
+	line-height: 15px;
+	font-size:15px;
 }
 /*register.html*/
 h2{
 	padding-left: 315px;
-	color: #00a652;
+	color: #333;
+}
+.rect2{
+	width: 800px;
+	height: 550px;
+	margin: 50px auto 0px auto;
+	padding-bottom: 20px;
+	background: white;
+	border: white double 3px;
+	border-radius: 10px;
 }
 #form_body{
 	padding-left: 100px;
-	color: white;
+	color: #333;
 }
 #form_body label{
 	display: inline-block;
@@ -67,40 +89,44 @@ h2{
 }
 #registerBtn{
 	margin-left: 22px;
-	background-color: #00a652;
-	border-color:#00a652;
+	background-color: #F33;
+	border-color:#F63;
 	width: 100px;
 	height: 40px;
 	color: #fff;
+	font-size: 16px;
 }
 #cancelBtn{
 	float:left;
 	margin-left: 170px;
-	background-color: #F33;
+	background-color: #fff;
 	border-color:#F33;
 	width: 100px;
 	height: 40px;
-	color: #fff;
+	color: #F33;
+	font-size: 16px;
 }
 /*forgotpwd.html*/
 #emailNotifyBtn{
 	margin-left: 360px;
-	background-color: #821280;
-	border-color:#821280;
+	background-color: #F33;
+	border-color:#F63;
 	width: 100px;
 	height: 40px;
 	color: #fff;
+	font-size: 16px;
 }
 #form_body2 {
 	padding-left: 180px;
+	
 }
 #form_body2 label{
 	display:inline-block;
 	width: 220px;
-	color: white;
+	color: #333;
 }
 #retrieve{
-	color: #821280;
+	color: #333;
 }
 #loginBtn{
 	background-color: #00A652;
