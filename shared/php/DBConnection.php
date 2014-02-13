@@ -2,27 +2,37 @@
 /**
  * This is a static class to create the connection to database
  * @author Lam Lu
+ * Revision 1.1: Fix the connectDB, now you can use DBConnection::connectDB() without args
  */
 class DBConnection
 {
-	//function to connect to database
-	static function connectDB ($hostname, $database, $username, $password)
+	private static $connection = NULL;
+	
+	//initialize static variable
+	private static function initialize()
 	{
-		$connection = new mysqli($hostname, $username,$password, $database);
-		if ($connection->connect_errno)
+		self::$connection = new mysqli("localhost", "groopyuser", "groopyuser","Groopy_Schema");
+	}
+	//function to connect to database
+	static function connectDB ()
+	{
+		self::initialize();
+		//self::$connection = new mysqli("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
+		if (self::$connection->connect_errno)
 		{
 			echo ("Failed to connect to database");
-			return null;
+			//printf ("\nError: %s",self::$connection->connect_error);
+			return NULL;
 		}
-		else return $connection;
+		else return self::$connection;
 		
 	}
 		
 	//function to close the connection
-	static function closeConnection ($connection)
+	static function closeConnection ()
 	{
-		if ($connection != null)
-			$connection->close();
+		if (self::$connection != NULL)
+			self::$connection->close();
 	}
 }
 
