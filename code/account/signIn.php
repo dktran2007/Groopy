@@ -104,8 +104,9 @@
 <!-- ui-dialog -->
 	<div class="rect">
         <br/>
-        <img src="../../shared/images/logo_2D.png" id="logo">
-        <br/><br/>
+        <a class="logo" href="../../index.html" title="LOGO">
+       	  <img alt="List-icon" src="../../shared/images/logo3.1.png"/> <strong>GROOPY</strong></a>
+          <hr/>
         <div id="leftDiv">
             <h3>Sign In</h3>
             <form method="post" action="../../code/account/signIn.php" onSubmit="return validate()">

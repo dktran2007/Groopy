@@ -4,16 +4,20 @@ body{
 	font-size:18px;
 }
 .rect{
-	width: 800px;
+	width: 780px;
 	height: 370px;
 	margin: 50px auto 0px auto;
 	padding-bottom: 20px;
 	background: white;
-	border: white solid 3px;
+	border: white solid 10px;
 	border-radius: 10px;
 }
-#logo{
-	margin-left: 80px;
+.logo{
+	font-size: 30px;
+	color: #000;
+	font-family:Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	padding-left: 280px;
 }
 input{
 	border-radius: 5px;
@@ -69,12 +73,12 @@ h2{
 	color: #333;
 }
 .rect2{
-	width: 800px;
+	width: 780px;
 	height: 550px;
 	margin: 50px auto 0px auto;
 	padding-bottom: 20px;
 	background: white;
-	border: white double 3px;
+	border: white double 10px;
 	border-radius: 10px;
 }
 #form_body{

@@ -61,12 +61,24 @@
 			color: #F33;
 			text-decoration: none;
 		}
+		.logo{
+			font-size: 30px;
+			color: #000;
+			font-family:Arial, Helvetica, sans-serif;
+		}
     </style> 
+    <script type = "text/javascript">
+		function callLogin(){
+			location.href= "code/account/signIn.php";
+		}
+	</script>
+		
   </head>
 
   <body>
       <div id="header-wrapper">
-          <a class="logo" href="index.html" title="Toggle side bar"><img alt="List-icon" src="shared/images/logo_2D_small.png" /></a>
+          <a class="logo" href="index.html" title="LOGO">
+       	  <img alt="List-icon" src="shared/images/logo3.1.png"/> <strong>GROOPY</strong></a>
           <nav>
               <span class="top-links">
               <span><a href="/about" class="link" title="About">ABOUT</a></span>
@@ -79,7 +91,7 @@
         <div id="site-container" class="context-loader-container" data-pjax-container="">       
           <div class="marketing-section marketing-section-signup">
             <div class="container">
-              <input type="button" id="getStartedBtn" value="GET STARTED"/>
+              <input type="button" id="getStartedBtn" value="GET STARTED" onClick="callLogin();"/>
             </div><!-- /.container -->
         </div>
         <div id="bottom">
