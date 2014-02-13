@@ -1,0 +1,42 @@
+/*home.php*/
+.icons {
+	padding-bottom: 5px;
+	background: white;
+	border:none;
+}
+.modal-title{
+	font-size: 20px;
+	color: #DC143C;
+}
+.modal-body p{
+	margin-left: 0px;
+}
+.modal-body label{
+	display: inline-block;
+	width: 200px;
+	text-align:right;
+	padding-right: 20px;
+	font-size: 16px;
+}
+.modal-body input{
+	border-radius: 5px;
+	width: 200px;
+	height: 30px;
+}
+.dataTables_wrapper{
+	padding: 0 20px 0 0;
+	/*width: 1100px;*/
+}
+.dataTables_length{
+	display: none;
+}
+.dataTables_filter label input {
+	margin-left: 10px;
+	width: 300px;
+	height: 30px;
+	border-radius: 5px;
+}
+.dataTables_filter label{
+	padding-bottom: 10px;
+	float:right;
+}

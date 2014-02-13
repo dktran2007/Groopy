@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Groopy | Home</title>
+    <!--Page specific css-->    
+	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css">
 
     <!-- Bootstrap imports -->
     <link href="../../includes/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -47,10 +49,10 @@
     <style type="text/css">
       body {
 		margin-left: 20px;
-		margin-top: 80px;
+		margin-top: 60px;
       }
 	  #project{
-		  border: 5px solid black;
+		  border: 5px double #555;
 		  border-radius: 20px;
 		  width: 980px;
 		  height: 120px;
@@ -74,13 +76,13 @@
 		  color: #00A652;
 	  }
 	  .project:hover{
-		  background-color: #FFFF80;
+		  background: #FA8072 ;
 	  }
 	  #rightDiv{
-		  border: 5px solid black;
+		  border: 5px double #555;
 		  border-radius: 20px;
 		  width: 300px;
-		  height: 500px;
+		  height: 480px;
 		  margin-left: 990px;
 	  }
 	  #rightDiv h3{
@@ -96,6 +98,9 @@
 	  .container{
 		  margin-left: 0px;
 	  }
+	  .icons {
+		  margin-left: 940px;
+	  }
     </style>
 
   </head>
@@ -103,7 +108,38 @@
   <body>
 
 	<?php require_once("../../shared/php/navbar.php"); ?>
-    
+	<button class="icons" data-toggle="modal" data-target="#addProjModal"><img src="../../shared/images/addProject.png" title="New Project"></button>
+
+<!-- Modal -->
+<div class="modal fade" id="addProjModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">New Project</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+            <label for="projName">Project Name: </label>
+            <input type="text" id="projName" />
+        </p>
+        <p>
+            <label for="projClassName">Class Name: </label>
+            <input type="text" id="projClassName"  />
+        </p>
+        <p>
+            <label for="projClassNum">Class Num: </label>
+            <input type="text" id="projClassNum"  />
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+	    
     <div class="container">
         <div id="project" class="project" onClick="callDashboard()">
         	<div id="floatLeft">
