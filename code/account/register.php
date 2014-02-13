@@ -32,7 +32,7 @@ php to register user
 			{
 				
 				require_once("../../shared/php/DBConnection.php");
-				$connection = DBConnection::connectDB("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
+				$connection = DBConnection::connectDB();
 				$error = null;
 				if ($connection != null)
 				{
@@ -51,7 +51,7 @@ php to register user
 							$error =  "Failed to execute";
 						}
 					}
-					DBConnection::closeConnection($connection);
+					DBConnection::closeConnection();
 					if ($error == null)
 					{
 						session_start();
