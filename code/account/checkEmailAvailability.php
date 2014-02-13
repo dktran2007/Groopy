@@ -19,7 +19,7 @@
 		}
 		//database connection
 		require_once("../../shared/php/DBConnection.php");
-		$connection = DBConnection::connectDB("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
+		$connection = DBConnection::connectDB();
 		if ($connection != null)
 		{
 			/* create a prepared statement */
@@ -46,7 +46,7 @@
 				else $availability= "true";
 			}	
 			
-			DBConnection::closeConnection($connection);
+			DBConnection::closeConnection();
 			print $availability;
 		}
 	}
