@@ -8,7 +8,7 @@ if(isset($_GET['email']) && isset($_GET['key']))
 	$email = $_GET['email'];
 	$key = $_GET['key'];
 	require_once("../../shared/php/DBConnection.php");
-	$connection = DBConnection::connectDB("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
+	$connection = DBConnection::connectDB();
 	$error = true;
 	if ($connection != null)
 	{
@@ -22,7 +22,7 @@ if(isset($_GET['email']) && isset($_GET['key']))
 					{
 						if($statement->fetch())
 						{
-							$error = false; 
+							$error = false;
 						}
 					}
 				}
@@ -37,11 +37,11 @@ if(isset($_GET['email']) && isset($_GET['key']))
 			}
 			
 			else if(strcasecmp($rEmail,$email) == 0 && strcmp($rKey,$key) === 0)//account has not been activated yet
-			{
+			{	
 				if($statement=$connection->prepare("Update Users set activation_key = ?, active = ? where email = ? "))
 				{
 					$active = 1;
-					$key = "";
+					$key = NULL;
 					if($statement->bind_param("sds",$key,$active,$email))
 					{
 						if($statement->execute())
@@ -49,6 +49,7 @@ if(isset($_GET['email']) && isset($_GET['key']))
 							//validate ok
 							echo '<div>Your account is now active. You may <a href="../../">log in</a> now</div>'; 
 						}
+						//else echo mysqli_stmt_error ( $statement );
 					}
 				}
 			}
@@ -61,10 +62,10 @@ if(isset($_GET['email']) && isset($_GET['key']))
 			//fail to verify
 			echo '<div>Oops !Your account could not be activated. Please recheck the link or contact the system administrator.</div>';
 		}
-		$statement-close();
+		$statement->close();
 		
 	}
-	DBConnection::closeConnection($connection);
+	DBConnection::closeConnection();
 	
 }
 ?>
