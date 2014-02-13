@@ -11,32 +11,32 @@
 		function callRegister(){
 			window.location.href="register.html";
 		}
-	
+
 		/**
 		validate input fields
 		*/
 		function validate()
 		{
 			var result = true;
-	
+
 			var email = document.getElementById("form_userName").value;
 			var password = document.getElementById("form_password").value;
 			var emptyString = new RegExp("^\\s*$"); /* $ is string empty ; \s* is string containing whitespaces only*/
-				
+
 			var emailString = new RegExp("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$");
 			if(!emailString.test(email))
 			{
 				result =  false;
-					
+
 			}
 			if(emptyString.test(password))
 			{
-			
+
 				result = false;
 			}
 			return result;
 		}	
-		
+
 	</script>
     
     
@@ -61,7 +61,7 @@
 		$error = 0;
 		//database connection
 		require_once("../../shared/php/DBConnection.php");
-		$connection = DBConnection::connectDB("localhost", "Groopy_Schema", "groopyuser", "groopyuser");
+		$connection = DBConnection::connectDB();
 		if ($connection != null)
 		{
 			/* create a prepared statement */
@@ -83,19 +83,19 @@
 									}
 									else //login ok
 									{
-										DBConnection::closeConnection($connection);
+										DBConnection::closeConnection();
 										echo "<script type='text/javascript'> location.href = '../user/home.php';</script>";
 									}
 								}
-								else $message = "* The email or password you entered is incorrect";//email and password does not match	
+								else $message = "* The email or password is incorrect";//email and password does not match	
 							}
 							else $message = "* Account was not found, please register";//email not found on database
 						}
 					}
 				}
 			}	
-			
-			DBConnection::closeConnection($connection);
+
+			DBConnection::closeConnection();
 		}
 	}
 	?>
