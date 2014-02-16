@@ -22,7 +22,6 @@
     <!-- Page specific CSS -->
     <link href="../../shared/css/tabs.css" rel="stylesheet">
    	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css">
-    
     <style type="text/css">
 		@import "../../shared/css/demo_table.css";
 		.masthead{
@@ -186,7 +185,6 @@
                       <label for="msg">Message:</label>
                       <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;" required></textarea>
                     </p>
-                    <hr/>
                     <p>
                       <input type="submit" name="submit" id="submit" value="Post message" class="btn btn-danger"/>
                       <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>

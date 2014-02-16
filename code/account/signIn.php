@@ -1,3 +1,67 @@
+<?php
+/**
+* login php
+@author: Lam Lu
+return error: 
+0: login succeeds
+1: login fails, account is not yet activated
+2: login fails, email and password do not match
+3: login fails, email not found on database
+*/
+header ("X-Content-Type-Options : nosniff");
+header ("X-Frame-Options: DENY");
+$message = ""; // moved it to global b/c of "variable undefined error!"
+if(isset($_POST['email']) && isset($_POST['password']))
+{
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+	$error = 0;
+	//database connection
+	require_once("../../shared/php/DBConnection.php");
+	$connection = DBConnection::connectDB();
+	if ($connection != null)
+	{
+		/* create a prepared statement */
+		if ($stmt = $connection->prepare("Select email,first_name,last_name, password,active from Users where email = ?")) 
+		{
+			if ($stmt->bind_param("s", $email))
+			{
+				if ($stmt->execute()) 
+				{
+					if ($stmt->bind_result($rEmail,$firstName,$lastName,$rPassword,$rActive))
+					{
+						if($stmt->fetch())
+						{
+							if(strcasecmp($email,$rEmail)==0 && password_verify($password,$rPassword))
+							{
+								if($rActive == 0)//acccount not yet activated
+								{
+									$message = "* Account has not been activated";
+								}
+								else //login ok
+								{
+									DBConnection::closeConnection();
+									session_start();
+									
+									$_SESSION['email'] = $rEmail;
+									$_SESSION['firstName'] = $firstName;
+									$_SESSION['lastName'] = $lastName;
+									
+									echo "<script type='text/javascript'> location.href = '../user/home.php';</script>";
+								}
+							}
+							else $message = "* The email or password is incorrect";//email and password does not match	
+						}
+						else $message = "* Account was not found, please register";//email not found on database
+					}
+				}
+			}
+		}	
+
+		DBConnection::closeConnection();
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,73 +203,6 @@
 		}	
 
 	</script>
-    
-    
-  	
-    <?php
-	/**
-	* login php
-	@author: Lam Lu
-	return error: 
-	0: login succeeds
-	1: login fails, account is not yet activated
-	2: login fails, email and password do not match
-	3: login fails, email not found on database
-	*/
-	header ("X-Content-Type-Options : nosniff");
-	header ("X-Frame-Options: DENY");
-	$message = ""; // moved it to global b/c of "variable undefined error!"
-	if(isset($_POST['email']) && isset($_POST['password']))
-	{
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$error = 0;
-		//database connection
-		require_once("../../shared/php/DBConnection.php");
-		$connection = DBConnection::connectDB();
-		if ($connection != null)
-		{
-			/* create a prepared statement */
-			if ($stmt = $connection->prepare("Select email,first_name,last_name, password,active from Users where email = ?")) 
-			{
-				if ($stmt->bind_param("s", $email))
-				{
-					if ($stmt->execute()) 
-					{
-						if ($stmt->bind_result($rEmail,$firstName,$lastName,$rPassword,$rActive))
-						{
-							if($stmt->fetch())
-							{
-								if(strcasecmp($email,$rEmail)==0 && password_verify($password,$rPassword))
-								{
-									if($rActive == 0)//acccount not yet activated
-									{
-										$message = "* Account has not been activated";
-									}
-									else //login ok
-									{
-										DBConnection::closeConnection();
-										session_start();
-										
-										$_SESSION['email'] = $rEmail;
-										$_SESSION['firstName'] = $firstName;
-										$_SESSION['lastName'] = $lastName;
-										
-										echo "<script type='text/javascript'> location.href = '../user/home.php';</script>";
-									}
-								}
-								else $message = "* The email or password is incorrect";//email and password does not match	
-							}
-							else $message = "* Account was not found, please register";//email not found on database
-						}
-					}
-				}
-			}	
-
-			DBConnection::closeConnection();
-		}
-	}
-	?>
 </head>
 
 <body>

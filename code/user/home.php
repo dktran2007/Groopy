@@ -165,7 +165,7 @@
           	<h2><?=$row['name']?></h2>
             <h4><?=$row['class_num']?>: <?=$row['class_name']?></h4>
         </div>	
-        <h4 id="percentage">50%</h4>	
+        <!--h4 id="percentage">50%</h4-->	
         <?php 
 			}
 		?>
