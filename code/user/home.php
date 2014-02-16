@@ -107,14 +107,26 @@
 
   <body>
 
-	<?php require_once("../../shared/php/navbar.php"); ?>
+	
 	<button class="icons" data-toggle="modal" data-target="#addProjModal"><img src="../../shared/images/addProject.png" title="New Project"></button>
-
+<?php require_once("../../shared/php/navbar.php"); ?>
+    <!-- google hangout button-->
+        <!---------------------------------------------------------------------------------->
+        <!---------------------------------------------------------------------------------->
+        <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+    	<div id="placeholder-div2"></div>
+   		<script type="text/javascript">
+        	gapi.hangout.render('placeholder-div2', { 'render': 'createhangout', 'widget_size':72 });
+    	</script>
+        <!---------------------------------------------------------------------------------->
+        <!---------------------------------------------------------------------------------->
+        <!---------------------------------------------------------------------------------->
 <!-- Modal -->
 <div class="modal fade" id="addProjModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+      
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">New Project</h4>
       </div>

@@ -8,7 +8,7 @@
     <meta name="google-signin-requestvisibleactions" content="http://schemas.google.com/AddActivity" />
     <meta name="google-signin-cookiepolicy" content="single_host_origin" />
    
-<!--Page specific css-->    
+	<!--Page specific css-->    
     <link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
     <link href="../../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
 	<script src="../../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
@@ -89,11 +89,11 @@
 			 'callback': signinCallback
 		   };
 		   gapi.auth.signIn(additionalParams);
-		   console.log('here');
 		}
 		 
 		 function signinCallback(authResult)
 		 {
+			 console.log("calling google sign in call back");
 		  if (authResult['status']['signed_in'])
 		  {
 			// Hide the sign-in button now that the user is authorized, for example:
@@ -103,11 +103,28 @@
   				gapi.client.plus.people.get( {'userId' : 'me'} ).execute(function(resp) 
 				{
    				 // Shows profile information
-   				 console.log(resp.name);
-				 console.log(resp.emails[0]);
+   				 // console.log(resp.name.familyName);
+				 //console.log(resp.name.givenName);
+				 //console.log(resp.emails[0].value);
+				  $.ajax({
+					 type:'POST',
+					 url:"startGPlusSession.php",
+					 data:
+					 {
+						 email:resp.emails[0].value,
+						 firstName:resp.name.givenName,
+						 lastName:resp.name.familyName
+					 },
+					 success: function()
+					 {
+						 //do something here in case call back in success
+						 location.href = '../user/home.php';
+					 }
+				 });
+				 
   				})
 			});
-			location.href = '../user/home.php';
+			//location.href = '../user/home.php';
 		  } 
 		  else 
 		  {
@@ -149,13 +166,13 @@
 		if ($connection != null)
 		{
 			/* create a prepared statement */
-			if ($stmt = $connection->prepare("Select email,password,active from Users where email = ?")) 
+			if ($stmt = $connection->prepare("Select email,first_name,last_name, password,active from Users where email = ?")) 
 			{
 				if ($stmt->bind_param("s", $email))
 				{
 					if ($stmt->execute()) 
 					{
-						if ($stmt->bind_result($rEmail,$rPassword,$rActive))
+						if ($stmt->bind_result($rEmail,$firstName,$lastName,$rPassword,$rActive))
 						{
 							if($stmt->fetch())
 							{
@@ -168,6 +185,12 @@
 									else //login ok
 									{
 										DBConnection::closeConnection();
+										session_start();
+										
+										$_SESSION['email'] = $rEmail;
+										$_SESSION['firstName'] = $firstName;
+										$_SESSION['lastName'] = $lastName;
+										
 										echo "<script type='text/javascript'> location.href = '../user/home.php';</script>";
 									}
 								}

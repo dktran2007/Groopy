@@ -47,16 +47,34 @@
         <a class="home-icons" href="#settings" title="Change Settings"><img src="../../shared/images/settings.png"/></a>
             <a href="#profile" class="dropdown-toggle" id="icons" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false"title="User"><img src="../../shared/images/user.png"/>
             </a>
+            
             <ul class="dropdown-menu">
-                <li><a tabindex="-1" href="#">My Account</a></li>
-                <li><a tabindex="-1" href="#">Logout</a></li>
+            	<li><a tabindex="-1">
+                <?php 
+					session_start(); 
+					$firstName = $_SESSION['firstName'];
+					$lastName = $_SESSION['lastName'];
+					$email = $_SESSION['email'];
+					$fullName = $firstName." ".$lastName;
+					if (!empty($fullName) && $fullName != " ")
+						echo $fullName;
+					else
+						echo $email;
+				?>
+                </a></li>
+                <li><a tabindex="-1" href="#">Account</a></li>
+                <li><a tabindex="-1" href="signOut.php">Logout</a></li>
             </ul>
-        </li>  
+            
+        </li>
+          
+        
           <!--button class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" >Username <b class="caret"></b></button-->
           <ul class="dropdown-menu">
             <li><a href="#">Profile</a></li>
             <li><a href="#">Logout</a></li>
           </ul>
+
         </div>
       </div>
     </div>
