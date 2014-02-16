@@ -204,6 +204,7 @@
                     <label id="form_error" class = "formInputError"><?php echo $message;?></label>
                 <p>
                     <input type="submit" id="signInBtn" value="Sign In"/> 
+					&nbsp; &nbsp; <a href="../../code/account/forgotPwd.html">Forgot password</a> 
                     &nbsp;
                    
                  

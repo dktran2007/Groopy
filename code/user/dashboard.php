@@ -1,10 +1,7 @@
 <?php 
-	$con = mysql_connect("localhost", "root", "");
-	if(!$con){
-		die("Error: ".mysql_error());
-	}
-	mysql_select_db("groopy_schema", $con);
-	$result = mysql_query("SELECT * FROM tasks");
+	require_once("../../shared/php/DBConnection.php");
+	$connection = DBConnection::connectDB();
+	$stmt = mysqli_query($connection,"SELECT * FROM tasks");
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +35,15 @@
 		}
 		.icons{
 			padding-right: 15px;
+		}
+		#submit{
+			width: 120px;
+			height: 35px;
+			float: right;
+		}
+		.modal-body p{
+			margin-left: 0;
+			padding-left: 0;
 		}
 	</style>
     <script type="text/javascript">
@@ -144,7 +150,7 @@
             </thead>
             <tbody>
                 <?php 
-                while($row = mysql_fetch_array($result)){ 
+                while($row = $stmt->fetch_assoc()){ 
                 ?>
                     <tr>
                         <td><?=$row['id']?></td>
@@ -162,9 +168,50 @@
             <h3>Uploads</h3>
             <p>yellow yellow yellow yellow yellow</p>
         </div>
+        
         <div class="tab-pane" id="forum">
-            <h3>Forum</h3>
-            <p>green green green green green</p>
+        <br/>
+        <button class="icons" data-toggle="modal" data-target="#addMsg"><img src="../../shared/images/addTask.png" title="Add Task"></button>
+        <br/>
+        <!-- Task Modal -->
+        <div class="modal fade" id="addMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Add Message</h4>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="forum.php">
+                    <p> 
+                      <label for="user">User:</label>
+                      <input type="text" name="user" id="user" />
+                    </p>
+                    <p>
+                      <label for="msg">Message:</label>
+                      <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;"></textarea>
+                    </p>
+                    <hr/>
+                    <p>
+                      <input type="submit" name="submit" id="submit" value="Post message" class="btn btn-danger"/>
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                    </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+            <h3>Messages so far...</h3>
+            <?php
+			$sql = mysqli_query($connection,"SELECT * FROM discussion ORDER BY date DESC ");
+			
+			while($row2 = $sql->fetch_assoc()) {
+			  echo $row2['user'].',  '.$row2['date'].' <br />';
+			  echo $row2['msg'].'<br />';
+			  echo '------------------------ <br />';
+			}
+			?>
         </div>
         <div class="tab-pane" id="contact">
             <h3>Contact</h3>
