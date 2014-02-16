@@ -1,7 +1,6 @@
 <?php 
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
-
 ?>
 
 <!DOCTYPE html>
@@ -110,7 +109,7 @@
                 <h4 class="modal-title" id="myModalLabel">New Task</h4>
               </div>
               <div class="modal-body">
-               <form method="post" action="task.php">
+               <form method="post" action="addTask.php">
                     <p>
                         <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
                         <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
@@ -178,7 +177,7 @@
                 <h4 class="modal-title" id="myModalLabel">Add Message</h4>
               </div>
               <div class="modal-body">
-                <form method="post" action="forum.php">
+                <form method="post" action="addDiscussion.php">
                     <p> 
                       <label for="user">User:</label>
                       <input type="text" name="user" id="user" autofocus required/>

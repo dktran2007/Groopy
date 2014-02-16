@@ -77,6 +77,7 @@
 	  }
 	  .project:hover{
 		  background: #FA8072 ;
+		  cursor: pointer;
 	  }
 	  #rightDiv{
 		  border: 5px double #555;
@@ -126,48 +127,48 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-      
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">New Project</h4>
       </div>
       <div class="modal-body">
+      <form method="post" action="addProject.php">
         <p>
             <label for="projName">Project Name: </label>
-            <input type="text" id="projName" />
-        </p>
-        <p>
-            <label for="projClassName">Class Name: </label>
-            <input type="text" id="projClassName"  />
+            <input type="text" name="projName" id="projName" required autofocus/>
         </p>
         <p>
             <label for="projClassNum">Class Num: </label>
-            <input type="text" id="projClassNum"  />
+            <input type="text" name="projClassNum" id="projClassNum"  />
         </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger">Create</button>
+        <p>
+            <label for="projClassName">Class Name: </label>
+            <input type="text" name="projClassName" id="projClassName"  />
+        </p>
+        <p>
+          <input type="submit" name="submit" id="submit" value="Add Project" class="btn btn-danger" />
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+        </p>
+        </form>
       </div>
     </div>
   </div>
 </div>
 	    
     <div class="container">
+        <?php 
+			require_once("../../shared/php/DBConnection.php");
+			$connection = DBConnection::connectDB();
+			$stmt = mysqli_query($connection,"SELECT * FROM project"); 
+			while($row = $stmt->fetch_assoc()){ 
+		?>
         <div id="project" class="project" onClick="callDashboard()">
-        	<div id="floatLeft">
-                <h2>Project 1</h2>
-                <h4>CMPE 195B: Senior Project</h4>
-            </div>
-            <h4 id="percentage">50%</h4>
-        </div>
-        <div id="project" class="project">
-          	<h2>Project 2</h2>
-            <h4>Class Number: Name</h4>
-        </div>		
-        <div id="project" class="project">
-        	<h2>Project 3</h2>
-            <h4>Class Number: Name</h4>
-        </div>
+          	<h2><?=$row['name']?></h2>
+            <h4><?=$row['class_num']?>: <?=$row['class_name']?></h4>
+        </div>	
+        <h4 id="percentage">50%</h4>	
+        <?php 
+			}
+		?>
 		<div id="rightDiv">
         	<h3>ToDo list for all projects</h3>
         </div>
