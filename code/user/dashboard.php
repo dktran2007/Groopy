@@ -1,7 +1,7 @@
 <?php 
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
-	$stmt = mysqli_query($connection,"SELECT * FROM tasks");
+
 ?>
 
 <!DOCTYPE html>
@@ -70,16 +70,38 @@
         </ul>
         <div id="tab-content" class="tab-content">
         <div class="tab-pane active" id="toDo">
-            <h3>To Do</h3>
-            <p>red red red red red red</p>
+            <h3>Derick's To Do List for Project 1</h3> <!--TODO: Project 1 & Derick should be a db pull-->
+            <table id="datatables" class="display">
+            <thead>
+                <tr>
+                    <th>Deadline</th>
+                    <th>Task</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+				$stmt2 = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = 'Derick'"); /*TODO: this shouldn't be Derick instead it should be USER that has logged in!*/
+                while($row = $stmt2->fetch_assoc()){ 
+                ?>
+                    <tr>
+                        <td><?=$row['deadline']?></td>
+                        <td><?=$row['task']?></td>
+
+                    </tr>
+                <?php 
+                }
+                ?>
+            </tbody>
+        </table>
         </div>
+        
         <div class="tab-pane" id="tasks">
         <br/>
         <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button>
         <button class="icons" data-toggle="modal" data-target="#deleteModal"><img src="../../shared/images/delete.png" title="Delete Task"></button>
         <button class="icons" data-toggle="modal" data-target="#editModal"><img src="../../shared/images/edit.png" title="Edit Task"></button>
 
-        <!-- Task Modal -->
+      <!--ADD Task Modal -->
         <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -88,56 +110,29 @@
                 <h4 class="modal-title" id="myModalLabel">New Task</h4>
               </div>
               <div class="modal-body">
-                <p>
-                    <label for="taskDesc">Task Description: </label>
-                    <textarea rows="4" cols="29" id="taskDesc" style="border: 2px solid #CCC; border-radius: 5px;"> </textarea>
-                </p>
-                <p>
-                    <label for="assignedTo">Assign To: </label>
-                    <input type="text" id="assignedTo"  />
-                </p>
-                <p>
-                    <label for="deadline">Deadline: </label>
-                    <input type="date" id="deadline"  />
-                </p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">Create</button>
+               <form method="post" action="task.php">
+                    <p>
+                        <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
+                        <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
+                    </p>
+                    <p>
+                        <label for="assignedTo">Assign To: </label>
+                        <input type="text" name="assignedTo" id="assignedTo"  required/>
+                    </p>
+                    <p>
+                        <label for="deadline">Deadline: </label>
+                        <input type="date" name="deadline" id="deadline" required />
+                    </p>
+                    <p>
+                      <input type="submit" name="submit" id="submit" value="Add Task" class="btn btn-danger" />
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                    </p>
+                </form>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Edit Task Modal -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Edit Task</h4>
-              </div>
-              <div class="modal-body">
-                <p>
-                    <label for="taskDesc">Task Description: </label>
-                    <textarea rows="4" cols="29" id="taskDesc" style="border: 2px solid #CCC; border-radius: 5px;"> </textarea>
-                </p>
-                <p>
-                    <label for="assignedTo">Assign To: </label>
-                    <input type="text" id="assignedTo"  />
-                </p>
-                <p>
-                    <label for="deadline">Deadline: </label>
-                    <input type="date" id="deadline"  />
-                </p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">Edit</button>
-              </div>
-            </div>
-          </div>
-        </div>
         
         <table id="datatables" class="display">
             <thead>
@@ -150,6 +145,7 @@
             </thead>
             <tbody>
                 <?php 
+				$stmt = mysqli_query($connection,"SELECT * FROM tasks");
                 while($row = $stmt->fetch_assoc()){ 
                 ?>
                     <tr>
@@ -171,7 +167,7 @@
         
         <div class="tab-pane" id="forum">
         <br/>
-        <button class="icons" data-toggle="modal" data-target="#addMsg"><img src="../../shared/images/addTask.png" title="Add Task"></button>
+        <button class="icons" data-toggle="modal" data-target="#addMsg"><img src="../../shared/images/addTask.png" title="Add Message"></button>
         <br/>
         <!-- Task Modal -->
         <div class="modal fade" id="addMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -185,11 +181,11 @@
                 <form method="post" action="forum.php">
                     <p> 
                       <label for="user">User:</label>
-                      <input type="text" name="user" id="user" />
+                      <input type="text" name="user" id="user" autofocus required/>
                     </p>
                     <p>
                       <label for="msg">Message:</label>
-                      <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;"></textarea>
+                      <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;" required></textarea>
                     </p>
                     <hr/>
                     <p>
