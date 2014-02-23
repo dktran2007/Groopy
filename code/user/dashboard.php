@@ -83,7 +83,7 @@
 
     <div class="container">
       <div class="masthead">
-        <h2 class="text-muted"><?php echo $title;?>
+        <h2 class="text-muted"><?php echo $title; echo $id[0];?>
         	<button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
             <!-- google hangout button-->
             <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
@@ -248,6 +248,9 @@
                           <input type="text" name="topic" id="topic" required/>
                         </p>
                         <p>
+                        <input type="hidden" name="projectId" id="projectId" value="<?php echo $id[0];?>"/>
+                        </p>
+                        <p>
                           <input type="submit" name="submit" id="submit" value="Create" class="btn btn-danger"/>
                           <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
                         </p>
@@ -259,7 +262,7 @@
                        
 			
             <?php
-			$sql = mysqli_query($connection,"SELECT * FROM discussion WHERE Project_id = $id[0]");
+			$sql = mysqli_query($connection,"SELECT * FROM discussion WHERE Project_id = $id[0] ORDER BY date DESC");
 			
 			while($row2 = $sql->fetch_assoc()) {?>
                 <div id="discussion" class="discussion">

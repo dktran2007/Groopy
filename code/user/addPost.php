@@ -8,6 +8,9 @@
 		$date = date('Y-m-d H:i:s');
 		$result = "INSERT INTO post(msg,date,discussion_id) VALUES ('$msg','$date','$discussionId')";
 		mysqli_query($connection,$result);
+		
+		$sql = mysqli_query($connection,"SELECT topic FROM discussion WHERE id = $discussionId");
+		$discussionTopic = mysqli_fetch_row($sql);
+		header( 'Location: searchPost.php?topic='.$discussionTopic[0] ) ;
 	}
-	header( 'Location: dashboard.php?#forum' ) ;
 ?>

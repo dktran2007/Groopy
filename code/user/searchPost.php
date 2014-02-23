@@ -43,7 +43,7 @@
                   <div class="modal-body">
                     <form method="post" action="addPost.php">
                         <p>
-                          <input type="hidden" name="discussionId" id="discussionId" value="<?php $id[0];?>"/>
+                          <input type="hidden" name="discussionId" id="discussionId" value="<?php echo $id[0];?>"/>
                         </p>
                         <p>
                           <label for="msg">Message:</label>
