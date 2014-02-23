@@ -2,10 +2,13 @@
 h3{
 	color: #F33;
 }
-.icons {
+.icons, .inviteIcons {
 	padding-bottom: 5px;
 	background: white;
 	border:none;
+}
+.modal-dialog{
+	margin-top: 40px;
 }
 .modal-title{
 	font-size: 20px;
@@ -42,4 +45,14 @@ h3{
 .dataTables_filter label{
 	padding-bottom: 10px;
 	float:right;
+}
+#submit{
+	margin-top: 0px;
+	width: 120px;
+	height: 35px;
+	float: right;
+}
+.modal-body p{
+	margin-left: 0;
+	padding-left: 0;
 }

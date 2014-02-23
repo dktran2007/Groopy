@@ -1,6 +1,8 @@
 <?php 
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
+	
+
 ?>
 
 <!DOCTYPE html>
@@ -31,18 +33,38 @@
 		.tab-pane{
 			padding-left: 10px;
 		}
+		.inviteIcons{
+			margin-left: 20px;
+			margin-right: 15px;
+		}
 		.icons{
-			padding-right: 15px;
+			margin-right: 15px;
 		}
-		#submit{
-			width: 120px;
-			height: 35px;
-			float: right;
-		}
-		.modal-body p{
-			margin-left: 0;
-			padding-left: 0;
-		}
+		#discussion{
+		  border: 2px solid #555;
+		  border-radius: 20px;
+		  width: 980px;
+		  height: 50px;
+		  margin-bottom: 10px;
+		  margin-left: 100px;
+		  padding: 0 20px;
+	  }
+	  #discussion h3{
+		  margin-top: 10px;
+	  }
+	  #discussion a:hover{
+		  text-decoration: none;
+		  
+	  }
+	  .discussion:hover{
+		  background: #e6e6e6;
+	  }
+	  #date{
+		  padding-top: 8px;
+		  font-size: 13px;
+		  float: right;
+		  color: #555;
+	  }
 	</style>
     <script type="text/javascript">
 		$(document).ready(function(){
@@ -57,7 +79,46 @@
 
     <div class="container">
       <div class="masthead">
-        <h2 class="text-muted">Project Name <button class="icons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button></h2>
+        <h2 class="text-muted">Web Dev 
+        	<button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
+            <!-- google hangout button-->
+            <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+            <div id="hangoutIcon" class="hangoutIcon"></div>
+            <script type="text/javascript">
+                gapi.hangout.render('hangoutIcon', { 'render': 'createhangout', 'widget_size':70 });
+            </script>
+        </h2>
+<!--ADD Member Modal -->
+        <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Invite A Member</h4>
+              </div>
+              <div class="modal-body">
+               <form method="post" action="addMember.php">
+                    <p>
+                        <label for="fName">First Name: </label>
+                        <input type="text" name="fName" id="fName"  required autofocus/>
+                    </p>
+                    <p>
+                        <label for="lName">Last Name: </label>
+                        <input type="text" name="lName" id="lName"  required/>
+                    </p>
+                    <p>
+                        <label for="email">Email: </label>
+                        <input type="email" name="email" id="email" required />
+                    </p>
+                    <p>
+                      <input type="submit" name="submit" id="submit" value="Send Invite" class="btn btn-danger" />
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                    </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         
         <ul id="tabs" class="nav nav-tabs nav-justified">
           <li class="active"><a href="#toDo" data-toggle="tab">To Do</a></li>
@@ -68,7 +129,7 @@
         </ul>
         <div id="tab-content" class="tab-content">
         <div class="tab-pane active" id="toDo">
-            <h3>Derick's To Do List for Project 1</h3> <!--TODO: Project 1 & Derick should be a db pull-->
+            <h3>Derick's To Do List for Web Dev</h3> <!--TODO: Project 1 & Derick should be a db pull-->
             <table id="datatables" class="display">
             <thead>
                 <tr>
@@ -87,7 +148,7 @@
 
                     </tr>
                 <?php 
-                }
+                }			
                 ?>
             </tbody>
         </table>
@@ -158,58 +219,100 @@
             </tbody>
         </table>
         </div>
+       
         <div class="tab-pane" id="uploads">
             <h3>Uploads</h3>
             <p>yellow yellow yellow yellow yellow</p>
         </div>
         
         <div class="tab-pane" id="forum">
-        <br/>
-        <button class="icons" data-toggle="modal" data-target="#addMsg"><img src="../../shared/images/addTask.png" title="Add Message"></button>
-        <br/>
-        <!-- Task Modal -->
-        <div class="modal fade" id="addMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Add Message</h4>
-              </div>
-              <div class="modal-body">
-                <form method="post" action="addDiscussion.php">
-                    <p> 
-                      <label for="user">User:</label>
-                      <input type="text" name="user" id="user" autofocus required/>
-                    </p>
-                    <p>
-                      <label for="msg">Message:</label>
-                      <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;" required></textarea>
-                    </p>
-                    <p>
-                      <input type="submit" name="submit" id="submit" value="Post message" class="btn btn-danger"/>
-                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
-                    </p>
-                </form>
+            <br/>
+            <button class="icons" data-toggle="modal" data-target="#newDiscussion"><img src="../../shared/images/addTask.png" title="New Discussion"></button>
+            <!--button class="icons" data-toggle="modal" data-target="#addPost"><img src="../../shared/images/addTask.png" title="Add Message"></button-->
+            <br/>
+            <!-- New Discussion Modal -->
+            <div class="modal fade" id="newDiscussion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Create New Discussion</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form method="post" action="addDiscussion.php">
+                        <p>
+                          <label for="topic">Topic:</label>
+                          <input type="text" name="topic" id="topic" required/>
+                        </p>
+                        <p>
+                          <input type="submit" name="submit" id="submit" value="Create" class="btn btn-danger"/>
+                          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                        </p>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        
-            <h3>Messages so far...</h3>
+            
+            <!-- Add Post Modal >
+            <div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Add Message</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form method="post" action="addPost.php">
+                        <p> 
+                          <label for="user">User:</label>
+                          <input type="text" name="user" id="user" autofocus required/>
+                        </p>
+                        <p>
+                          <label for="msg">Message:</label>
+                          <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;" required></textarea>
+                        </p>
+                        <p>
+                          <input type="submit" name="submit" id="submit" value="Post message" class="btn btn-danger"/>
+                          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                        </p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div--> <!--/addPostModal-->
+            
             <?php
-			$sql = mysqli_query($connection,"SELECT * FROM discussion ORDER BY date DESC ");
+			$sql = mysqli_query($connection,"SELECT * FROM discussion ORDER BY date DESC");
 			
-			while($row2 = $sql->fetch_assoc()) {
-			  echo $row2['user'].',  '.$row2['date'].' <br />';
-			  echo $row2['msg'].'<br />';
-			  echo '------------------------ <br />';
-			}
+			while($row2 = $sql->fetch_assoc()) {?>
+                <div id="discussion" class="discussion">
+                    <a href="searchPost.php?topic=<?php echo $row2['topic'];?>">
+                    <h3><?php echo $row2['topic'];?><i id="date"><?php echo $row2['date'];?></i></h3> 
+                    </a>
+                </div> <!--/discussion-->
+			<?php }
+				/**function callPost(){
+				$sql = mysqli_query($connection,"SELECT id FROM discussion");
+				$row1 = $sql1->fetch_assoc();
+				$sql1 = mysqli_query($connection,"SELECT * FROM post WHERE Discussion_id = '$row1'");
+					while($row2 = $sql1->fetch_assoc()) {
+					  echo $row2['date'].' <br />';
+					  echo $row2['msg'].'<br />';
+					  echo '------------------------ <br />';
+					}
+				}
+				if (isset($_GET['searchPost'])) {
+					callPost();
+				}*/
 			?>
+            
+            
         </div>
         <div class="tab-pane" id="contact">
             <h3>Contact</h3>
             <p>blue blue blue blue blue</p>
-        </div>
+        </div> <!--/contact-->
     </div>
 </div>
     </div> <!-- /container -->

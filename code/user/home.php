@@ -20,31 +20,6 @@
 		function callDashboard(){
 			window.location = "dashboard.php";
 		}
-	/*	$(function() {
-			$( "#addIcon" ).tooltip({
-			  show: {
-				effect: "slideDown",
-				delay: 250
-			  }
-			});
-		});
-		$(function() {
-			$( "#dialog" ).dialog({
-			  autoOpen: false,
-			  show: {
-				effect: "blind",
-				duration: 1000
-			  },
-			  hide: {
-				effect: "explode",
-				duration: 1000
-			  }
-			});
-		 
-		$( "#addIcon" ).click(function() {
-		  $( "#dialog" ).dialog( "open" );
-		});
-	  });*/
 	</script>
     <style type="text/css">
       body {
@@ -52,18 +27,22 @@
 		margin-top: 60px;
       }
 	  #project{
-		  border: 5px double #555;
+		  border: 2px solid #555;
 		  border-radius: 20px;
 		  width: 980px;
-		  height: 120px;
+		  height: 60px;
 		  margin-bottom: 10px;
 		  float: left;
 	  }
 	  #project h2{
-		  padding: 5px 0 0 20px;
-		  color: #03C;
+		  margin-top: 0px;
+		  padding-top: 5px;
+		  font-size: 20px;
+		  padding-left: 20px;
+		  color: #F33;
 	  }
 	  #project h4{
+		  font-size: 14px;
 		  padding-left: 20px;
 	  }
 	  #project #floatLeft{
@@ -76,11 +55,11 @@
 		  color: #00A652;
 	  }
 	  .project:hover{
-		  background: #FA8072 ;
+		  background: #e6e6e6;/*#FA8072 ;*/
 		  cursor: pointer;
 	  }
 	  #rightDiv{
-		  border: 5px double #555;
+		  border: 2px solid #555;
 		  border-radius: 20px;
 		  width: 300px;
 		  height: 480px;
@@ -90,12 +69,6 @@
 		  padding-left: 7px;
 		  color: #03C;
 	  }
-/*	  button{
-		  border-color:transparent;
-		  background: white;
-		  margin-left: 920px;
-		  margin-top: 50px;
-	  }*/
 	  .container{
 		  margin-left: 0px;
 	  }
@@ -108,51 +81,40 @@
 
   <body>
 
-	
 	<button class="icons" data-toggle="modal" data-target="#addProjModal"><img src="../../shared/images/addProject.png" title="New Project"></button>
-<?php require_once("../../shared/php/navbar.php"); ?>
-    <!-- google hangout button-->
-        <!---------------------------------------------------------------------------------->
-        <!---------------------------------------------------------------------------------->
-        <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
-    	<div id="placeholder-div2"></div>
-   		<script type="text/javascript">
-        	gapi.hangout.render('placeholder-div2', { 'render': 'createhangout', 'widget_size':72 });
-    	</script>
-        <!---------------------------------------------------------------------------------->
-        <!---------------------------------------------------------------------------------->
-        <!---------------------------------------------------------------------------------->
-<!-- Modal -->
-<div class="modal fade" id="addProjModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">New Project</h4>
-      </div>
-      <div class="modal-body">
-      <form method="post" action="addProject.php">
-        <p>
-            <label for="projName">Project Name: </label>
-            <input type="text" name="projName" id="projName" required autofocus/>
-        </p>
-        <p>
-            <label for="projClassNum">Class Num: </label>
-            <input type="text" name="projClassNum" id="projClassNum"  />
-        </p>
-        <p>
-            <label for="projClassName">Class Name: </label>
-            <input type="text" name="projClassName" id="projClassName"  />
-        </p>
-        <p>
-          <input type="submit" name="submit" id="submit" value="Add Project" class="btn btn-danger" />
-          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
-        </p>
-        </form>
+	<?php require_once("../../shared/php/navbar.php"); ?>
+      
+<!-- Add Project Modal -->
+    <div class="modal fade" id="addProjModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">New Project</h4>
+          </div>
+          <div class="modal-body">
+          <form method="post" action="addProject.php">
+            <p>
+                <label for="projName">Project Name: </label>
+                <input type="text" name="projName" id="projName" required autofocus/>
+            </p>
+            <p>
+                <label for="projClassNum">Class Num: </label>
+                <input type="text" name="projClassNum" id="projClassNum"  />
+            </p>
+            <p>
+                <label for="projClassName">Class Name: </label>
+                <input type="text" name="projClassName" id="projClassName"  />
+            </p>
+            <p>
+              <input type="submit" name="submit" id="submit" value="Add Project" class="btn btn-danger" />
+              <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+            </p>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 	    
     <div class="container">
         <?php 
@@ -173,8 +135,8 @@
         	<h3>ToDo list for all projects</h3>
         </div>
 	</div> <!--/container fluid-->
-    <script src="../../includes/bootstrap/js/bootstrap.min.js"></script>
 
+	<script src="../../includes/bootstrap/js/bootstrap.min.js"></script>
     <?php require_once("../../shared/php/footer.php")?>
 
   </body>
