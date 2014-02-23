@@ -6,5 +6,5 @@
 		$result = "INSERT INTO discussion(topic) VALUES ('$topic')";
 		mysqli_query($connection,$result);
 	}
-	header( 'Location: dashboard.php' ) ;
+	header( 'Location: dashboard.php?#forum' ) ;
 ?>

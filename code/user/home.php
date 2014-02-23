@@ -123,10 +123,12 @@
 			$stmt = mysqli_query($connection,"SELECT * FROM project"); 
 			while($row = $stmt->fetch_assoc()){ 
 		?>
-        <div id="project" class="project" onClick="callDashboard()">
-          	<h2><?=$row['name']?></h2>
-            <h4><?=$row['class_num']?>: <?=$row['class_name']?></h4>
-        </div>	
+        <a href="dashboard.php?title=<?php echo $row['name'];?>">
+	        <div id="project" class="project" onClick="callDashboard()">
+                <h2><?php echo $row['name'];?></h2>
+                <h4><?=$row['class_num']?>: <?=$row['class_name']?></h4>
+	        </div>	
+        </a>
         <!--h4 id="percentage">50%</h4-->	
         <?php 
 			}

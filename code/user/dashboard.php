@@ -1,8 +1,10 @@
 <?php 
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
-	
-
+	if(isset($_GET['title'])) {
+	$title = $_GET['title'];
+	$sql = mysqli_query($connection,"SELECT id FROM project WHERE name = '$title'");
+	$id = mysqli_fetch_row($sql);
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +72,8 @@
 		$(document).ready(function(){
 			$('#datatables').dataTable();
 		})
+		
+
     </script>
   </head>
 
@@ -79,7 +83,7 @@
 
     <div class="container">
       <div class="masthead">
-        <h2 class="text-muted">Web Dev 
+        <h2 class="text-muted"><?php echo $title;?>
         	<button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
             <!-- google hangout button-->
             <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
@@ -129,7 +133,7 @@
         </ul>
         <div id="tab-content" class="tab-content">
         <div class="tab-pane active" id="toDo">
-            <h3>Derick's To Do List for Web Dev</h3> <!--TODO: Project 1 & Derick should be a db pull-->
+            <h3>Derick's To Do List for <?php echo $title;?></h3> <!--TODO: Project 1 & Derick should be a db pull-->
             <table id="datatables" class="display">
             <thead>
                 <tr>
@@ -228,7 +232,6 @@
         <div class="tab-pane" id="forum">
             <br/>
             <button class="icons" data-toggle="modal" data-target="#newDiscussion"><img src="../../shared/images/addTask.png" title="New Discussion"></button>
-            <!--button class="icons" data-toggle="modal" data-target="#addPost"><img src="../../shared/images/addTask.png" title="Add Message"></button-->
             <br/>
             <!-- New Discussion Modal -->
             <div class="modal fade" id="newDiscussion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -253,37 +256,10 @@
                 </div>
               </div>
             </div>
-            
-            <!-- Add Post Modal >
-            <div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Add Message</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form method="post" action="addPost.php">
-                        <p> 
-                          <label for="user">User:</label>
-                          <input type="text" name="user" id="user" autofocus required/>
-                        </p>
-                        <p>
-                          <label for="msg">Message:</label>
-                          <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;" required></textarea>
-                        </p>
-                        <p>
-                          <input type="submit" name="submit" id="submit" value="Post message" class="btn btn-danger"/>
-                          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
-                        </p>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div--> <!--/addPostModal-->
-            
+                       
+			
             <?php
-			$sql = mysqli_query($connection,"SELECT * FROM discussion ORDER BY date DESC");
+			$sql = mysqli_query($connection,"SELECT * FROM discussion WHERE Project_id = $id[0]");
 			
 			while($row2 = $sql->fetch_assoc()) {?>
                 <div id="discussion" class="discussion">
@@ -292,19 +268,7 @@
                     </a>
                 </div> <!--/discussion-->
 			<?php }
-				/**function callPost(){
-				$sql = mysqli_query($connection,"SELECT id FROM discussion");
-				$row1 = $sql1->fetch_assoc();
-				$sql1 = mysqli_query($connection,"SELECT * FROM post WHERE Discussion_id = '$row1'");
-					while($row2 = $sql1->fetch_assoc()) {
-					  echo $row2['date'].' <br />';
-					  echo $row2['msg'].'<br />';
-					  echo '------------------------ <br />';
-					}
-				}
-				if (isset($_GET['searchPost'])) {
-					callPost();
-				}*/
+				} /*closing if loop*/
 			?>
             
             
@@ -321,6 +285,15 @@
     jQuery(document).ready(function ($) {
         $('#tabs').tab();
     });
+			// store the currently selected tab in the hash value
+		$("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+			var id = $(e.target).attr("href").substr(1);
+			window.location.hash = id;
+		});
+	
+		// on load of the page: switch to the currently selected tab
+		var hash = window.location.hash;
+		$('#tabs a[href="' + hash + '"]').tab('show');
 </script>    
 
       <?php require_once("../../shared/php/footer.php")?>
