@@ -14,6 +14,7 @@ php to log out the user
 	echo "
 	 <script type='text/javascript'>
 		setTimeout(function(){
+			gapi.auth.signOut();
 			location.href = '../account/signIn.php';
 		},3000);
 	</script>
@@ -22,8 +23,12 @@ php to log out the user
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Logging Out...</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Logging Out...</title>
+	<script src="../../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
+	<script src="../../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="https://apis.google.com/js/client:plusone.js"></script>
+    <script src="https://apis.google.com/js/plusone.js"></script>
 </head>
 
 <body>

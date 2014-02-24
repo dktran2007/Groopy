@@ -224,9 +224,37 @@
         </table>
         </div>
        
+       <!------------------------------------ upload file --------------------------------------------->
+       <!---------------------------------------------------------------------------------------------->
+       <!---------------------------------------------------------------------------------------------->
+       <!---------------------------------------------------------------------------------------------->
         <div class="tab-pane" id="uploads">
             <h3>Uploads</h3>
             <p>yellow yellow yellow yellow yellow</p>
+            <?php
+			/**
+			 * the class to upload files
+			 * @author lamlu
+			 */
+			if(isset($_FILES['uploadedFile']) && isset($_POST['userEmail']) && isset($_POST['projectId']))
+			{
+				$iFile = $_FILES['uploadedFile'];
+				$iEmail = $_POST['userEmail'];
+				$iID = $_POST['projectId'];
+				$resultArray = array();
+				require_once("FileProcessor.php");
+				$resultArray = FileProcessor::uploadFile($iFile,$iEmail,$iID);		
+			}
+			?>
+            <form id='uploadForm' action="" method="post" enctype="multipart/form-data">
+                <input type='file' id='uploadedFile' name='uploadedFile' />
+                <input type="reset" value="clear" />
+                <input type="hidden" value="<?php echo $id[0];?>" name="projectId" />
+                <input type="hidden" value="<?php session_start(); echo $_SESSION['email'];?>" name="userEmail" />
+                <input type="submit" name="submit" value="Submit" />
+            </form>
+  
+            
         </div>
         
         <div class="tab-pane" id="forum">
