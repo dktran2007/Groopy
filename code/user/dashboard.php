@@ -83,7 +83,7 @@
 
     <div class="container">
       <div class="masthead">
-        <h2 class="text-muted"><?php echo $title; echo $id[0];?>
+        <h2 class="text-muted"><?php echo $title;?>
         	<button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
             <!-- google hangout button-->
             <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
