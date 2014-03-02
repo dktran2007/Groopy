@@ -143,7 +143,7 @@
             </thead>
             <tbody>
                 <?php 
-				$stmt2 = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = 'Derick'"); /*TODO: this shouldn't be Derick instead it should be USER that has logged in!*/
+				$stmt2 = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = 'Derick' AND project_id = $id[0]"); /*TODO: this shouldn't be Derick instead it should be USER that has logged in!*/
                 while($row = $stmt2->fetch_assoc()){ 
                 ?>
                     <tr>
@@ -187,6 +187,9 @@
                         <input type="date" name="deadline" id="deadline" required />
                     </p>
                     <p>
+                        <input type="hidden" name="projectId" id="projectId" value="<?php echo $id[0];?>"/>
+                    </p>
+                    <p>
                       <input type="submit" name="submit" id="submit" value="Add Task" class="btn btn-danger" />
                       <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
                     </p>
@@ -208,7 +211,7 @@
             </thead>
             <tbody>
                 <?php 
-				$stmt = mysqli_query($connection,"SELECT * FROM tasks");
+				$stmt = mysqli_query($connection,"SELECT * FROM tasks where project_id = $id[0]");
                 while($row = $stmt->fetch_assoc()){ 
                 ?>
                     <tr>
@@ -230,7 +233,6 @@
        <!---------------------------------------------------------------------------------------------->
         <div class="tab-pane" id="uploads">
             <h3>Uploads</h3>
-            <p>yellow yellow yellow yellow yellow</p>
             <?php
 			/**
 			 * the class to upload files

@@ -6,9 +6,13 @@
 		$task = $_POST['task'];
 		$assignedTo = $_POST['assignedTo'];
 		$deadline = $_POST['deadline'];
-		$result = "INSERT INTO tasks(task, assignedTo ,deadline) VALUES ('$task','$assignedTo','$deadline')";
+		$projectId = $_POST['projectId'];
+		$result = "INSERT INTO tasks(task, assignedTo ,deadline, project_id) VALUES ('$task','$assignedTo','$deadline','$projectId')";
 		mysqli_query($connection,$result);
-	}
 	
-	header( 'Location: dashboard.php?#tasks' ) ;
+		$sql = mysqli_query($connection,"SELECT name FROM project WHERE id = $projectId");
+		$projectTitle = mysqli_fetch_row($sql);
+			
+		header( 'Location: dashboard.php?title=' . $projectTitle[0] . '#tasks' ) ;
+	}
 ?>
