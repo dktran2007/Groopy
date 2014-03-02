@@ -71,8 +71,13 @@
 		width: 1040px;
 	  }
 	  .replyBtn{
+		  background: #F33;
+		  border: 1px solid #F33;
+		  padding: 4px 15px;
+		  border-radius: 5px;
 		  float: right;
 		  margin-top: -35px;
+		  margin-right: 50px;
 	  }
 	</style>
     <script type="text/javascript">
@@ -279,14 +284,13 @@
         
         <div class="tab-pane" id="forum">
             <br/>
-
-            <!-- New Discussion Modal -->
+			<!-- New Discussion Modal -->
             <div class="modal fade" id="newDiscussion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Create New Discussion</h4>
+                    <h4 class="modal-title" id="myModalLabel">Start a New Topic</h4>
                   </div>
                   <div class="modal-body">
                     <form method="post" action="addDiscussion.php">
@@ -321,9 +325,7 @@
                 </ul>
                 <div class="tab-content" id="postArea">
                     <div class="tab-pane active" id="default">
-                      <h2>Instruction to use this forum</h2>
-                      <p>To start a new discussion click on the plus
-                      <button class="icons" data-toggle="modal" data-target="#newDiscussion"><img src="../../shared/images/addTask.png" title="New Discussion"></button> </p>
+                      <h2>Discussion Board Manager &nbsp;&nbsp;&nbsp;<button class="icons" data-toggle="modal" data-target="#newDiscussion"><img src="../../shared/images/addTask.png" title="Start a new TOPIC"></button> </h2>
                     </div>
                     <?php 
 					$count = count($idArray);
@@ -333,10 +335,10 @@
 						  $sql = mysqli_query($connection,"SELECT topic FROM discussion WHERE id = $idArray[$x]");
 						  $title = mysqli_fetch_row($sql);
 					  ?>
-                      <h2><?php echo $title[0];?></h2><!--button class="replyBtn" data-toggle="modal" data-target="#addPost">REPLY</button-->
+                      <h2><?php echo $title[0];?></h2><button class="replyBtn" data-toggle="modal" data-target="#addPost<?php echo $idArray[$x];?>">REPLY</button>
                       <hr/>
 					<!-- Add Post Modal -->
-                    <div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="addPost<?php echo $idArray[$x];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -346,7 +348,7 @@
                           <div class="modal-body">
                             <form method="post" action="addPost.php">
                                 <p>
-                                  <input type="hidden" name="discussionId" id="discussionId" value="<?php echo $id[0];?>"/>
+                                  <input type="hidden" name="discussionId" id="discussionId" value="<?php echo $idArray[$x];?>"/>
                                 </p>
                                 <p>
                                   <label for="msg">Message:</label>
@@ -364,6 +366,7 @@
 
                       <?php
 						$sql1 = mysqli_query($connection,"SELECT * FROM post WHERE Discussion_id = $idArray[$x] ORDER BY date DESC");
+						$postCount = mysqli_num_rows($sql1);
 							while($row2 = $sql1->fetch_assoc()) {?>
                             <div id="post" class="post">
                             	<h4>Participant says:<i id="date"><?php echo $row2['date']; ?></i></h4>
@@ -371,6 +374,9 @@
                             </div> <!--/post-->
                             <?php
 							}
+							if($postCount == NULL){?>
+								<i style="color: #FA8072">Be the first one to start the discussion</i>
+							<?php }
 						?>
                     </div>	
                     <?php }?>

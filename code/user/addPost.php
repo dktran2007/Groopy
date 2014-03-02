@@ -9,8 +9,10 @@
 		$result = "INSERT INTO post(msg,date,discussion_id) VALUES ('$msg','$date','$discussionId')";
 		mysqli_query($connection,$result);
 		
-		$sql = mysqli_query($connection,"SELECT topic FROM discussion WHERE id = $discussionId");
-		$discussionTopic = mysqli_fetch_row($sql);
-		header( 'Location: searchPost.php?topic='.$discussionTopic[0] ) ;
+		$sql = mysqli_query($connection,"SELECT project_id FROM discussion WHERE id = $discussionId");
+		$projectId = mysqli_fetch_row($sql);
+		$sql = mysqli_query($connection,"SELECT name FROM project WHERE id = $projectId[0]");
+		$projectTitle = mysqli_fetch_row($sql);
+		header( 'Location: dashboard.php?title=' . $projectTitle[0] . '#forum' ) ;
 	}
 ?>
