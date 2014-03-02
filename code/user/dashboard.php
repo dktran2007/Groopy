@@ -78,6 +78,7 @@
 		  float: right;
 		  margin-top: -35px;
 		  margin-right: 50px;
+		  color: white;
 	  }
 	</style>
     <script type="text/javascript">
