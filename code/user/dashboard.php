@@ -7,6 +7,68 @@
 	$id = mysqli_fetch_row($sql);
 ?>
 
+<?php
+/**
+php to add member when invite member button is clicked
+@author: Lam Lu
+**/
+	if(isset($_POST["inviteMemberButtonClicked"]) && isset($_POST['emailToInvite']) && isset($_POST['projectId']) && 
+			isset($_POST['projectTitle']))
+	{
+		if($_POST['inviteMemberButtonClicked'] == true)
+		{ 
+			$kInviteEmail = $_POST['emailToInvite'];
+			$kProjectID = $_POST['projectId'];
+			$kProjectTitle = $_POST['projectTitle'];
+			if ($connection != null)
+			{
+				/* create a prepared statement */
+				if ($stmt = $connection->prepare("Select id from Users where email = ?")) 
+				{
+					if ($stmt->bind_param("d", $kInviteEmail))
+					{
+						if ($stmt->execute()) 
+						{
+							if ($stmt->bind_result($kResultUID))
+							{
+								if($stmt->fetch())
+								{
+									$stmt->close();
+									$stmt = null;
+									
+									/* select user ok*/
+									if ($stmt = $connection->prepare("Insert into project_user(project_id,user_id,active, activation_key) values (?,?,?,?)")) 
+									{
+										$kActive = 0;
+										$kActivationKey = $activation_key = md5(uniqid(rand(), true));
+										if ($stmt->bind_param("ddds", $kProjectID, $kResultUID,$kActive, $kActivationKey))
+										{
+											if ($stmt->execute()) 
+											{
+												//insert ok, send invitation email to the user
+												require_once("../account/MailAgent.php");
+												$subject = "Groopy Project Invitation";
+												session_start();
+												$kInviteFirstName = $_SESSION['firstName'];
+												$kInviteLastName = $_SESSION['lastName'];
+												
+												$kInviteMessage = "Hello from Groopy Team.\n".$kInviteFirstName." ".$kInviteLastName." has invited you to join ".$kProjectTitle.". Click on the link below if you wish to accept the invitation \n";
+												$kLink = "http://localhost:8888/code/user/acceptProjectInvitation.php?key=".$kActivationKey."&accept=true";
+												$kInviteMessage= $kInviteMessage.$kLink."\nThank You.\nGroopy Team";
+												$kHeader = "From: Groopy <noreply@groopy.com>";
+												MailAgent::writeEmail($kInviteEmail,$subject,$kInviteMessage,$kHeader);
+											}
+										}
+									}
+								}					
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,7 +178,12 @@
                 gapi.hangout.render('hangoutIcon', { 'render': 'createhangout', 'widget_size':70 });
             </script>
         </h2>
-<!--ADD Member Modal -->
+        
+		<!--ADD Member Modal -->
+        <!-- call self php to invite member --->
+        <!---------------------------------------------------------------------------------------------->
+        <!---------------------------------------------------------------------------------------------->
+        <!---------------------------------------------------------------------------------------------->     
         <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -125,18 +192,13 @@
                 <h4 class="modal-title" id="myModalLabel">Invite A Member</h4>
               </div>
               <div class="modal-body">
-               <form method="post" action="addMember.php">
-                    <p>
-                        <label for="fName">First Name: </label>
-                        <input type="text" name="fName" id="fName"  required autofocus/>
-                    </p>
-                    <p>
-                        <label for="lName">Last Name: </label>
-                        <input type="text" name="lName" id="lName"  required/>
-                    </p>
+               <form method="post" action="">
+               			<input type="hidden" name="inviteMemberButtonClicked" value="true"/>
+                        <input type="hidden" name="projectId" value="<?php echo $id[0];?>"/>
+                        <input type="hidden" name="projectTitle" value="<?php echo $title;?>"/>
                     <p>
                         <label for="email">Email: </label>
-                        <input type="email" name="email" id="email" required />
+                        <input type="email" name="emailToInvite" id="email" required />
                     </p>
                     <p>
                       <input type="submit" name="submit" id="submit" value="Send Invite" class="btn btn-danger" />
@@ -197,6 +259,7 @@
                 <h4 class="modal-title" id="myModalLabel">New Task</h4>
               </div>
               <div class="modal-body">
+              
                <form method="post" action="addTask.php">
                     <p>
                         <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
