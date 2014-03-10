@@ -4,6 +4,7 @@
  @author: Lam Lu
  @date : 03/03/2014
  */
+ 	$needShowMessage =false;
  	if(isset($_POST['email']))
 	{
 		$kForgotPwEmail = $_POST['email'];
@@ -15,6 +16,7 @@
 		$kMessage .= $kLink."\nThank You.\nGroopy Team";
 		$kHeader = "From: Groopy <noreply@groopy.com>";
 		MailAgent::writeEmail($kForgotPwEmail,$subject,$kMessage,$kHeader);	
+		$needShowMessage = true;
 	}
  ?>
 <!DOCTYPE html>
@@ -29,7 +31,7 @@
 	<link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.css" rel="stylesheet">
 	<script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
 	<script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
-    <script>
+    <script type="text/javascript">
 		function showNotification(){
 			$('#notification').show();
 			setTimeout(function() {
@@ -39,6 +41,8 @@
 		function callLogin(){
 			location.href= "signIn.php";
 		}
+		
+								
 	</script>
     <style>
 		#notification{
@@ -46,6 +50,10 @@
 		}
 		h3{
 			padding-left: 300px;
+		}
+		#form_message_span
+		{
+			color:#0C0;
 		}
     </style>
 </head>
@@ -66,6 +74,24 @@
                 </p>
                 <p>
                     <input type="submit" value="Submit" id="emailNotifyBtn" >
+                </p>
+                <p>
+                	<span id="form_message_span">
+                    	<?php 
+							if ($needShowMessage == true)
+							{
+								echo "Please check your email to reset password. You will be redirected to home page in 3 seconds";
+								echo '
+									<script type="text/javascript">
+										setTimeout(function()
+										{
+											window.location.replace("signIn.php");
+										}, 3000);
+									</script>
+								';
+							}
+						?>
+                    </span>
                 </p>
           </form>
         </div>

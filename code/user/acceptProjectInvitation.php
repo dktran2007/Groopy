@@ -19,7 +19,15 @@ php to accept the project invitation
 				if ($stmt->execute()) 
 				{
 					//update ok
-					echo "You've been added to the project. You can now contribute to the project";
+					echo "Accepted Invitation. You will be redirected to login page in 3 seconds";
+					echo '
+						<script type="text/javascript">
+							setTimeout(function()
+							{
+								window.location.replace("../account/signIn.php");
+							}, 3000);
+						</script>
+					';
 				}
 				//else update not ok, maybe display an error message
 			}

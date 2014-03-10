@@ -4,6 +4,7 @@ php to reset the password, must have user email in order to reset
 @author: Lam Lu
 @date : 03/03/2014
 */
+	$needShowMessage = false;
 	if(isset($_GET['email']) && isset($_POST['password']) && isset($_POST['confirmPassword']))
 	{
 		$kResetPwEmail = $_GET['email'];
@@ -25,7 +26,7 @@ php to reset the password, must have user email in order to reset
 						if ($stmt->execute()) 
 						{
 							//reset password ok
-							//echo "reset password ok";
+							$needShowMessage = true;
 						}
 					}
 				}
@@ -45,7 +46,7 @@ php to reset the password, must have user email in order to reset
 	<link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.css" rel="stylesheet">
 	<script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
 	<script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
-    <script type='text/javascript'>
+    <script type="text/javascript">
 		/**
 		validate input fields
 		*/
@@ -62,12 +63,12 @@ php to reset the password, must have user email in order to reset
 				result = false;
 			}
 			
-			if(password !== confirmPassowrd)
+			if(password !== confirmPassword)
 			{
 				document.getElementById("form_confirmPasswordError").innerHTML = "Password does not match";
 				result = false;
 			}
-			return false;
+			return result;
 		}
 		
 		/**
@@ -81,7 +82,7 @@ php to reset the password, must have user email in order to reset
 				document.getElementById("form_confirmPasswordError").innerHTML = "Password does not match";
 			}
 			else
-				document.getElementById("form_confirmPasswordError").innerHTML = "";
+				document.getElementById("form_confirmPasswordError").innerHTML = ""; 
 		}
 	</script>
     <style>
@@ -95,6 +96,10 @@ php to reset the password, must have user email in order to reset
 		{
 			color:#F00;
 		}
+		#form_message_span
+		{
+			color:#0C0;
+		}
     </style>
 </head>
 
@@ -107,7 +112,7 @@ php to reset the password, must have user email in order to reset
         <div id="retrieveDiv">
           <h3>Reset Password</h3>
         
-          <form method="post" id="form_body2" action="" onSubmit="return formValidate()" />
+          <form method="post" id="form_body2" action="" onsubmit="return formValidate()" />
                 <p>
                     <label for="form_password">New Password: </label>
                     <input type="password" name='password' id="form_password" required autofocus/>
@@ -119,6 +124,24 @@ php to reset the password, must have user email in order to reset
                 </p>
                 <p>
                     <input type="submit" value="Submit" id="emailNotifyBtn" >
+                </p>
+                <p>
+                	<span id="form_message_span">
+                    	<?php
+						if($needShowMessage)
+						{
+                    		echo "Your password has been reset. You will be redirected to login page in 3 seconds";
+							echo '
+								<script type="text/javascript">
+									setTimeout(function()
+										{
+											window.location.replace("signIn.php");
+										}, 3000);
+								</script>
+								';
+						}
+						?>
+                    </span>
                 </p>
           </form>
         </div>

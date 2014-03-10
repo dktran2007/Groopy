@@ -17,15 +17,15 @@ php to add member when invite member button is clicked
 	{
 		if($_POST['inviteMemberButtonClicked'] == true)
 		{ 
-			$kInviteEmail = $_POST['emailToInvite'];
-			$kProjectID = $_POST['projectId'];
+			$kInviteEmail = $_POST['emailToInvite']; 
+			$kProjectID = $_POST['projectId']; 
 			$kProjectTitle = $_POST['projectTitle'];
 			if ($connection != null)
 			{
 				/* create a prepared statement */
 				if ($stmt = $connection->prepare("Select id from Users where email = ?")) 
 				{
-					if ($stmt->bind_param("d", $kInviteEmail))
+					if ($stmt->bind_param("s", $kInviteEmail))
 					{
 						if ($stmt->execute()) 
 						{
@@ -265,6 +265,17 @@ php to add member when invite member button is clicked
                         <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
                         <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
                     </p>
+                    
+                    <!-- php to retrieve all the members on the project so task can be assigned to them only-->
+                    <!---------------------------------------------------------------------------------------->
+                    <!---------------------------------------------------------------------------------------->
+                    <?php
+						$kAssignerTaskEmail = $_SESSION['email'];//email of person assigning task
+						$kAssignTaskSQL = mysqli_query($connection,"SELECT u.first_name, u.last_name, u.email from Users u,
+						project_user pu where pu.project_id = '$id[0]' and u.id = pu.user_id and pu.active = 1 and
+						u.email != '$kAssignerTaskEmail'");
+						$projectTitle = mysqli_fetch_row($sql);
+					?>
                     <p>
                         <label for="assignedTo">Assign To: </label>
                         <input type="text" name="assignedTo" id="assignedTo"  required/>

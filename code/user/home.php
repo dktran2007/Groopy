@@ -118,9 +118,15 @@
 	    
     <div class="container">
         <?php 
+			//////////////////////////////////////
+			// Lam modified to filer project here
+			/////////////////////////////////////
+			session_start();
+			$kHomeEmail = $_SESSION['email'];
 			require_once("../../shared/php/DBConnection.php");
 			$connection = DBConnection::connectDB();
-			$stmt = mysqli_query($connection,"SELECT * FROM project"); 
+			$stmt = mysqli_query($connection,"SELECT p.name, p.class_name, p.class_num FROM project p, project_user pu, Users u where
+												u.email ='$kHomeEmail' and u.id = pu.user_id and p.id = pu.project_id"); 
 			while($row = $stmt->fetch_assoc()){ 
 		?>
         <a href="dashboard.php?title=<?php echo $row['name'];?>">
