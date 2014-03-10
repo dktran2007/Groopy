@@ -165,7 +165,10 @@ php to add member when invite member button is clicked
 
   <body>
 
-	<?php require_once("../../shared/php/navbar.php"); ?>
+	<?php require_once("../../shared/php/navbar.php"); 
+		$userSql = mysqli_query($connection,"SELECT first_name FROM v_user2project WHERE email = '$email'");
+		$userName = mysqli_fetch_row($userSql);
+	?>
 
     <div class="container">
       <div class="masthead">
@@ -219,7 +222,7 @@ php to add member when invite member button is clicked
         </ul>
         <div id="tab-content" class="tab-content">
         <div class="tab-pane active" id="toDo">
-            <h3>Derick's To Do List for <?php echo $title;?></h3> <!--TODO: Project 1 & Derick should be a db pull-->
+            <h3><?php echo $userName[0];?>'s To Do List for <?php echo $title;?></h3>
             <table id="datatables" class="display">
             <thead>
                 <tr>
@@ -229,7 +232,7 @@ php to add member when invite member button is clicked
             </thead>
             <tbody>
                 <?php 
-				$stmt2 = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = 'Derick' AND project_id = $id[0]"); /*TODO: this shouldn't be Derick instead it should be USER that has logged in!*/
+				$stmt2 = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = '$userName[0]' AND project_id = $id[0]"); 
                 while($row = $stmt2->fetch_assoc()){ 
                 ?>
                     <tr>
@@ -271,9 +274,7 @@ php to add member when invite member button is clicked
                     <!---------------------------------------------------------------------------------------->
                     <?php
 						$kAssignerTaskEmail = $_SESSION['email'];//email of person assigning task
-						$kAssignTaskSQL = mysqli_query($connection,"SELECT u.first_name, u.last_name, u.email from Users u,
-						project_user pu where pu.project_id = '$id[0]' and u.id = pu.user_id and pu.active = 1 and
-						u.email != '$kAssignerTaskEmail'");
+						$kAssignTaskSQL = mysqli_query($connection,"SELECT first_name from v_user2project where project_id = $id[0]"); // retrieves all the members in this project
 						$projectTitle = mysqli_fetch_row($sql);
 					?>
                     <p>

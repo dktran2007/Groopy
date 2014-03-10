@@ -106,6 +106,7 @@
                 <label for="projClassName">Class Name: </label>
                 <input type="text" name="projClassName" id="projClassName"  />
             </p>
+				<input type="hidden" name="userEmail" value="<?php echo $email;?>"/>
             <p>
               <input type="submit" name="submit" id="submit" value="Add Project" class="btn btn-danger" />
               <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
@@ -121,7 +122,7 @@
 			//////////////////////////////////////
 			// Lam modified to filer project here
 			/////////////////////////////////////
-			session_start();
+			//session_start();
 			$kHomeEmail = $_SESSION['email'];
 			require_once("../../shared/php/DBConnection.php");
 			$connection = DBConnection::connectDB();

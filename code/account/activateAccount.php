@@ -44,13 +44,19 @@ if(isset($_GET['email']) && isset($_GET['key']))
 					$key = NULL;
 					if($statement->bind_param("sds",$key,$active,$email))
 					{
+						
 						if($statement->execute())
 						{
+							echo 'okay, validated!';
 							//validate ok
 							echo '<div>Your account is now active. You may <a href="../../">log in</a> now</div>'; 
 						}
 						//else echo mysqli_stmt_error ( $statement );
+						else{
+							echo "Execute failed: (" . $statement->errno . ") " . $statement->error;
+						}
 					}
+					
 				}
 			}
 			else // there is an error
