@@ -142,24 +142,26 @@ php to add member when invite member button is clicked
 		  margin-right: 50px;
 		  color: white;
 	  }
+	  #taskId{
+		display: flex;
+		width: 500px;
+		padding-left: -100px;
+		font-size: 16px;
+		color: #555;
+	}
 	</style>
     <script type="text/javascript">
 		$(document).ready(function(){
 			$('#datatables').dataTable();
 		})
-		/*For forum to post
-			function searchPost(){
-				$.ajax({
-					url: "temp.php",
-					type: "POST",
-					data: { topic: "<?php /*echo $row2['topic'];*/?>", option: "search"},
-					cahce: false;
-					success: function(response){
-						  //do action  
-						  $('#forum').html(response);
-					}
-				});
-			}*/
+		$(document).ready(function(){
+			$('#datatables2').dataTable();
+		})
+		$(document).on("click", ".delete-MyTasks", function () {
+			 var myBookId = $(this).data('id');
+			 $(".modal-body #taskId").html( myBookId ); // for label
+			 $(".modal-body #taskId").val( myBookId ); // for hidden input field
+		});
     </script>
   </head>
 
@@ -167,7 +169,7 @@ php to add member when invite member button is clicked
 
 	<?php require_once("../../shared/php/navbar.php"); 
 		$userSql = mysqli_query($connection,"SELECT first_name FROM v_user2project WHERE email = '$email'");
-		$userName = mysqli_fetch_row($userSql);
+		$userName = mysqli_fetch_row($userSql); /*UserName is used in the todo tab*/
 	?>
 
     <div class="container">
@@ -221,11 +223,15 @@ php to add member when invite member button is clicked
           <li><a href="#contact" data-toggle="tab">Contact</a></li>
         </ul>
         <div id="tab-content" class="tab-content">
+        
+        <!-- //////////////////// TO DO TAB //////////////////////  -->
         <div class="tab-pane active" id="toDo">
             <h3><?php echo $userName[0];?>'s To Do List for <?php echo $title;?></h3>
+			
             <table id="datatables" class="display">
             <thead>
                 <tr>
+                	<th></th>
                     <th>Deadline</th>
                     <th>Task</th>
                 </tr>
@@ -236,6 +242,7 @@ php to add member when invite member button is clicked
                 while($row = $stmt2->fetch_assoc()){ 
                 ?>
                     <tr>
+                    	<td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
                         <td><?=$row['deadline']?></td>
                         <td><?=$row['task']?></td>
 
@@ -245,12 +252,36 @@ php to add member when invite member button is clicked
                 ?>
             </tbody>
         </table>
+		</div>
+        
+        <!--DELETE Modal --> 
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+              </div>
+              <div class="modal-body">
+               <form method="post" action="deleteTask.php">
+                    <i><label id="taskId" ></label></i>
+                    task would be deleted!
+                    <input type="hidden" name="taskId" id="taskId" value="" />
+                    <p>
+                      <input type="submit" name="submit" id="submit" value="Okay" class="btn btn-danger" />
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                    </p>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         
+        
+        <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">
         <br/>
         <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button>
-        <button class="icons" data-toggle="modal" data-target="#deleteModal"><img src="../../shared/images/delete.png" title="Delete Task"></button>
         <button class="icons" data-toggle="modal" data-target="#editModal"><img src="../../shared/images/edit.png" title="Edit Task"></button>
 
       <!--ADD Task Modal -->
@@ -259,7 +290,7 @@ php to add member when invite member button is clicked
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">New Task</h4>
+                <h4 class="modal-title" id="myModalLabel">Assign a New Task</h4>
               </div>
               <div class="modal-body">
               
@@ -268,18 +299,16 @@ php to add member when invite member button is clicked
                         <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
                         <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
                     </p>
-                    
-                    <!-- php to retrieve all the members on the project so task can be assigned to them only-->
-                    <!---------------------------------------------------------------------------------------->
-                    <!---------------------------------------------------------------------------------------->
-                    <?php
-						$kAssignerTaskEmail = $_SESSION['email'];//email of person assigning task
-						$kAssignTaskSQL = mysqli_query($connection,"SELECT first_name from v_user2project where project_id = $id[0]"); // retrieves all the members in this project
-						$projectTitle = mysqli_fetch_row($sql);
-					?>
                     <p>
                         <label for="assignedTo">Assign To: </label>
-                        <input type="text" name="assignedTo" id="assignedTo"  required/>
+                        <?php 
+						$kAssignTaskSQL = mysqli_query($connection,"SELECT first_name from v_user2project where project_id = $id[0]"); // retrieves all the members in this project
+						echo '<select name="assignedTo">'; // Open your drop down box
+                        // Loop through the query results, outputing the options one by one
+                        while ($row = $kAssignTaskSQL->fetch_assoc()) {
+						   echo '<option value="'.$row['first_name'].'">'.$row['first_name'].'</option>';
+                        }
+                        echo '</select>';// Close your drop down box?>
                     </p>
                     <p>
                         <label for="deadline">Deadline: </label>
@@ -298,11 +327,11 @@ php to add member when invite member button is clicked
           </div>
         </div>
         
-        
-        <table id="datatables" class="display">
+
+        <table id="datatables2" class="display">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th></th>
                     <th>Assigned To</th>
                     <th>Task</th>
                     <th>Deadline</th>
@@ -314,7 +343,7 @@ php to add member when invite member button is clicked
                 while($row = $stmt->fetch_assoc()){ 
                 ?>
                     <tr>
-                        <td><?=$row['id']?></td>
+                        <td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
                         <td><?=$row['assignedTo']?></td>
                         <td><?=$row['task']?></td>
                         <td><?=$row['deadline']?></td>
@@ -324,12 +353,9 @@ php to add member when invite member button is clicked
                 ?>
             </tbody>
         </table>
-        </div>
+		</div>
        
-       <!------------------------------------ upload file --------------------------------------------->
-       <!---------------------------------------------------------------------------------------------->
-       <!---------------------------------------------------------------------------------------------->
-       <!---------------------------------------------------------------------------------------------->
+        <!-- //////////////////// UPLOADS TAB //////////////////////  -->
         <div class="tab-pane" id="uploads">
             <h3>Uploads</h3>
             <?php
@@ -354,10 +380,9 @@ php to add member when invite member button is clicked
                 <input type="hidden" value="<?php session_start(); echo $_SESSION['email'];?>" name="userEmail" />
                 <input type="submit" name="submit" value="Submit" />
             </form>
-  
-            
         </div>
         
+        <!-- //////////////////// FORUM TAB //////////////////////  -->
         <div class="tab-pane" id="forum">
             <br/>
 			<!-- New Discussion Modal -->
@@ -460,8 +485,9 @@ php to add member when invite member button is clicked
           </div> 
              	   
 			<?php } /*closing if loop*/	?>
-            
         </div>
+        
+        <!-- //////////////////// CONTACT TAB //////////////////////  -->
         <div class="tab-pane" id="contact">
             <h3>Contact</h3>
             <p>blue blue blue blue blue</p>

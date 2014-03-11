@@ -510,7 +510,6 @@ tr.even.gradeU td.sorting_3 {
 .ex_highlight_row #example tr.even:hover {
 	background-color: #FA8072;
 }
-
 .ex_highlight_row #example tr.even:hover td.sorting_1 {
 	background-color: #FA8072;
 }
@@ -538,7 +537,6 @@ tr.even.gradeU td.sorting_3 {
 .ex_highlight_row #example tr.odd:hover td.sorting_3 {
 	background-color: #FA8072;
 }
-
 
 /*
  * KeyTable
