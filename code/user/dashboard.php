@@ -72,7 +72,7 @@ php to add member when invite member button is clicked
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Groopy | Project 1</title>
+	<title>Groopy | <?php echo $title;?></title>
 
     <!-- Bootstrap imports -->
     <link href="../../includes/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -155,10 +155,10 @@ php to add member when invite member button is clicked
 	</style>
     <script type="text/javascript">
 		$(document).ready(function(){
-			$('#datatables').dataTable();
-		})
-		$(document).ready(function(){
-			$('#datatables2').dataTable();
+			$('#datatables').dataTable(); // todo table
+			$('#datatables2').dataTable(); // tasks table
+			$('#datatables3').dataTable(); // teams table
+			
 		})
 		$(document).on("click", ".delete-MyTasks", function () {
 			 var myBookId = $(this).data('id');
@@ -223,13 +223,13 @@ php to add member when invite member button is clicked
           <li><a href="#tasks" data-toggle="tab">Tasks</a></li>
           <li><a href="#uploads" data-toggle="tab">Uploads</a></li>
           <li><a href="#forum" data-toggle="tab">Forum</a></li>
-          <li><a href="#contact" data-toggle="tab">Contact</a></li>
+          <li><a href="#team" data-toggle="tab">Team Members</a></li>
         </ul>
         <div id="tab-content" class="tab-content">
         
         <!-- //////////////////// TO DO TAB //////////////////////  -->
         <div class="tab-pane active" id="toDo">
-            <h3><?php echo $userName[0];?>'s To Do List for <?php echo $title;?></h3>
+            <h3>My tasks list for <?php echo $title;?> project</h3>
 			
             <table id="datatables" class="display">
             <thead>
@@ -263,15 +263,14 @@ php to add member when invite member button is clicked
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                <h4 class="modal-title" id="myModalLabel">Are you ABSOLUTELY sure you want to DELETE?</h4>
               </div>
               <div class="modal-body">
                <form method="post" action="deleteTask.php">
-                    <i><label id="taskId" ></label></i>
-                    task would be deleted!
+                    <strong>TASK: </strong><i id="taskId"></i>
                     <input type="hidden" name="taskId" id="taskId" value="" />
                     <p>
-                      <input type="submit" name="submit" id="submit" value="Okay" class="btn btn-danger" />
+                      <input type="submit" name="submit" id="submit" value="YES" class="btn btn-danger" />
                       <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
                     </p>
                 </form>
@@ -280,12 +279,11 @@ php to add member when invite member button is clicked
           </div>
         </div>
         
-        
         <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">
-        <br/>
+        <h3>Team Tasks list &nbsp; &nbsp; &nbsp;
         <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button>
-        <button class="icons" data-toggle="modal" data-target="#editModal"><img src="../../shared/images/edit.png" title="Edit Task"></button>
+        <button class="icons" data-toggle="modal" data-target="#editModal"><img src="../../shared/images/edit.png" title="Edit Task"></button></h3>
 
       <!--ADD Task Modal -->
         <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -344,6 +342,8 @@ php to add member when invite member button is clicked
                 <?php 
 				$stmt = mysqli_query($connection,"SELECT * FROM tasks where project_id = $id[0]");
                 while($row = $stmt->fetch_assoc()){ 
+					// if not the user themselves
+					if(strcmp($row['assignedTo'], $userName[0]) != 0 ){  
                 ?>
                     <tr>
                         <td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
@@ -352,7 +352,17 @@ php to add member when invite member button is clicked
                         <td><?=$row['deadline']?></td>
                     </tr>
                 <?php 
-                }
+					}// closing if loop
+					else{?>
+                    <tr>
+                        <td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
+                        <td>ME</td>
+                        <td><?=$row['task']?></td>
+                        <td><?=$row['deadline']?></td>
+                    </tr>
+                    <?php
+					}
+                } // closing while loop
                 ?>
             </tbody>
         </table>
@@ -478,7 +488,15 @@ php to add member when invite member button is clicked
 									$postBySQL = mysqli_query($connection,"SELECT first_name, last_name FROM users WHERE id = $postById");
 									$postBy = mysqli_fetch_row($postBySQL);
 								?>
-                            	<h4><?php echo $postBy[0]. " " .$postBy[1];?> says:<i id="date"><?php echo $row2['date']; ?></i></h4>
+                            	<h4><?php 
+								// if not the user themselves
+								if(strcmp($postBy[0], $userName[0]) != 0 ){ 
+									echo $postBy[0]. " " .$postBy[1];
+								}
+								else{
+									echo "I";
+								}
+								?> said:<i id="date"><?php echo $row2['date']; ?></i></h4>
                                 <?php echo $row2['msg'];?>  
                             </div> <!--/post-->
                             <?php
@@ -495,11 +513,41 @@ php to add member when invite member button is clicked
 			<?php } /*closing if loop*/	?>
         </div>
         
-        <!-- //////////////////// CONTACT TAB //////////////////////  -->
-        <div class="tab-pane" id="contact">
-            <h3>Contact</h3>
-            <p>blue blue blue blue blue</p>
-        </div> <!--/contact-->
+        <!-- //////////////////// TEAM TAB //////////////////////  -->
+        <div class="tab-pane" id="team">
+        <br/>
+            <table id="datatables3" class="display">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+				<?php 
+                    $contactSql = mysqli_query($connection,"SELECT first_name, last_name, email FROM v_user2project WHERE project_id = $id[0]");
+                while($row = $contactSql->fetch_assoc()){
+					// if not the user themselves
+					if(strcmp($row['first_name'], $userName[0]) != 0 ){  
+                ?>
+                    <tr>
+                        <td><?=$row['first_name']. " ". $row['last_name']?></td>
+                        <td><?=$row['email']?></td>
+                    </tr>
+                <?php 
+					}
+					else{?>
+                     <tr>
+                        <td>ME</td>
+                        <td><?=$row['email']?></td>
+                    </tr>
+					<?php } // closing else
+					
+                }	//closing while loop		
+                ?>
+            </tbody>
+        </table>
+        </div> <!--/team-->
     </div>
 </div>
     </div> <!-- /container -->
