@@ -149,6 +149,9 @@ php to add member when invite member button is clicked
 		font-size: 16px;
 		color: #555;
 	}
+	.delete-MyTasks{
+		cursor: pointer;
+	}
 	</style>
     <script type="text/javascript">
 		$(document).ready(function(){
@@ -448,9 +451,8 @@ php to add member when invite member button is clicked
                           </div>
                           <div class="modal-body">
                             <form method="post" action="addPost.php">
-                                <p>
-                                  <input type="hidden" name="discussionId" id="discussionId" value="<?php echo $idArray[$x];?>"/>
-                                </p>
+                            	<input type="hidden" name="discussionId" id="discussionId" value="<?php echo $idArray[$x];?>"/>
+                                <input type="hidden" name="userFirstName" id="userFirstName" value="<?php echo $userName[0];?>"/>
                                 <p>
                                   <label for="msg">Message:</label>
                                   <textarea name="msg" id="msg" cols="45" rows="5" style="border: 2px solid #CCC; border-radius: 5px;" autofocus required></textarea>
@@ -470,12 +472,18 @@ php to add member when invite member button is clicked
 						$postCount = mysqli_num_rows($sql1);
 							while($row2 = $sql1->fetch_assoc()) {?>
                             <div id="post" class="post">
-                            	<h4>Participant says:<i id="date"><?php echo $row2['date']; ?></i></h4>
+                            	<?php
+									/*GET participant's name!*/
+									$postById = $row2['user_id'];
+									$postBySQL = mysqli_query($connection,"SELECT first_name, last_name FROM users WHERE id = $postById");
+									$postBy = mysqli_fetch_row($postBySQL);
+								?>
+                            	<h4><?php echo $postBy[0]. " " .$postBy[1];?> says:<i id="date"><?php echo $row2['date']; ?></i></h4>
                                 <?php echo $row2['msg'];?>  
                             </div> <!--/post-->
                             <?php
 							}
-							if($postCount == NULL){?>
+							if($postCount == NULL){?> <!--//if NO new posts have been made!-->
 								<i style="color: #FA8072">Be the first one to start the discussion</i>
 							<?php }
 						?>
