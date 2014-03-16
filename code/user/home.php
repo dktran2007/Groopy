@@ -127,8 +127,9 @@
 			require_once("../../shared/php/DBConnection.php");
 			$connection = DBConnection::connectDB();
 			$stmt = mysqli_query($connection,"SELECT p.name, p.class_name, p.class_num FROM project p, project_user pu, Users u where
-												u.email ='$kHomeEmail' and u.id = pu.user_id and p.id = pu.project_id"); 
+												u.email ='$kHomeEmail' and u.id = pu.user_id and p.id = pu.project_id and pu.active = 1"); 								
 			while($row = $stmt->fetch_assoc()){ 
+			
 		?>
         <a href="dashboard.php?title=<?php echo $row['name'];?>">
 	        <div id="project" class="project" onClick="callDashboard()">
