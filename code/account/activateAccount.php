@@ -32,9 +32,21 @@ if(isset($_GET['email']) && isset($_GET['key']))
 		if($error == false) //no error with select statement
 		{
 			if ($rActive === 1)//account had been activated before
-			{
-				echo '<div> Your account had been activated before You may <a href="../../">log in</a> now</div>';
-			}
+			{ ?>
+				<!DOCTYPE html>
+				<html>
+				<head>
+					<title>Account Activation</title>
+					<link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
+				</head>
+				<body>
+					<div class='rect'>
+						<br/>
+						<h3 style="padding-top: 100px; text-align:center;">Your account had been activated before. You may <a href="../../">Login</a> now</h3>
+					</div>
+				</body>
+				</html>
+			<?php }
 			
 			else if(strcasecmp($rEmail,$email) == 0 && strcmp($rKey,$key) === 0)//account has not been activated yet
 			{	
@@ -47,10 +59,22 @@ if(isset($_GET['email']) && isset($_GET['key']))
 						
 						if($statement->execute())
 						{
-							echo 'okay, validated!';
-							//validate ok
-							echo '<div>Your account is now active. You may <a href="../../">log in</a> now</div>'; 
-						}
+							//echo 'okay, validated!';
+							//validate ok ?>
+							<!DOCTYPE html>
+							<html>
+							<head>
+								<title>Account Activation</title>
+								<link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
+							</head>
+							<body>
+								<div class='rect'>
+									<br/>
+									<h3 style="padding-top: 100px; text-align:center;">Your account is now active. You may <a href="../../">Login</a> now</h3>
+								</div>
+							</body>
+							</html>
+						<?php }
 						//else echo mysqli_stmt_error ( $statement );
 						else{
 							echo "Execute failed: (" . $statement->errno . ") " . $statement->error;
@@ -65,24 +89,24 @@ if(isset($_GET['email']) && isset($_GET['key']))
 		
 		else //there is error with select statement
 		{
-			//fail to verify
-			echo '<div>Oops !Your account could not be activated. Please recheck the link or contact the system administrator.</div>';
-		}
+			//fail to verify ?>
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<title>Account Activation</title>
+				<link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
+			</head>
+			<body>
+				<div class='rect'>
+					<br/>
+					<h3 style="padding-top: 100px; text-align:center;">Oops! Your account could not be activated. Please recheck the link or contact the system administrator.</h3>
+				</div>
+			</body>
+			</html>
+		<?php }
 		$statement->close();
-		
 	}
 	DBConnection::closeConnection();
 	
 }
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Account Activation</title>
-</head>
-
-<body>
-</body>
-</html>

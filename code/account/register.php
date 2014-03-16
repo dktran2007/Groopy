@@ -67,8 +67,22 @@ php to register user
 						" \nBest Regards.\nGroopy Team.";
 						$header = "From: Groopy <noreply@groopy.com>";
 						MailAgent::writeEmail($email,$subject,$message,$header);
-						echo "Thank you for registering. Please check your email to activate your account.";
-					}
+						?>
+						<!DOCTYPE html>
+						<html>
+						<head>
+						    <title>Registered</title>
+							<link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
+						</head>
+						<body>
+							<div class='rect'>
+								<br/>
+								<h3 style="padding-top: 40px; text-align:center;">Registration Completed!</h3>
+								<h3 style="padding-top: 30px; text-align:center;">Thank you for registering. Please check your email to activate your account.</h3>
+							</div>
+						</body>
+						</html>
+					<?php }
 					else 
 						print "Database errors. Could not register";
 				}

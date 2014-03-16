@@ -15,7 +15,7 @@ php to log out the user
 	 <script type='text/javascript'>
 		setTimeout(function(){
 			gapi.auth.signOut();
-			location.href = '../account/signIn.php';
+			location.href = '../../index.html';
 		},3000);
 	</script>
 	";

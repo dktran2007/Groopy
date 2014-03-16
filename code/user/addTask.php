@@ -5,9 +5,12 @@
 	if(isset($_POST['task'])){ 
 		$task = $_POST['task'];
 		$assignedTo = $_POST['assignedTo'];
+		$status = $_POST['status'];
+		$priority = $_POST['priority'];
 		$deadline = $_POST['deadline'];
 		$projectId = $_POST['projectId'];
-		$result = "INSERT INTO tasks(task, assignedTo ,deadline, project_id) VALUES ('$task','$assignedTo','$deadline','$projectId')";
+		
+		$result = "INSERT INTO tasks(task, assignedTo, status, priority, deadline, project_id) VALUES ('$task','$assignedTo', '$status','$priority','$deadline','$projectId')";
 		mysqli_query($connection,$result);
 	
 		$sql = mysqli_query($connection,"SELECT name FROM project WHERE id = $projectId");

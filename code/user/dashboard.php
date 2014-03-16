@@ -73,7 +73,10 @@ php to add member when invite member button is clicked
 <html lang="en">
 <head>
 	<title>Groopy | <?php echo $title;?></title>
-
+	
+	<!-- CHART.js -->
+	<script src="../../includes/chart/chart.js"></script>
+	
     <!-- Bootstrap imports -->
     <link href="../../includes/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="../../includes/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -85,6 +88,8 @@ php to add member when invite member button is clicked
     <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
     <script src="../../includes/jquery.dataTables.js"></script>
        
+
+	
     <!-- Page specific CSS -->
     <link href="../../shared/css/tabs.css" rel="stylesheet">
    	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css">
@@ -148,14 +153,17 @@ php to add member when invite member button is clicked
 		padding-left: -100px;
 		font-size: 16px;
 		color: #555;
-	}
-	.delete-MyTasks{
+	  }
+	  .delete-MyTasks{
 		cursor: pointer;
-	}
+	  }
+	  #lineChart, #doghnutChart{
+	  margin-left: 80px;
+	  }
 	</style>
     <script type="text/javascript">
 		$(document).ready(function(){
-			$('#datatables').dataTable(); // todo table
+//			$('#datatables').dataTable(); todo table
 			$('#datatables2').dataTable(); // tasks table
 			$('#datatables3').dataTable(); // teams table
 			
@@ -165,6 +173,16 @@ php to add member when invite member button is clicked
 			 $(".modal-body #taskId").html( myBookId ); // for label
 			 $(".modal-body #taskId").val( myBookId ); // for hidden input field
 		});
+		function validateAssignedTo(){
+			/*var result = true;
+			var assignedTo = document.getElementById("assignedTo").value; // saved value
+			
+			if(assignedTo == 0){ // i.e nothing is selected
+				document.getElementById("assignedToError").innerHTML = "Please select a member";
+				result = false;
+			}
+			return result;*/
+		}
     </script>
   </head>
 
@@ -189,9 +207,7 @@ php to add member when invite member button is clicked
         
 		<!--ADD Member Modal -->
         <!-- call self php to invite member --->
-        <!---------------------------------------------------------------------------------------------->
-        <!---------------------------------------------------------------------------------------------->
-        <!---------------------------------------------------------------------------------------------->     
+           
         <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -219,7 +235,7 @@ php to add member when invite member button is clicked
         </div>
         
         <ul id="tabs" class="nav nav-tabs nav-justified">
-          <li class="active"><a href="#toDo" data-toggle="tab">To Do</a></li>
+          <li class="active"><a href="#summary" data-toggle="tab">Summary</a></li>
           <li><a href="#tasks" data-toggle="tab">Tasks</a></li>
           <li><a href="#uploads" data-toggle="tab">Uploads</a></li>
           <li><a href="#forum" data-toggle="tab">Forum</a></li>
@@ -227,34 +243,77 @@ php to add member when invite member button is clicked
         </ul>
         <div id="tab-content" class="tab-content">
         
-        <!-- //////////////////// TO DO TAB //////////////////////  -->
-        <div class="tab-pane active" id="toDo">
-            <h3>My tasks list for <?php echo $title;?> project</h3>
-			
-            <table id="datatables" class="display">
-            <thead>
-                <tr>
-                	<th></th>
-                    <th>Deadline</th>
-                    <th>Task</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-				$stmt2 = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = '$userName[0]' AND project_id = $id[0]"); 
-                while($row = $stmt2->fetch_assoc()){ 
-                ?>
-                    <tr>
-                    	<td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
-                        <td><?=$row['deadline']?></td>
-                        <td><?=$row['task']?></td>
+        <!-- //////////////////// SUMMARY TAB //////////////////////  -->
+        <div class="tab-pane active" id="summary">
+            <h3>Summary</h3>
+			<canvas id="pieChart" height="300" width="300"></canvas> <!-- for pieChart-->
+			<script>
+				var pieData = [
+						{
+							value: 30,
+							color:"#F38630"
+						},
+						{
+							value : 50,
+							color : "#E0E4CC"
+						},
+						{
+							value : 20,
+							color : "#69D2E7"
+						}
+					];
+				var myPie = new Chart(document.getElementById("pieChart").getContext("2d")).Pie(pieData);
+            </script>
+			<canvas id="lineChart" height="300" width="500"></canvas> <!-- for lineChart-->
+			<script>
 
-                    </tr>
-                <?php 
-                }			
-                ?>
-            </tbody>
-        </table>
+				var lineChartData = {
+					labels : ["January","February","March","April","May","June","July"],
+					datasets : [
+						{
+							fillColor : "rgba(220,220,220,0.5)",
+							strokeColor : "rgba(220,220,220,1)",
+							pointColor : "rgba(220,220,220,1)",
+							pointStrokeColor : "#fff",
+							data : [65,59,90,81,56,55,40]
+						},
+						{
+							fillColor : "rgba(151,187,205,0.5)",
+							strokeColor : "rgba(151,187,205,1)",
+							pointColor : "rgba(151,187,205,1)",
+							pointStrokeColor : "#fff",
+							data : [28,48,40,19,96,27,100]
+						}
+					]
+				}
+				var myLine = new Chart(document.getElementById("lineChart").getContext("2d")).Line(lineChartData);
+			</script>
+			<canvas id="doghnutChart" height="300" width="300"></canvas> <!-- for doghnutChart-->
+			<script>
+				var doughnutData = [
+						{
+							value: 30,
+							color:"#F7464A"
+						},
+						{
+							value : 50,
+							color : "#46BFBD"
+						},
+						{
+							value : 100,
+							color : "#FDB45C"
+						},
+						{
+							value : 40,
+							color : "#949FB1"
+						},
+						{
+							value : 120,
+							color : "#4D5360"
+						}
+					];
+			var myDoughnut = new Chart(document.getElementById("doghnutChart").getContext("2d")).Doughnut(doughnutData);
+			</script>
 		</div>
         
         <!--DELETE Modal --> 
@@ -281,7 +340,7 @@ php to add member when invite member button is clicked
         
         <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">
-        <h3>Team Tasks list &nbsp; &nbsp; &nbsp;
+        <h3>Tasks List &nbsp; &nbsp; &nbsp;
         <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button>
         <button class="icons" data-toggle="modal" data-target="#editModal"><img src="../../shared/images/edit.png" title="Edit Task"></button></h3>
 
@@ -295,7 +354,7 @@ php to add member when invite member button is clicked
               </div>
               <div class="modal-body">
               
-               <form method="post" action="addTask.php">
+               <form method="post" action="addTask.php" id="addTask" onSubmit="return validateDropdown()">
                     <p>
                         <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
                         <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
@@ -305,13 +364,34 @@ php to add member when invite member button is clicked
                         <?php 
 						$kAssignTaskSQL = mysqli_query($connection,"SELECT first_name from v_user2project where project_id = $id[0]"); // retrieves all the members in this project
 						echo '<select name="assignedTo">'; // Open your drop down box
+						echo '<option value="0">--Select One--</option>';
                         // Loop through the query results, outputing the options one by one
                         while ($row = $kAssignTaskSQL->fetch_assoc()) {
 						   echo '<option value="'.$row['first_name'].'">'.$row['first_name'].'</option>';
                         }
                         echo '</select>';// Close your drop down box?>
+						<label id="assignedToError" class="error"></label>
                     </p>
-                    <p>
+					<p>
+                        <label for="status">Status: </label>
+                        <select name="status">
+							<option value="0">--Select One--</option>
+							<option value="Incomplete">Incomplete</option>
+							<option value="Complete">Complete</option>
+						</select>
+						<label id="statusError" class="error"></label>
+                    </p>
+					<p>
+                        <label for="priority">Priority: </label>
+                        <select name="priority">
+							<option value="0">--Select One--</option>
+							<option value="Low">Low</option>
+							<option value="Medium">Medium</option>
+							<option value="High">High</option>
+						</select>
+						<label id="priorityError" class="error"></label>
+                    </p>
+					<p>
                         <label for="deadline">Deadline: </label>
                         <input type="date" name="deadline" id="deadline" required />
                     </p>
@@ -328,13 +408,14 @@ php to add member when invite member button is clicked
           </div>
         </div>
         
-
         <table id="datatables2" class="display">
             <thead>
                 <tr>
                     <th></th>
                     <th>Assigned To</th>
                     <th>Task</th>
+					<th>Status</th>
+					<th>Priority</th>
                     <th>Deadline</th>
                 </tr>
             </thead>
@@ -349,6 +430,8 @@ php to add member when invite member button is clicked
                         <td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
                         <td><?=$row['assignedTo']?></td>
                         <td><?=$row['task']?></td>
+						<td><?=$row['status']?></td>
+						<td><?=$row['priority']?></td>
                         <td><?=$row['deadline']?></td>
                     </tr>
                 <?php 
@@ -358,6 +441,8 @@ php to add member when invite member button is clicked
                         <td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
                         <td>ME</td>
                         <td><?=$row['task']?></td>
+						<td><?=$row['status']?></td>
+						<td><?=$row['priority']?></td>
                         <td><?=$row['deadline']?></td>
                     </tr>
                     <?php
