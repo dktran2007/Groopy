@@ -87,12 +87,21 @@ php to add member when invite member button is clicked
     <script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
     <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
     <script src="../../includes/jquery.dataTables.js"></script>
-       
 
-	
     <!-- Page specific CSS -->
     <link href="../../shared/css/tabs.css" rel="stylesheet">
    	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css">
+	
+	 <!-- Calendar specific jquery -->
+    <link rel='stylesheet' href='../lib/cupertino/jquery-ui.min.css' />
+    <link href='../../includes/calendar/fullcalendar/fullcalendar.css' rel='stylesheet' />
+    <link href='../../includes/calendar/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <script src='../../includes/calendar/lib/moment.min.js'></script>
+    <script src='../../includes/calendar/lib/jquery.min.js'></script>
+    <script src='../../includes/calendar/lib/jquery-ui.custom.min.js'></script>
+    <script src='../../includes/calendar/fullcalendar/fullcalendar.min.js'></script>
+	
+	
     <style type="text/css">
 		@import "../../shared/css/demo_table.css";
 		.masthead{
@@ -160,7 +169,48 @@ php to add member when invite member button is clicked
 	  #lineChart, #doghnutChart{
 	  margin-left: 80px;
 	  }
+	  
+	  /*Calendar UI*/
+	  #calendarTheme {
+		width: 900px;
+		margin: 40px auto;
+      }
+	  
 	</style>
+	<!--Calendar required script-->
+	<script>
+        $(document).ready(function() {
+            $('#calendarTheme').fullCalendar({
+                theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultDate: new Date(),
+                editable: true,
+                
+                events: "http://localhost/code/user/connectDBJson.php",
+                
+                eventColor: '#E6E6E6',
+                
+                eventMouseover: function(event, jsEvent, view) {
+                    if (event.url) {
+                        $(jsEvent.target).attr('title', event.url);
+                    }
+                },
+                
+                eventClick: function(event) {
+                    if (event.url) {
+                        
+                        return false;
+                    }
+                }
+            });    
+        });
+    </script>
+	
+	
     <script type="text/javascript">
 		$(document).ready(function(){
 //			$('#datatables').dataTable(); todo table
@@ -240,6 +290,7 @@ php to add member when invite member button is clicked
           <li><a href="#uploads" data-toggle="tab">Uploads</a></li>
           <li><a href="#forum" data-toggle="tab">Forum</a></li>
           <li><a href="#team" data-toggle="tab">Team Members</a></li>
+		  <li><a href="#calendar" data-toggle="tab">Calendar</a></li>
         </ul>
         <div id="tab-content" class="tab-content">
         
@@ -633,6 +684,12 @@ php to add member when invite member button is clicked
             </tbody>
         </table>
         </div> <!--/team-->
+		
+		<!-- //////////////////// CALENDAR TAB //////////////////////  -->
+		<div class="tab-pane" id="calendar">
+            <h3>Calendar</h3>
+            <div id="calendarTheme"></div>
+        </div>
     </div>
 </div>
     </div> <!-- /container -->
