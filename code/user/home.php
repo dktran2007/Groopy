@@ -65,15 +65,37 @@
 		  height: 480px;
 		  margin-left: 990px;
 	  }
-	  #rightDiv h3{
-		  padding-left: 7px;
-		  color: #03C;
-	  }
 	  .container{
 		  margin-left: 0px;
 	  }
 	  .icons {
 		  margin-left: 940px;
+	  }
+	  
+	  #displayTask{
+		  border: 2px solid #555;
+		  padding: 0 10px;
+		  margin-left: 5px;
+		  border-radius: 20px;
+		  width: 285px;
+		  height: auto;
+		  margin-bottom: 10px;
+		  float: left;
+	  }
+	  #projectName{
+		  color: #f33;
+	  }
+	  #taskDescription{
+		  font-style: italic;
+	  }
+	  #date{
+		  float:right;
+		  font-style:italic;
+		  font-size: 10px;
+	  }
+	  #heading{
+		  text-align: center;
+		  color: #555;
 	  }
     </style>
 
@@ -142,7 +164,20 @@
 			}
 		?>
 		<div id="rightDiv">
-        	<h3>ToDo list for all projects</h3>
+        	<h3 id="heading">Things to do...</h3>
+            <?php 
+				$userSql = mysqli_query($connection, "SELECT first_name FROM users where email = 'shrutip25@yahoo.com'");
+				$userName = mysqli_fetch_row($userSql);
+				$taskStmt = mysqli_query($connection,"SELECT t.task, t.deadline, p.name FROM tasks t, project p where 
+													status = 'Incomplete' AND assignedTo = '$userName[0]' AND p.id = t.project_id ORDER BY t.deadline ASC;"); 								
+				while($row = $taskStmt->fetch_assoc()){
+			?>
+			<div id="displayTask">
+				<h5 id="projectName"><?php echo $row['name']?> <span id="date"><?php echo $row['deadline']?></span></h5>
+				<h6 id="taskDescription"><?php echo $row['task']?></h6>
+			</div>
+            <?php }
+            ?>
         </div>
 	</div> <!--/container fluid-->
 

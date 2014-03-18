@@ -163,7 +163,7 @@ php to add member when invite member button is clicked
 		font-size: 16px;
 		color: #555;
 	  }
-	  .delete-MyTasks{
+	  .edit-MyTasks{
 		cursor: pointer;
 	  }
 	  #lineChart, #doghnutChart{
@@ -218,10 +218,19 @@ php to add member when invite member button is clicked
 			$('#datatables3').dataTable(); // teams table
 			
 		})
-		$(document).on("click", ".delete-MyTasks", function () {
-			 var myBookId = $(this).data('id');
-			 $(".modal-body #taskId").html( myBookId ); // for label
-			 $(".modal-body #taskId").val( myBookId ); // for hidden input field
+		$(document).on("click", ".edit-MyTasks", function () {
+			 var taskId = $(this).data('id');
+			 var taskDesc = $(this).data('task');
+			 var assignee = $(this).data('assignee');
+			 var status = $(this).data('status');
+			 var priority = $(this).data('priority');
+			 var deadline = $(this).data('deadline');
+			 $(".modal-body #task").html( taskDesc); //to show text
+			 $(".modal-body #assignedTo").val(assignee); 
+			 $(".modal-body #status").val(status);
+			 $(".modal-body #priority").val(priority); 
+			 $(".modal-body #deadline").val(deadline); 
+			 $(".modal-body #taskId").val( taskId ); // for hidden input field
 		});
 		function validateAssignedTo(){
 			/*var result = true;
@@ -366,34 +375,11 @@ php to add member when invite member button is clicked
 			var myDoughnut = new Chart(document.getElementById("doghnutChart").getContext("2d")).Doughnut(doughnutData);
 			</script>
 		</div>
-        
-        <!--DELETE Modal --> 
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Are you ABSOLUTELY sure you want to DELETE?</h4>
-              </div>
-              <div class="modal-body">
-               <form method="post" action="deleteTask.php">
-                    <strong>TASK: </strong><i id="taskId"></i>
-                    <input type="hidden" name="taskId" id="taskId" value="" />
-                    <p>
-                      <input type="submit" name="submit" id="submit" value="YES" class="btn btn-danger" />
-                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
-                    </p>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        
+               
         <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">
         <h3>Tasks List &nbsp; &nbsp; &nbsp;
-        <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button>
-        <button class="icons" data-toggle="modal" data-target="#editModal"><img src="../../shared/images/edit.png" title="Edit Task"></button></h3>
+        <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button></h3>
 
       <!--ADD Task Modal -->
         <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -459,6 +445,70 @@ php to add member when invite member button is clicked
           </div>
         </div>
         
+        <!--Edit Task Modal -->
+        <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Edit Task</h4>
+              </div>
+              <div class="modal-body">
+              
+               <form method="post" action="editTask.php" id="editTask" onSubmit="return validateDropdown()"> <!--TODO: js validation NOT working!!!-->
+                    <input type="hidden" name="taskId" id="taskId" value=""/>
+                    <p>
+                        <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
+                        <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
+                    </p>
+                    <p>
+                        <label for="assignedTo">Assign To: </label>
+                        <?php 
+						$kAssignTaskSQL = mysqli_query($connection,"SELECT first_name from v_user2project where project_id = $id[0]"); // retrieves all the members in this project
+						echo '<select name="assignedTo" id="assignedTo">'; // Open your drop down box
+						echo '<option value="0">--Select One--</option>';
+                        // Loop through the query results, outputing the options one by one
+                        while ($row = $kAssignTaskSQL->fetch_assoc()) {
+					   		echo '<option value="'.$row['first_name'].'">'.$row['first_name'].'</option>';
+                        }
+                        echo '</select>';// Close your drop down box?>
+						<label id="assignedToError" class="error"></label>
+                    </p>
+					<p>
+                        <label for="status">Status: </label>
+                        <select name="status" id="status">
+							<option value="0">--Select One--</option>
+							<option value="Incomplete">Incomplete</option>
+							<option value="Complete">Complete</option>
+						</select>
+						<label id="statusError" class="error"></label>
+                    </p>
+					<p>
+                        <label for="priority">Priority: </label>
+                        <select name="priority" id="priority">
+							<option value="0">--Select One--</option>
+							<option value="Low">Low</option>
+							<option value="Medium">Medium</option>
+							<option value="High">High</option>
+						</select>
+						<label id="priorityError" class="error"></label>
+                    </p>
+					<p>
+                        <label for="deadline">Deadline: </label>
+                        <input type="date" name="deadline" id="deadline" required />
+                    </p>
+                    <p>
+                        <input type="hidden" name="projectId" id="projectId" value="<?php echo $id[0];?>"/>
+                    </p>
+                    <p>
+                      <input type="submit" name="submit" id="submit" value="Update" class="btn btn-danger" />
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                    </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         <table id="datatables2" class="display">
             <thead>
                 <tr>
@@ -473,31 +523,20 @@ php to add member when invite member button is clicked
             <tbody>
                 <?php 
 				$stmt = mysqli_query($connection,"SELECT * FROM tasks where project_id = $id[0]");
+				$taskNumber = $row['id'];
                 while($row = $stmt->fetch_assoc()){ 
-					// if not the user themselves
-					if(strcmp($row['assignedTo'], $userName[0]) != 0 ){  
                 ?>
                     <tr>
-                        <td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
+                        <td><a class="edit-MyTasks" data-toggle="modal" data-target="#editTaskModal"  data-id="<?=$row['id']?>" data-task="<?=$row['task']?>" data-assignee="<?=$row['assignedTo']?>" data-status="<?=$row['status']?>" data-priority="<?=$row['priority']?>" data-deadline="<?=$row['deadline']?>">
+                        		<img src="../../shared/images/edit.png" title="Edit Task <?=$row['id']?>">
+                            </a></td>
                         <td><?=$row['assignedTo']?></td>
                         <td><?=$row['task']?></td>
 						<td><?=$row['status']?></td>
 						<td><?=$row['priority']?></td>
                         <td><?=$row['deadline']?></td>
                     </tr>
-                <?php 
-					}// closing if loop
-					else{?>
-                    <tr>
-                        <td><a class="delete-MyTasks" data-toggle="modal" data-target="#deleteModal" data-id="<?=$row['task']?>"><img src="../../shared/images/delete.png" title="Delete Task"></a></td>
-                        <td>ME</td>
-                        <td><?=$row['task']?></td>
-						<td><?=$row['status']?></td>
-						<td><?=$row['priority']?></td>
-                        <td><?=$row['deadline']?></td>
-                    </tr>
-                    <?php
-					}
+                <?php
                 } // closing while loop
                 ?>
             </tbody>
