@@ -92,11 +92,12 @@ Class FileProcessor
 			$updatedResultArr['updated'] = "passed";
 			$updatedResultArr['error'] = null;
 			$stmt = null;
+			$downloadLink = 'http://localhost:8888/UploadedFiles/'.$newFileName;
 			if ($connection != null)
 			{
 				if ($stmt = $connection->prepare("Insert into files(user_id, project_id, path, alias) values (?,?,?,?)") )
 				{
-					if ($stmt->bind_param("ddss",$userId,$projectId,$targetPath,$fileName))
+					if ($stmt->bind_param("ddss",$userId,$projectId,$downloadLink,$fileName))
 					{
 						if ($stmt->execute()) 
 						{
