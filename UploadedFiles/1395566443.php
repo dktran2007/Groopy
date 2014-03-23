@@ -8,7 +8,7 @@
 
 define ("MAX_FILE_SIZE", "50000");
 
-Class FileProcessor
+Class UploadFile
 {
 	/**
 	 * static function to upload user profile
@@ -24,7 +24,7 @@ Class FileProcessor
 		
 			
 		$blacklist = array("exe");
-		$ext = strtolower(FileProcessor::getExt($fileName));		
+		$ext = strtolower(UploadFile::getExt($fileName));		
 		//no extension
 		if($ext === FALSE)
 		{
@@ -50,7 +50,7 @@ Class FileProcessor
 		}
 					
 		//not allow to upload file > 50Mb
-		if($uploadedFile['size'] > MAX_FILE_SIZE * 1024)
+		if($File['size'] > MAX_FILE_SIZE * 1024)
 		{
 			$updatedResultArr['updated'] = "failed";
 			$updatedResultArr['error'] = "Image size exceeded 50Mb";
@@ -60,8 +60,8 @@ Class FileProcessor
 		//give a unique new name for the file
 		$newFileName = time().".".$ext;
 		
-		$targetPath = $_SERVER['DOCUMENT_ROOT']."/UploadedFiles/".$newFileName;
-		require_once("../../shared/php/DBConnection.php");
+		$targetPath = $_SERVER['DOCUMENT_ROOT']."/UploadedFiles/".$newImgName;	
+		require_once("../shared/php/DBConnection.php");
 		$connection = DBConnection::connectDB();
 		if ($connection != null)
 		{
@@ -79,7 +79,6 @@ Class FileProcessor
 								$updatedResultArr['error'] = "could not found the user";
 								return $updatedResultArr;
 							}
-							
 						}
 					}
 				}
@@ -91,13 +90,12 @@ Class FileProcessor
 		{
 			$updatedResultArr['updated'] = "passed";
 			$updatedResultArr['error'] = null;
-			$stmt = null;
-			$downloadLink = 'http://localhost:8888/UploadedFiles/'.$newFileName;
+			
 			if ($connection != null)
 			{
 				if ($stmt = $connection->prepare("Insert into files(user_id, project_id, path, alias) values (?,?,?,?)") )
 				{
-					if ($stmt->bind_param("ddss",$userId,$projectId,$downloadLink,$fileName))
+					if ($stmt->bind_param("ddss",$userId,$projectId,$targetPath,$fileName))
 					{
 						if ($stmt->execute()) 
 						{
@@ -127,5 +125,15 @@ Class FileProcessor
 		$ext = substr($str, $pos + 1, $len);
 		return $ext;
 	}
+}
+
+if( isset($_POST['userEmail']) && isset($_POST['projectId']))
+{
+	//$iFile = $_FILES['uploadedFile'];
+	$iEmail = $_POST['userEmail'];
+	$iID = $_POST['projectId'];
+	$resultArray = array();
+	echo $iEmail.$iID;
+	//$resultArray = UploadFile::uploadFile($iFile,$iEmail,$iID);		
 }
 ?>

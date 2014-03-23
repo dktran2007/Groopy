@@ -560,26 +560,27 @@ php to add member when invite member button is clicked
 				require_once("FileProcessor.php");
 				$resultArray = FileProcessor::uploadFile($iFile,$iEmail,$iID);		
 			}
-			$kUploadProjectID = $_POST['projectId'];
-			
-			if ($stmt = $connection->prepare("Select path, alias from files where project_id = ?")) 
-				{
-					if ($stmt->bind_param("d", $kUploadProjectID))
+			if(isset($_POST['projectId']))
+			{
+				$kUploadProjectID = $_POST['projectId'];
+				
+				if ($stmt = $connection->prepare("Select path, alias from files where project_id = ?")) 
 					{
-						if ($stmt->execute()) 
+						if ($stmt->bind_param("d", $kUploadProjectID))
 						{
-							if ($stmt->bind_result($kUploadPathResult, $kUploadAliasResult))
+							if ($stmt->execute()) 
 							{
-								while($stmt->fetch())
+								if ($stmt->bind_result($kUploadPathResult, $kUploadAliasResult))
 								{
-									//$kUploadPathResult = 'http://localhost:8888/UploadedFiles/1395021023.php';
-									//echo '<a href="'.$kUploadPathResult.'">'.$kUploadAliasResult.'</a>'.'<br />';
-									echo '<a href="'.$kUploadPathResult.'"download="'.$kUploadAliasResult.'">'.$kUploadAliasResult.'</a>'.'<br />';
+									while($stmt->fetch())
+									{
+										echo '<a href="'.$kUploadPathResult.'"download="'.$kUploadAliasResult.'">'.$kUploadAliasResult.'</a>'.'<br />';
+									}
 								}
 							}
 						}
 					}
-				}
+			}
 			?>
             <form id='uploadForm' action="" method="post" enctype="multipart/form-data">
                 <input type='file' id='uploadedFile' name='uploadedFile' />

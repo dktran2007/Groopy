@@ -51,9 +51,9 @@
             <ul class="dropdown-menu">
             	<li><a tabindex="-1">
                 <?php 
-//					if (session_status() == PHP_SESSION_NONE) {
+					if (!isset($_SESSION)) {
 						session_start();
-//					}
+					}
 					$firstName = $_SESSION['firstName'];
 					$lastName = $_SESSION['lastName'];
 					$email = $_SESSION['email'];
