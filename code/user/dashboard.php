@@ -83,7 +83,7 @@ php to add member when invite member button is clicked
     <link href="../../includes/bootstrap/js/bootstrap.min.js" rel="stylesheet">
 
     <!-- jQuery imports -->
-    <link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+    <link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
     <script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
     <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
     <script src="../../includes/jquery.dataTables.js"></script>
@@ -190,7 +190,7 @@ php to add member when invite member button is clicked
                 defaultDate: new Date(),
                 editable: true,
                 
-                events: "http://localhost/code/user/connectDBJson.php",
+                events: "http://localhost:8888/code/user/connectDBJson.php",
                 
                 eventColor: '#E6E6E6',
                 
@@ -246,8 +246,12 @@ php to add member when invite member button is clicked
   </head>
 
   <body>
-
-	<?php require_once("../../shared/php/navbar.php"); 
+	
+	<?php 
+	/*if (!isset($_SESSION)){
+		session_start();				
+	}*/
+	require_once("../../shared/php/navbar.php"); 
 		$userSql = mysqli_query($connection,"SELECT first_name FROM v_user2project WHERE email = '$email'");
 		$userName = mysqli_fetch_row($userSql); /*UserName is used in the todo tab*/
 	?>
@@ -747,7 +751,6 @@ php to add member when invite member button is clicked
 		
 		<!-- //////////////////// CALENDAR TAB //////////////////////  -->
 		<div class="tab-pane" id="calendar">
-            <h3>Calendar</h3>
             <div id="calendarTheme"></div>
         </div>
     </div>
