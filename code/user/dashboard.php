@@ -84,8 +84,8 @@ php to add member when invite member button is clicked
 
     <!-- jQuery imports -->
     <link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
-    <script src="../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
-    <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.js"></script>
+    <script src="../../includes/jquery/groopy/js/jquery-1.10.2.js"></script>
+    <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="../../includes/jquery.dataTables.js"></script>
 
     <!-- Page specific CSS -->
@@ -476,18 +476,18 @@ php to add member when invite member button is clicked
 		</div>
                
         <!-- //////////////////// TASKS TAB //////////////////////  -->
-        <div class="tab-pane" id="tasks">
-		<div class="onoffswitch">
+        <div class="tab-pane" id="tasks">      
+        <h3>Tasks List &nbsp; &nbsp; &nbsp;
+        <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button></h3>
+		<!---
+        <div class="onoffswitch"> //fancy toggle switch for Status field
             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
             <label class="onoffswitch-label" for="myonoffswitch">
                 <div class="onoffswitch-inner"></div>
                 <div class="onoffswitch-switch"></div>
             </label>
         </div>
-        
-        <h3>Tasks List &nbsp; &nbsp; &nbsp;
-        <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button></h3>
-		
+        --->
       <!--ADD Task Modal -->
         <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">

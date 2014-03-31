@@ -74,9 +74,12 @@ if(isset($_POST['email']) && isset($_POST['password']))
    
 	<!--Page specific css-->    
     <link rel="stylesheet" type="text/css" href="../../shared/css/base.css">
-    <link href="../../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
-	<script src="../../../includes/jquery/groopy/js/jquery-1.9.1.js"></script>
-	<script src="../../../includes/jquery/groopy/js/jquery-ui-1.10.3.custom.min.js"></script>
+   
+    <!-- jQuery imports -->
+    <link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+    <script src="../../includes/jquery/groopy/js/jquery-1.10.2.js"></script>
+    <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.4.custom.min.js"></script>
+   
     <script src="https://apis.google.com/js/client:plusone.js"></script>
     <script src="https://apis.google.com/js/plusone.js"></script>
 
