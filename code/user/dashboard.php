@@ -127,54 +127,66 @@ php to add member when invite member button is clicked
 		  margin-top: 10px;
 		  margin-left: 0px;
 		  padding: 0 20px;
-	  }
-	  #post h3{
-		  margin-top: 10px;
-		  cursor: pointer;
-	  }
-	  #post a:hover{
-		  text-decoration: none; 
-	  }
-	  #date{
-		  padding-top: 8px;
-		  font-size: 13px;
-		  float: right;
-		  color: #555;
-	  }
-	  #postArea {
-		margin-top: 0px;
-		margin-left: 160px;
-		width: 1040px;
-	  }
-	  .replyBtn{
-		  background: #F33;
-		  border: 1px solid #F33;
-		  padding: 4px 15px;
-		  border-radius: 5px;
-		  float: right;
-		  margin-top: -35px;
-		  margin-right: 50px;
-		  color: white;
-	  }
-	  #taskId{
-		display: flex;
-		width: 500px;
-		padding-left: -100px;
-		font-size: 16px;
-		color: #555;
-	  }
-	  .edit-MyTasks{
-		cursor: pointer;
-	  }
-	  #lineChart, #doghnutChart{
-	  margin-left: 80px;
-	  }
+		}
+		#post h3{
+		    margin-top: 10px;
+			cursor: pointer;
+		}
+		#post a:hover{
+			text-decoration: none; 
+		}
+		#date{
+			padding-top: 8px;
+			font-size: 13px;
+			float: right;
+			color: #555;
+		}
+		#postArea {
+			margin-top: 0px;
+			margin-left: 160px;
+			width: 1040px;
+		}
+		.replyBtn{
+			background: #F33;
+			border: 1px solid #F33;
+			padding: 4px 15px;
+			  border-radius: 5px;
+			  float: right;
+			  margin-top: -35px;
+			  margin-right: 50px;
+			  color: white;
+		  }
+		  #taskId{
+			display: flex;
+			width: 500px;
+			padding-left: -100px;
+			font-size: 16px;
+			color: #555;
+		  }
+		  .edit-MyTasks{
+			cursor: pointer;
+		  }
+		  #lineChart, #doghnutChart{
+		  margin-left: 80px;
+		  }
 	  
-	  /*Calendar UI*/
-	  #calendarTheme {
-		width: 900px;
-		margin: 40px auto;
-      }
+        /*Calendar UI*/
+		  #calendarTheme {
+			width: 900px;
+			margin: 40px auto;
+		}
+		#addTask #taskError,#addTask #assignedToError, #addTask #statusError, #addTask #priorityError{
+			color: red;
+			display: inline;
+			padding-left: 10px;
+			width: 10px;
+		}
+		#editTask #edit-taskError,#editTask #edit-assignedToError, #editTask #edit-statusError, #editTask #edit-priorityError{
+			color: red;
+			display: inline;
+			padding-left: 10px;
+			width: 10px;
+		}
 	  
 	</style>
 	<!--Calendar required script-->
@@ -225,24 +237,107 @@ php to add member when invite member button is clicked
 			 var status = $(this).data('status');
 			 var priority = $(this).data('priority');
 			 var deadline = $(this).data('deadline');
-			 $(".modal-body #task").html( taskDesc); //to show text
-			 $(".modal-body #assignedTo").val(assignee); 
-			 $(".modal-body #status").val(status);
-			 $(".modal-body #priority").val(priority); 
-			 $(".modal-body #deadline").val(deadline); 
+			 $(".modal-body #edit-task").html( taskDesc); //to show text
+			 $(".modal-body #edit-assignedTo").val(assignee); 
+			 $(".modal-body #edit-status").val(status);
+			 $(".modal-body #edit-priority").val(priority); 
+			 $(".modal-body #edit-deadline").val(deadline); 
 			 $(".modal-body #taskId").val( taskId ); // for hidden input field
 		});
-		function validateAssignedTo(){
-			/*var result = true;
-			var assignedTo = document.getElementById("assignedTo").value; // saved value
+		
+/*Before adding tasks to db, we need to check if all the fields are properly filled*/
+		function validateAddTask(){
+			/*Set all the error message label to blank*/
+			document.getElementById("taskError").innerHTML = "";
+			document.getElementById("assignedToError").innerHTML = "";
+//			document.getElementById("statusError").innerHTML = "";
+			document.getElementById("priorityError").innerHTML = "";
+			var result = true; // all the fields are properly filled and have no error messages!
 			
-			if(assignedTo == 0){ // i.e nothing is selected
-				document.getElementById("assignedToError").innerHTML = "Please select a member";
+			/*store all the input field values*/
+			var task = document.getElementById("task").value;
+			var assignedTo = document.getElementById("assignedTo").selectedIndex;
+//			var status = document.getElementById("status").selectedIndex;
+			var priority = document.getElementById("priority").selectedIndex;
+			
+			/*using regular expression to check if an input field is empty*/
+			var emptyString = new RegExp("^\\s*$");
+
+			if (emptyString.test(task))
+			{
+				document.getElementById("taskError").innerHTML = "*";
+				document.getElementById("task").focus();
 				result = false;
 			}
-			return result;*/
+			if (assignedTo == 0){
+				document.getElementById("assignedToError").innerHTML = "*";
+				//addTask.assignedTo.focus();
+				result = false;
+			}
+			else{
+				document.getElementById("assignedToError").innerHTML = "";
+			}
+			if (priority == 0){
+				document.getElementById("priorityError").innerHTML = "*";
+				result = false;
+			}
+			else{
+				document.getElementById("priorityError").innerHTML = "";
+			}
+			return result;
 		}
-    </script>
+    
+		function validateEditTask(){
+			
+			/*Set all the error message label to blank*/
+			document.getElementById("edit-taskError").innerHTML = "";
+			document.getElementById("edit-assignedToError").innerHTML = "";
+			document.getElementById("edit-statusError").innerHTML = "";
+			document.getElementById("edit-priorityError").innerHTML = "";
+			var result = true; // all the fields are properly filled and have no error messages!
+			
+			/*store all the input field values*/
+			var task = document.getElementById("edit-task").value;
+			var assignedTo = document.getElementById("edit-assignedTo");
+			var status = document.getElementById("edit-status");
+			var priority = document.getElementById("edit-priority");
+			
+			/*using regular expression to check if an input field is empty*/
+			var emptyString = new RegExp("^\\s*$");
+			
+			if (emptyString.test(task))
+			{
+				document.getElementById("edit-taskError").innerHTML = "*";
+				document.getElementById("edit-task").focus();
+				result = false;
+			}
+			if (assignedTo.options[assignedTo.selectedIndex].value==""){
+				document.getElementById("edit-assignedToError").innerHTML = "*";
+				editTask.edit-assignedTo.focus();
+				result = false;
+			}
+			else{
+				document.getElementById("edit-assignedToError").innerHTML = "";
+			}
+			if (status.options[status.selectedIndex].value==""){
+				document.getElementById("edit-statusError").innerHTML = "*";
+				editTask.edit-status.focus();
+				result = false;
+			}
+			else{
+				document.getElementById("edit-statusError").innerHTML = "";
+			}
+			if (priority.options[priority.selectedIndex].value==""){
+				document.getElementById("edit-priorityError").innerHTML = "*";
+				editTask.edit-priority.focus();
+				result = false;
+			}
+			else{
+				document.getElementById("edit-priorityError").innerHTML = "";
+			}
+			return result;
+		}
+	</script>
   </head>
 
   <body>
@@ -382,9 +477,17 @@ php to add member when invite member button is clicked
                
         <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">
+		<div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <div class="onoffswitch-inner"></div>
+                <div class="onoffswitch-switch"></div>
+            </label>
+        </div>
+        
         <h3>Tasks List &nbsp; &nbsp; &nbsp;
         <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button></h3>
-
+		
       <!--ADD Task Modal -->
         <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -395,46 +498,42 @@ php to add member when invite member button is clicked
               </div>
               <div class="modal-body">
               
-               <form method="post" action="addTask.php" id="addTask" onSubmit="return validateDropdown()">
+               <form method="post" action="addTask.php" id="addTask" onSubmit="return validateAddTask()">
                     <p>
-                        <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
+                        <label for="task">Task Description: </label>
                         <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
+						<label id="taskError" class = "addTaskError"></label>
                     </p>
                     <p>
                         <label for="assignedTo">Assign To: </label>
                         <?php 
 						$kAssignTaskSQL = mysqli_query($connection,"SELECT first_name from v_user2project where project_id = $id[0]"); // retrieves all the members in this project
-						echo '<select name="assignedTo">'; // Open your drop down box
-						echo '<option value="0">--Select One--</option>';
+						echo '<select name="assignedTo" id="assignedTo">'; // Open your drop down box
+						echo '<option value="">--Select One--</option>';
                         // Loop through the query results, outputing the options one by one
                         while ($row = $kAssignTaskSQL->fetch_assoc()) {
 						   echo '<option value="'.$row['first_name'].'">'.$row['first_name'].'</option>';
                         }
                         echo '</select>';// Close your drop down box?>
-						<label id="assignedToError" class="error"></label>
-                    </p>
-					<p>
-                        <label for="status">Status: </label>
-                        <select name="status">
-							<option value="0">--Select One--</option>
-							<option value="Incomplete">Incomplete</option>
-							<option value="Complete">Complete</option>
-						</select>
-						<label id="statusError" class="error"></label>
+						<label id="assignedToError" class = "addTaskError"></label>
                     </p>
 					<p>
                         <label for="priority">Priority: </label>
-                        <select name="priority">
-							<option value="0">--Select One--</option>
+                        <select name="priority" id="priority">
+							<option value="">--Select One--</option>
 							<option value="Low">Low</option>
 							<option value="Medium">Medium</option>
 							<option value="High">High</option>
 						</select>
-						<label id="priorityError" class="error"></label>
+						<label id="priorityError" class="addTaskError"></label>
+                    </p>
+                    <p>
+                       	<input type="text" value="Incomplete" name="status" id="status" hidden/>
                     </p>
 					<p>
                         <label for="deadline">Deadline: </label>
                         <input type="date" name="deadline" id="deadline" required />
+						<label id="deadlineError" class="addTaskError"></label>
                     </p>
                     <p>
                         <input type="hidden" name="projectId" id="projectId" value="<?php echo $id[0];?>"/>
@@ -459,47 +558,48 @@ php to add member when invite member button is clicked
               </div>
               <div class="modal-body">
               
-               <form method="post" action="editTask.php" id="editTask" onSubmit="return validateDropdown()"> <!--TODO: js validation NOT working!!!-->
+               <form method="post" action="editTask.php" id="editTask" onSubmit="return validateEditTask()"> 
                     <input type="hidden" name="taskId" id="taskId" value=""/>
                     <p>
-                        <label for="task">Task Description: </label> <!--TODO: check if the field task is empty before adding into db-->
-                        <textarea rows="4" cols="45" name ="task" id="task" autofocus style="border: 2px solid #CCC; border-radius: 5px;" required> </textarea>
+                        <label for="edit-task">Task Description: </label>
+                        <textarea rows="4" cols="45" name ="edit-task" id="edit-task" style="border: 2px solid #CCC; border-radius: 5px;" autofocus required> </textarea>
+						<label id="edit-taskError" class = "editTaskError"></label>
                     </p>
                     <p>
-                        <label for="assignedTo">Assign To: </label>
+                        <label for="edit-assignedTo">Assign To: </label>
                         <?php 
 						$kAssignTaskSQL = mysqli_query($connection,"SELECT first_name from v_user2project where project_id = $id[0]"); // retrieves all the members in this project
-						echo '<select name="assignedTo" id="assignedTo">'; // Open your drop down box
-						echo '<option value="0">--Select One--</option>';
+						echo '<select name="edit-assignedTo" id="edit-assignedTo">'; // Open your drop down box
+						echo '<option value="">--Select One--</option>';
                         // Loop through the query results, outputing the options one by one
                         while ($row = $kAssignTaskSQL->fetch_assoc()) {
 					   		echo '<option value="'.$row['first_name'].'">'.$row['first_name'].'</option>';
                         }
                         echo '</select>';// Close your drop down box?>
-						<label id="assignedToError" class="error"></label>
+						<label id="edit-assignedToError" class="editTaskError"></label>
                     </p>
 					<p>
-                        <label for="status">Status: </label>
-                        <select name="status" id="status">
-							<option value="0">--Select One--</option>
-							<option value="Incomplete">Incomplete</option>
-							<option value="Complete">Complete</option>
-						</select>
-						<label id="statusError" class="error"></label>
-                    </p>
-					<p>
-                        <label for="priority">Priority: </label>
-                        <select name="priority" id="priority">
-							<option value="0">--Select One--</option>
+                        <label for="edit-priority">Priority: </label>
+                        <select name="edit-priority" id="edit-priority">
+							<option value="">--Select One--</option>
 							<option value="Low">Low</option>
 							<option value="Medium">Medium</option>
 							<option value="High">High</option>
 						</select>
-						<label id="priorityError" class="error"></label>
+						<label id="edit-priorityError" class="editTaskError"></label>
+                    </p>
+                    <p>
+                        <label for="edit-status">Status: </label>
+                        <select name="edit-status" id="edit-status">
+							<option value="">--Select One--</option>
+							<option value="Incomplete">Incomplete</option>
+							<option value="Complete">Complete</option>
+						</select>
+						<label id="edit-statusError" class="editTaskError"></label>
                     </p>
 					<p>
-                        <label for="deadline">Deadline: </label>
-                        <input type="date" name="deadline" id="deadline" required />
+                        <label for="edit-deadline">Deadline: </label>
+                        <input type="date" name="edit-deadline" id="edit-deadline" required />
                     </p>
                     <p>
                         <input type="hidden" name="projectId" id="projectId" value="<?php echo $id[0];?>"/>

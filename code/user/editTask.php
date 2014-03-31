@@ -4,11 +4,11 @@
 
 	if(isset($_POST['taskId'])){ 
 		$id = $_POST['taskId'];
-		$task = $_POST['task'];
-		$assignedTo = $_POST['assignedTo'];
-		$status = $_POST['status'];
-		$priority = $_POST['priority'];
-		$deadline = $_POST['deadline'];
+		$task = $_POST['edit-task'];
+		$assignedTo = $_POST['edit-assignedTo'];
+		$status = $_POST['edit-status'];
+		$priority = $_POST['edit-priority'];
+		$deadline = $_POST['edit-deadline'];
 		$projectId = $_POST['projectId'];
 		
 		$sql = mysqli_query($connection,"SELECT name FROM project WHERE id = $projectId");
