@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
 	if(isset($_GET['title'])) {

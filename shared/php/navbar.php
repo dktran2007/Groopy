@@ -1,3 +1,8 @@
+<?php 
+if (!isset($_SESSION)) {
+	session_start();
+}
+?>
 <style type="text/css">
 	.navbar{
 		padding: 10px 0 5px 40px;
@@ -51,9 +56,7 @@
             <ul class="dropdown-menu">
             	<li><a tabindex="-1">
                 <?php 
-					if (!isset($_SESSION)) {
-						session_start();
-					}
+					
 					$firstName = $_SESSION['firstName'];
 					$lastName = $_SESSION['lastName'];
 					$email = $_SESSION['email'];
