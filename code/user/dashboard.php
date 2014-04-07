@@ -405,75 +405,41 @@ php to add member when invite member button is clicked
         
         <!-- //////////////////// SUMMARY TAB //////////////////////  -->
         <div class="tab-pane active" id="summary">
-            <h3>Summary</h3>
-			<canvas id="pieChart" height="300" width="300"></canvas> <!-- for pieChart-->
+            <?php /*Total percent of tasks completed vs. incomplete*/
+				$totalTasks = mysqli_query($connection,"SELECT * FROM tasks WHERE project_id = $id[0]");
+				$allTaskCount = mysqli_num_rows($totalTasks);
+				$completedTasks = mysqli_query($connection,"SELECT assignedTo FROM tasks WHERE project_id = $id[0] AND status = 'Complete'");
+				$whoCompleted = mysqli_fetch_row($completedTasks); 
+				$completedTasksCount = mysqli_num_rows($completedTasks);
+				$completed = ($completedTasksCount / $allTaskCount) * 100;
+				$incomplete = 100 - $completed;
+				
+				$teamMemberCount = mysqli_query($connection,"SELECT assignedTo FROM tasks WHERE project_id = $id[0]");
+				$numberOfUsers = mysqli_num_rows($teamMemberCount);
+			?>
+            <h3>Summary <?php echo $numberOfUsers[0];?></h3>
+			
+            <canvas id="pieChart" height="300" width="300"></canvas> <!-- for pieChart-->
 			<script>
 				var pieData = [
 						{
-							value: 30,
-							color:"#F38630"
+							value: <?php echo $completed;?>,
+							color:"#38DF64"
 						},
 						{
-							value : 50,
-							color : "#E0E4CC"
+							value : <?php echo $incomplete;?>,
+							color : "#F33"
 						},
-						{
-							value : 20,
-							color : "#69D2E7"
-						}
 					];
 				var myPie = new Chart(document.getElementById("pieChart").getContext("2d")).Pie(pieData);
             </script>
-			<canvas id="lineChart" height="300" width="500"></canvas> <!-- for lineChart-->
-			<script>
-
-				var lineChartData = {
-					labels : ["January","February","March","April","May","June","July"],
-					datasets : [
-						{
-							fillColor : "rgba(220,220,220,0.5)",
-							strokeColor : "rgba(220,220,220,1)",
-							pointColor : "rgba(220,220,220,1)",
-							pointStrokeColor : "#fff",
-							data : [65,59,90,81,56,55,40]
-						},
-						{
-							fillColor : "rgba(151,187,205,0.5)",
-							strokeColor : "rgba(151,187,205,1)",
-							pointColor : "rgba(151,187,205,1)",
-							pointStrokeColor : "#fff",
-							data : [28,48,40,19,96,27,100]
-						}
-					]
-				}
-				var myLine = new Chart(document.getElementById("lineChart").getContext("2d")).Line(lineChartData);
-			</script>
-			<canvas id="doghnutChart" height="300" width="300"></canvas> <!-- for doghnutChart-->
-			<script>
-				var doughnutData = [
-						{
-							value: 30,
-							color:"#F7464A"
-						},
-						{
-							value : 50,
-							color : "#46BFBD"
-						},
-						{
-							value : 100,
-							color : "#FDB45C"
-						},
-						{
-							value : 40,
-							color : "#949FB1"
-						},
-						{
-							value : 120,
-							color : "#4D5360"
-						}
-					];
-			var myDoughnut = new Chart(document.getElementById("doghnutChart").getContext("2d")).Doughnut(doughnutData);
-			</script>
+            <div style="float:right; padding-right:600px;">
+            	<h4 >Current Project Status: <?php echo $completed; ?> % completed!</h4>
+                <p>Total Number of tasks = <?php echo $allTaskCount; ?></p>
+                <p style="color: #38DF64;">Tasks Completed = <?php echo $completed; ?></p>
+                <p style="color: #f33;">Tasks Incomplete = <?php echo $incomplete; ?></p>
+            </div>
+            
 		</div>
                
         <!-- //////////////////// TASKS TAB //////////////////////  -->

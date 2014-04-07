@@ -48,8 +48,7 @@ if (!isset($_SESSION)) {
        	  <img alt="List-icon" src="../../shared/images/icon.png"/> <strong>GROOPY</strong></a>
         <div class="btn-group">
         
-        <li class="dropdown">  
-        <a class="home-icons" href="#settings" title="Change Settings"><img src="../../shared/images/settings.png"/></a>
+        <li class="dropdown" style="padding-left: 50px;">  
             <a href="#profile" class="dropdown-toggle" id="icons" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false"title="User"><img src="../../shared/images/user.png"/>
             </a>
             
