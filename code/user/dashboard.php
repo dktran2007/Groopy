@@ -631,10 +631,8 @@ php to add member when invite member button is clicked
 				require_once("FileProcessor.php");
 				$resultArray = FileProcessor::uploadFile($iFile,$iEmail,$iID);		
 			}
-			if(isset($_POST['projectId']))
-			{
-				$kUploadProjectID = $_POST['projectId'];
-				
+	
+				$kUploadProjectID = $id[0];
 				if ($stmt = $connection->prepare("Select path, alias from files where project_id = ?")) 
 					{
 						if ($stmt->bind_param("d", $kUploadProjectID))
@@ -651,7 +649,7 @@ php to add member when invite member button is clicked
 							}
 						}
 					}
-			}
+		
 			?>
             <form id='uploadForm' action="" method="post" enctype="multipart/form-data">
                 <input type='file' id='uploadedFile' name='uploadedFile' />
