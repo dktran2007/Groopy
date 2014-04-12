@@ -56,6 +56,37 @@ h3{
 	margin-left: 0;
 	padding-left: 0;
 }
+#projectStatus{
+	float: left;
+	padding-left: 50px;
+}
+
+#teamStatus{
+	float: right;
+	margin-top: 0px;
+	margin-right: 100px;
+	border-left:thin solid #999;
+}
+#desc{
+	margin-left: 300px;
+	margin-top: -300px;
+}
+#desc2{
+	margin-left: 420px;
+	margin-top: -300px;
+	margin-bottom: 230px;
+}
+#user2contribution{
+	border-bottom: thin solid #999;
+}
+#contribution{
+	float:right;
+}
+
+
+
+
+
 /*** ON-OFF SWITCH CSS*/
 .onoffswitch {
     position: relative; width: 113px;

@@ -408,18 +408,60 @@ php to add member when invite member button is clicked
             <?php /*Total percent of tasks completed vs. incomplete*/
 				$totalTasks = mysqli_query($connection,"SELECT * FROM tasks WHERE project_id = $id[0]");
 				$allTaskCount = mysqli_num_rows($totalTasks);
-				$completedTasks = mysqli_query($connection,"SELECT assignedTo FROM tasks WHERE project_id = $id[0] AND status = 'Complete'");
-				$whoCompleted = mysqli_fetch_row($completedTasks); 
+				$completedTasks = mysqli_query($connection,"SELECT * FROM tasks WHERE project_id = $id[0] AND status = 'Complete'");
 				$completedTasksCount = mysqli_num_rows($completedTasks);
+				$incompletedTasksCount = $allTaskCount - $completedTasksCount;
 				$completed = ($completedTasksCount / $allTaskCount) * 100;
 				$incomplete = 100 - $completed;
 				
-				$teamMemberCount = mysqli_query($connection,"SELECT assignedTo FROM tasks WHERE project_id = $id[0]");
+				$teamMemberCount = mysqli_query($connection,"SELECT first_name FROM v_user2project WHERE project_id = $id[0]");
 				$numberOfUsers = mysqli_num_rows($teamMemberCount);
+				
+				$colors = array("#953ED5","#46BFBD","#130873","#949FB1","#4D5360", "#FF7400", "85004B"); // six colors for doughnut graph
+				$userArray = array(); // array to save user's completed task count
+				
+//				$teamMember = mysqli_fetch_row($teamMemberCount);
+
+						
 			?>
-            <h3>Summary <?php echo $numberOfUsers[0];?></h3>
-			
-            <canvas id="pieChart" height="300" width="300"></canvas> <!-- for pieChart-->
+            <h3>Summary</h3>
+            <hr/>
+            
+			 <div id="projectStatus">
+                <h4 style="padding-left: 85px;">PROJECT Status</h4>
+                <canvas id="pieChart" height="300" width="300"></canvas> <!-- for pieChart-->
+                <div id="desc">
+                    <p>Total Number of tasks = <?php echo $allTaskCount; ?></p>
+                    <p style="color: #38DF64;">Tasks Completed = <?php echo $completedTasksCount; ?></p>
+                    <p style="color: #f33;">Tasks Incomplete = <?php echo $incompletedTasksCount; ?></p>
+                </div>
+            </div>
+            <div id="teamStatus">
+           		<h4 style="padding-left: 150px;">TEAM Contribution</h4>
+                <canvas id="doghnutChart" height="300" width="300"></canvas> 
+                <div id="desc2">
+                    <p>Team Count = <?php echo $numberOfUsers; ?></p>
+					<?php 
+					$i = 0;
+					
+					 while ($row = $teamMemberCount->fetch_assoc() ) {
+						 $user = $row['first_name'];
+						 $individualContribution = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = '$user' AND project_id = $id[0] AND status = 'Complete'");
+						$userCount = mysqli_num_rows($individualContribution);
+						$userArray[$i] = $userCount;
+//						$percent = ($userArray[$i]/ $allTaskCount) * 100;
+						$i++;
+					?>
+                    <div id="user2contribution">
+                    	<div id="user"><?php echo $user?>
+                        	<div id="contribution"><?php echo $userCount;?></div>
+                        </div>
+                    </div>
+                    <?php 
+					}// closing while loop  ?>
+                </div>
+           </div>
+
 			<script>
 				var pieData = [
 						{
@@ -433,12 +475,27 @@ php to add member when invite member button is clicked
 					];
 				var myPie = new Chart(document.getElementById("pieChart").getContext("2d")).Pie(pieData);
             </script>
-            <div style="float:right; padding-right:600px;">
-            	<h4 >Current Project Status: <?php echo $completed; ?> % completed!</h4>
-                <p>Total Number of tasks = <?php echo $allTaskCount; ?></p>
-                <p style="color: #38DF64;">Tasks Completed = <?php echo $completed; ?></p>
-                <p style="color: #f33;">Tasks Incomplete = <?php echo $incomplete; ?></p>
-            </div>
+            <!-- for doghnutChart-->
+			<script>
+				var doughnutData = [
+					<?php 
+					$j = 0;
+					while($numberOfUsers != 0){
+						$percent = ($userArray[$j]/ $allTaskCount) * 100;
+						$randomNum = rand(0, 5);
+					?>
+						{
+							value: <?php echo $percent;?>,
+							color: "<?php echo $colors[$randomNum];?>"
+						},
+					<?php 
+					$numberOfUsers--;
+					$j++;
+					}?>
+					];
+			var myDoughnut = new Chart(document.getElementById("doghnutChart").getContext("2d")).Doughnut(doughnutData);
+			</script>
+            
             
 		</div>
                
