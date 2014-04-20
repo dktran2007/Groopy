@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Groopy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--Page specific css>    
+	<link rel="stylesheet" type="text/css" href="shared/css/base.css">
+    
+    <!-- styles -->
+    <link href="includes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="includes/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <style type = "text/css">
+      div{
+        display: block;
+      }
+      .marketing-section-signup {
+        text-shadow: 0 1px 3px #222;
+        background: #202021 url("http://i.imgur.com/d2C3Saj.jpg") center no-repeat;
+      }
+      .marketing-section {
+        position: relative;
+		height: 470px;
+      }
+      .container {
+        width: 200px;
+      }
+	  #getStartedBtn{
+		font-size: 20px;
+		margin-top: 200px;
+		background-color: #F33;
+		border-color:#F33;
+		border-radius: 25px;
+		width: 200px;
+		height: 60px;
+		color: #fff;
+		}
+		#bottom{
+			text-align:center;
+			font-size: 16px;
+			padding-top: 30px;
+		}
+		#header-wrapper{
+			height: 90px;
+			padding: 25px;
+		}
+		nav{
+			float: right;
+			padding-top: 15px;
+		}
+		span{
+			font-size: 16px;
+			padding: 8px;
+		}
+		a{
+			color: #333;	
+		}
+		a:hover{
+			color: #F33;
+			text-decoration: none;
+		}
+		.logo{
+			font-size: 30px;
+			color: #000;
+			font-family:Arial, Helvetica, sans-serif;
+		}
+    </style> 
+    <script type = "text/javascript">
+		function callLogin(){
+			location.href= "code/account/signIn.php";
+		}
+	</script>
+		
+  </head>
+
+  <body>
+      <div id="header-wrapper">
+          <a class="logo" href="index.html" title="LOGO">
+       	  <img alt="List-icon" src="shared/images/logo3.1.png"/> <strong>GROOPY</strong></a>
+          <nav>
+              <span class="top-links">
+              <span><a href="/about" class="link" title="About">ABOUT</a></span>
+              <span><a href="/community" class="link" title="Communities">COMMUNITIES</a></span>
+              <span><a href="/group" class="link" title="Groups">GROUPS</a></span>
+              </span>
+              <span class="sign-in-link"><a href="code/account/signIn.php" title="Sign In">SIGN IN</a></span>
+          </nav>
+      </div>
+        <div id="site-container" class="context-loader-container" data-pjax-container="">       
+          <div class="marketing-section marketing-section-signup">
+            <div class="container">
+              <input type="button" id="getStartedBtn" value="GET STARTED" onClick="callLogin();"/>
+            </div><!-- /.container -->
+        </div>
+        <div id="bottom">
+        	GROOPY IS WHERE COLLABORATION BEGINS - SO DIVE IN!
+        </div>
+  </body>
+</html>

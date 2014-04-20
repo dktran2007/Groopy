@@ -6,6 +6,10 @@
 	$title = $_GET['title'];
 	$sql = mysqli_query($connection,"SELECT id FROM project WHERE name = '$title'");
 	$id = mysqli_fetch_row($sql);
+	
+	//store project id to the SESSION
+	if ($id[0] != NULL)
+		$_SESSION['projectID'] = $id[0];
 ?>
 
 <?php

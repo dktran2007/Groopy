@@ -1,0 +1,255 @@
+@charset "UTF-8";
+/****************************
+Style sheet for common pages
+@author	:	Lam Lu
+@date	:	04/19/2012
+****************************/
+
+/*===========================================================
+						common classes
+=============================================================*/
+#wrapper
+{
+	width: 1024px;
+	margin: 0 auto;	
+}
+
+.center_image_tag img
+{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input_row
+{
+	position:relative;
+	width:90%;
+	margin: 0 auto;
+	display:block;
+	padding-top: 0.5%;
+	margin-top: 1%;
+	padding-left: 10px;
+	height: 35px;
+	font-size:16px;
+}
+
+.blue_button
+{
+	width: 96%;
+	margin-top: 4%;
+	background-color:#06C;
+	border-radius: 3px;
+	cursor:pointer;
+	border:1px solid #006;
+	color:#FFF;
+	font-size:16px;
+}
+
+.blue_button:hover
+{
+	background-color:#06F;
+}
+
+.hidden_message_row
+{
+	position:relative;
+	width:90%;
+	margin: 0 auto;
+	display:block;
+	padding-top: 0.5%;
+	margin-top: 1%;
+	padding-left: 10px;
+	font-size:16px;
+}
+
+span.error_message
+{
+	color:#F00;
+}
+
+/*===========================================================
+						index page
+=============================================================*/
+#pindex_left
+{
+	position:relative;
+	float:left;
+	width: 49%;
+	margin: 0.5%;
+	padding-top: 5%;
+
+}
+
+#pindex_right
+{
+	position:relative;
+	float:right;
+	width:49%;
+	margin:0.5%;
+}
+
+
+#pindex_logocontainer
+{
+	position:relative;
+	width:25%;
+	margin:0 auto;
+	padding-top: 20%;
+	padding-left: 3%;
+}
+
+#pindex_logoDescription
+{
+	position:relative;
+	width:60%;
+	margin: 0 auto;
+	padding-top: 2%;
+	margin-top: 0.2%;
+	padding-left: 8%;
+	font-size:20px;
+}
+
+#pindex_loginbox
+{
+	position:relative;
+	width: 50%;
+	margin: 0 auto;
+	padding-top: 1%;
+	margin-top:2%;
+	padding-bottom: 1%;
+}
+
+span.centerOr
+{
+	text-align:center;
+	height:50%;
+	color:#666;
+}
+
+span.k_graytext
+{
+	text-align:center;
+	color:#666;
+	font-size:14px;
+}
+
+a.k_link
+{
+	color:#06C;
+}
+
+/*===========================================================
+						Sign Up Page
+=============================================================*/
+#psignup_signupbox
+{
+	position:relative;
+	width: 70%;
+	margin: 0 auto;
+	padding-top: 1%;
+	margin-top:2%;
+	padding-bottom: 1%;
+}
+#psignup_logocontainer
+{
+	position:relative;
+	width:25%;
+	margin:0 auto;
+	padding-top: 20%;
+	padding-left: 3%;
+}
+
+#psignup_signupbox .input_row
+{
+	position:relative;
+	width:65%;
+	margin: 0 auto;
+	display:block;
+	padding-top: 0.5%;
+	margin-top: 1%;
+	padding-left: 10px;
+	height: 35px;
+	font-size:16px;
+}
+
+#psignup_signupbox .input_row_wrapper
+{
+	position:relative;
+	width:84%;
+	margin: 0 auto;
+	float:left;
+	padding-left: 15.4%;
+	margin-bottom:0.5%;
+	
+}
+#psignup_signupbox .k_input_row
+{
+	position:relative;
+	float:left;
+	width: 77.5%;
+	height: 35px;
+	font-size:16px;
+	padding-left: 10px;
+	margin: 0 auto;
+	padding-top: 0.5%;
+	margin-top: 1%;
+}
+#psignup_signupbox .k_error_row
+{
+	position:relative;
+	float:left;
+	width: 14%;
+	height: 32px;
+	padding-top: 2%;
+	margin-top: 1%;
+	padding-left: 10px;
+	
+}
+#psignup_signupbox .addMargin
+{
+	margin-bottom: 5%;
+	
+}
+
+
+#psignup_signupbox .blue_button
+{
+	position:relative;
+	width: 69.5%;
+	margin-top: 10%;
+	background-color:#06C;
+	border-radius: 3px;
+	cursor:pointer;
+	border:1px solid #006;
+	color:#FFF;
+	font-size:16px;
+}
+
+#psignup_signupbox .blue_button:hover
+{
+	background-color:#06F;
+}
+
+/*===========================================================
+						Forgot Password Page
+=============================================================*/
+#pforgot_forgotbox
+{
+	position:relative;
+	width: 70%;
+	margin: 0 auto;
+	padding-top: 1%;
+	margin-top:2%;
+	padding-bottom: 1%;
+}
+
+#pforgot_messagebox
+{
+	position:relative;
+	margin: 0 auto;
+	width: 96%;
+	margin-top: 3%;
+	padding-left: 2%;
+	color:#666;
+}
