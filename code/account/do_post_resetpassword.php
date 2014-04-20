@@ -65,7 +65,7 @@ the header importer
 				result = false;
 			}
 			
-			if(password !== confirmPassword)
+			if(password !== confirmPassword || emptyString.test(confirmPassword))
 			{
 				document.getElementById("confirm_password_error_row").innerHTML = 
 				'<img src="http://localhost:8888/shared/assets/NotOk_Icon.png" />';;
@@ -80,7 +80,8 @@ the header importer
 		{
 			var password = document.getElementById("form_password").value;
 			var confirmPassword = document.getElementById("form_confirmPassword").value;
-			if(password !== confirmPassword)
+			var emptyString = new RegExp("^\\s*$"); /* $ is string empty ; \s* is string containing whitespaces only*/
+			if(password !== confirmPassword || emptyString.test(confirmPassword))
 			{
 				document.getElementById("confirm_password_error_row").innerHTML = 
 					'<img src="http://localhost:8888/shared/assets/NotOk_Icon.png" />';;
