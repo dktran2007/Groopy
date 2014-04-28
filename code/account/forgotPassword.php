@@ -35,7 +35,7 @@ require_once("../../HeaderImporter.php");
   </head>
 
   <body>
-  		<div id="wrapper">            
+  		<div id="gwrapper">            
         	<div id="pindex_left" class="center_image_tag">
                	 <img src="http://localhost:8888/shared/assets/Groopy_Puzzle.png" />
             </div> 											

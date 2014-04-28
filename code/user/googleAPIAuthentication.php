@@ -10,12 +10,16 @@
 	$client->setClientId('509349210477-k7sfmbos0brvp7nse3ib357bq8f07krv.apps.googleusercontent.com');
 	$client->setClientSecret('vOXSHACk2rfdVV8d1VMcdds0');
 	$client->setRedirectUri('http://localhost:8888/code/user/googleAPIAuthentication.php');
-	$client->setScopes(array('https://www.googleapis.com/auth/drive'));
+	$client->setScopes(array(
+				'https://www.googleapis.com/auth/drive',
+				'https://www.googleapis.com/auth/drive.file',
+				'https://www.googleapis.com/auth/drive.readonly',
+				'https://www.googleapis.com/auth/drive.readonly.metadata',
+				'https://www.googleapis.com/auth/drive.appdata'));
 	$authUrl = $client->createAuthUrl();
 	if(isset($_GET['code']))
 	{
 		//already have access token, do something here
-		$accessToken = $_GET['code'];
 		$accessToken = $client->authenticate($_GET['code']);
 //		print_r ($accessToken);
 		$email = $_SESSION['email'];
@@ -33,7 +37,7 @@
 				/* create a prepared statement */
 				if ($stmt = $connection->prepare("Update Users set driveAPI_Token = ? where email =?")) 
 				{
-					$accessToken = json_encode($accessToken);
+					//$accessToken = json_encode($accessToken);
 					if ($stmt->bind_param("ss", $accessToken, $email))
 					{
 						if ($stmt->execute()) 

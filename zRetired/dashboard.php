@@ -1,9 +1,5 @@
 <?php 
-	require_once("../../HeaderImporter.php");
-
-	//check login
-	importHeader("checklogin");
-	checklogin();
+	session_start();
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
 	if(isset($_GET['title'])) {
@@ -78,13 +74,11 @@ php to add member when invite member button is clicked
 		}
 	}
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<title>Groopy | <?php echo $title;?></title>
-	<?php
-		importHeader("css");
-	?>
+	
 	<!-- CHART.js -->
 	<script src="../../includes/chart/chart.js"></script>
 	
@@ -100,7 +94,7 @@ php to add member when invite member button is clicked
     <script src="../../includes/jquery.dataTables.js"></script>
 
     <!-- Page specific CSS -->
-
+    <link href="../../shared/css/tabs.css" rel="stylesheet">
    	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css">
 	
 	 <!-- Calendar specific jquery -->
@@ -115,6 +109,10 @@ php to add member when invite member button is clicked
 	
     <style type="text/css">
 		@import "../../shared/css/demo_table.css";
+		.masthead{
+			margin-left: -75px;
+			width: 1290px;
+		}
 		.tab-pane{
 			padding-left: 10px;
 		}
@@ -344,11 +342,6 @@ php to add member when invite member button is clicked
 			}
 			return result;
 		}
-		
-		function backtoHome()
-		{
-			window.location= "home.php";
-		}
 	</script>
   </head>
 
@@ -357,10 +350,9 @@ php to add member when invite member button is clicked
     	<div id="phome_nav">
        		<div id="phome_nav_logoDiv">
             	<img src="http://localhost:8888/shared/assets/Groopy_Logo_32.png"  onclick="backtoHome()"/>
-                <span onclick="backtoHome()">Groopy</span>
-                
+                <span onclick="backtoLogin()">Groopy</span>
             </div>
-            <div id="phome_nav_titleDiv"><span><?php echo $title;?></span></div>
+            
              <div id="phome_nav_accountDiv" class="pdropdown">
                	<ul>
                     <li class="drop">
@@ -381,7 +373,7 @@ php to add member when invite member button is clicked
                 </ul>
         	</div>										<!--end phome_nav_accoutDiv-->
         </div>											<!--end phome_nav-->
-     
+    </div>												<!--end main_wrapper-->
 	<?php 
 		$userSql = mysqli_query($connection,"SELECT first_name FROM v_user2project WHERE email = '$email'");
 		$userName = mysqli_fetch_row($userSql); /*UserName is used in the todo tab*/
@@ -389,6 +381,16 @@ php to add member when invite member button is clicked
 
     <div class="container">
       <div class="masthead">
+        <h2 class="text-muted"><?php echo $title;?>
+        	<button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
+            <!-- google hangout button-->
+            <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+            <div id="hangoutIcon" class="hangoutIcon"></div>
+            <script type="text/javascript">
+                gapi.hangout.render('hangoutIcon', { 'render': 'createhangout', 'widget_size':70 });
+            </script>
+        </h2>
+        
 		<!--ADD Member Modal -->
         <!-- call self php to invite member --->
            
@@ -421,7 +423,7 @@ php to add member when invite member button is clicked
         <ul id="tabs" class="nav nav-tabs nav-justified">
           <li class="active"><a href="#summary" data-toggle="tab">Summary</a></li>
           <li><a href="#tasks" data-toggle="tab">Tasks</a></li>
-          <li><a href="#uploads" data-toggle="tab">Files</a></li>
+          <li><a href="#uploads" data-toggle="tab">Uploads</a></li>
           <li><a href="#forum" data-toggle="tab">Forum</a></li>
           <li><a href="#team" data-toggle="tab">Team Members</a></li>
 		  <li><a href="#calendar" data-toggle="tab">Calendar</a></li>
@@ -449,13 +451,14 @@ php to add member when invite member button is clicked
 
 						
 			?>
-            
+            <h3>Summary</h3>
+            <hr/>
             
 			 <div id="projectStatus">
                 <h4 style="padding-left: 85px;">PROJECT Status</h4>
                 <canvas id="pieChart" height="300" width="300"></canvas> <!-- for pieChart-->
                 <div id="desc">
-                    <p>Total tasks = <?php echo $allTaskCount; ?></p>
+                    <p>Total Number of tasks = <?php echo $allTaskCount; ?></p>
                     <p style="color: #38DF64;">Tasks Completed = <?php echo $completedTasksCount; ?></p>
                     <p style="color: #f33;">Tasks Incomplete = <?php echo $incompletedTasksCount; ?></p>
                 </div>
@@ -525,7 +528,7 @@ php to add member when invite member button is clicked
                
         <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">      
-        <h3>
+        <h3>Tasks List &nbsp; &nbsp; &nbsp;
         <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button></h3>
 		<!---
         <div class="onoffswitch"> //fancy toggle switch for Status field
@@ -697,6 +700,7 @@ php to add member when invite member button is clicked
        
         <!-- //////////////////// UPLOADS TAB //////////////////////  -->
         <div class="tab-pane" id="uploads">
+            <h3>Uploads</h3>
             <?php
 			/**
 			 * the class to upload files
@@ -860,18 +864,6 @@ php to add member when invite member button is clicked
         
         <!-- //////////////////// TEAM TAB //////////////////////  -->
         <div class="tab-pane" id="team">
-        	<div id="pteam_buttonDiv">
-            	<div class="invite_member_icon">
-             <button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
-             </div>
-            <!-- google hangout button-->
-                <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
-                <div id="hangoutIcon" class="hangout_Icon">
-                <script type="text/javascript">
-                    gapi.hangout.render('hangoutIcon', { 'render': 'createhangout', 'widget_size':70 });
-                </script>
-                </div>
-            </div>
         <br/>
             <table id="datatables3" class="display">
             <thead>
@@ -880,7 +872,6 @@ php to add member when invite member button is clicked
                     <th>Email</th>
                 </tr>
             </thead>
-           
             <tbody>
 				<?php 
                     $contactSql = mysqli_query($connection,"SELECT first_name, last_name, email FROM v_user2project WHERE project_id = $id[0]");
@@ -913,7 +904,6 @@ php to add member when invite member button is clicked
         </div>
     </div>
 </div>
-</div>												<!--end main_wrapper-->
     </div> <!-- /container -->
     <script src="../../includes/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
@@ -932,8 +922,10 @@ php to add member when invite member button is clicked
         $('#tabs a[href="' + hash + '"]').tab('show');
 		
     </script>    
-	</div>
+
+    <?php require_once("../../shared/php/footer.php")?>
+
+
     
- 
 </body>
 </html>

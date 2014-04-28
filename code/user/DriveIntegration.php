@@ -30,8 +30,14 @@
 	$client->setClientId('509349210477-k7sfmbos0brvp7nse3ib357bq8f07krv.apps.googleusercontent.com');
 	$client->setClientSecret('vOXSHACk2rfdVV8d1VMcdds0');
 	$client->setRedirectUri('http://localhost:8888');
-	$client->setScopes(array('https://www.googleapis.com/auth/drive'));
+	$client->setScopes(array(
+				'https://www.googleapis.com/auth/drive',
+				'https://www.googleapis.com/auth/drive.file',
+				'https://www.googleapis.com/auth/drive.readonly',
+				'https://www.googleapis.com/auth/drive.readonly.metadata',
+				'https://www.googleapis.com/auth/drive.appdata'));
 	
+	$refreshToken = NULL;
 	//database connection
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
@@ -48,8 +54,11 @@
 					{
 						if($stmt->fetch())
 						{
-							$driveAccessToken = json_decode($driveAccessToken);
-							$client->setAccessToken(file_get_contents('conf.json'));
+							//decode the string into json
+							$jsonDriveAccessToken = json_decode($driveAccessToken);
+							//get the refreshToken
+							$refreshToken = $jsonDriveAccessToken->refresh_token;
+							$client->setAccessToken($driveAccessToken);
 						}
 					}
 				}
@@ -91,6 +100,11 @@
 							
 								else
 								{
+									if($client->isAccessTokenExpired()) 
+									{
+										$client->refreshToken($refreshToken);
+									}
+									
 									//drive folder is not exist, create one
 									//access ok
 									if ($client->getAccessToken()) 
@@ -140,6 +154,11 @@
 			$stmt->fetch();
 		DBConnection::closeConnection();
 		echo ($driveFolderID);
+		
+		if($client->isAccessTokenExpired()) 
+		{
+			$client->refreshToken($refreshToken);
+		}
 		if ($client->getAccessToken()) 
 		{
 				
@@ -163,6 +182,50 @@
 			));
 		}
 	}
+	
+	/**
+	 * Retrieve a list of File resources.
+	 *
+	 * @param Google_DriveService $service Drive API service instance.
+	 * @return Array List of Google_DriveFile resources.
+	 */
+	if(isset($_POST['List_Drive_Files']))
+	{
+		if($client->isAccessTokenExpired()) 
+		{
+			$client->refreshToken($refreshToken);
+		}
+		
+		if ($client->getAccessToken()) 
+		{/*
+			  $service = new Google_DriveService($client);
+			  $pageToken = NULL;
+			  $folderId = "0B66j_3FAnVMUbExKVXgtc2RzSlU";
+			  do {
+				try {
+				  $parameters = array();
+				  if ($pageToken) {
+					$parameters['pageToken'] = $pageToken;
+				  }
+				  $children = $service->children->listChildren($folderId, $parameters);
+print "<pre>";
+print_r($children);
+print "</pre>";	
+echo'<iframe src="https://drive.google.com/embeddedfolderview?id=0B66j_3FAnVMUbExKVXgtc2RzSlU#list" width="800" height="200" frameborder="0"></iframe>';			  
+					foreach ($children['items'] as $child) 
+					{ 
+					print_r ($child['id']);
+				  }
+				  $pageToken = $children->getNextPageToken();
+				} catch (Exception $e) {
+				  print "An error occurred: " . $e->getMessage();
+				  $pageToken = NULL;
+				}
+			  } while ($pageToken);*/
+			  
+			  echo '<iframe src="https://drive.google.com/embeddedfolderview?id=0B66j_3FAnVMUbExKVXgtc2RzSlU#list" width="800" height="500" frameborder="0"></iframe>';
+		}
+	}
 ?>
 
 
@@ -180,6 +243,10 @@
         <br />
         <input type='file' id='uploadedToDriveFile' name='uploadedToDriveFile' />
         <input type="submit" name="Upload_To_Drive" value="uploadFileToDrive" />
+         <br />
+        <input type="submit" name="List_Drive_Files" value="List_Drive_Files" />
      </form>
+  
+
 </body>
 </html>

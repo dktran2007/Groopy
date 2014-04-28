@@ -1,4 +1,5 @@
 <?php
+
 	require_once("../../shared/php/DBConnection.php");
 	$connection = DBConnection::connectDB();
 	
@@ -16,8 +17,9 @@
 		
 		$sql2 = mysqli_query($connection,"SELECT id from users where email = '$userEmail'"); // get the user's ID
 		$userId = mysqli_fetch_row($sql2);
-		
+	
 		$updatePU = "INSERT INTO project_user(project_id,user_id,active) VALUES ($newProjectId[0],$userId[0], 1)"; // inserted into project_user
+		
 		mysqli_query($connection,$updatePU);
 	}
 	

@@ -15,6 +15,12 @@ function importHeader($hParam)
 			break;
 		}
 		
+		case "checklogin":
+		{
+			require_once($_SERVER['DOCUMENT_ROOT']."/shared/php/CheckLogin.php");
+			break;
+		}
+		
 		case "mailagent":
 		{
 			require_once($_SERVER['DOCUMENT_ROOT']."/code/account/MailAgent.php");
@@ -22,10 +28,13 @@ function importHeader($hParam)
 		}
 		case "css":
 		{
-			echo '<link rel="stylesheet" type="text/css" href="http://localhost:8888/shared/css/stylesheet.css">';
-			echo '<link rel="icon"  href="http://localhost:8888/shared/assets/Groopy_Bar_Icon.png">';
-			echo '<link rel="stylesheet" type="text/css"
-			href="http://localhost:8888/includes/jquery/groopy/css/groopy/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">';
+			echo '<link rel="stylesheet" type="text/css" href="http://localhost:8888/shared/css/stylesheet.css" />';
+			echo '<link rel="icon"  href="http://localhost:8888/shared/assets/Groopy_Bar_Icon.png" />';
+		//	echo '<link type="text/css"
+		//	href="http://localhost:8888/includes/jquery/groopy/css/groopy/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />';
+		//	echo '<link rel="stylesheet" 
+		//	href="http://localhost:8888/includes/bootstrap/css/bootstrap.min.css" rel="stylesheet" />';
+		//	echo '<link href="http://localhost:8888/includes/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />';
 			break;
   		}
 		
@@ -46,8 +55,8 @@ function importHeader($hParam)
 					src="https://apis.google.com/js/plusone.js"></script>';
 			break;
 		}
+		default: break;
 	}
-	
 }
 
 function redirectPage($toPage)
@@ -61,6 +70,7 @@ function redirectPage($toPage)
 			echo $link;
 			break;
 		}
+		default: break;
 	}
 }
 ?>

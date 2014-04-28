@@ -68,8 +68,8 @@ if(isset($_POST['email']) && isset($_POST['password']))
 	}
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
     <title>Groopy</title>
@@ -157,7 +157,7 @@ if(isset($_POST['email']) && isset($_POST['password']))
   </head>
 
   <body>
-  		<div id="wrapper">            
+  		<div id="gwrapper">            
         	<div id="pindex_left" class="center_image_tag">
                	 <img src="shared/assets/Groopy_Puzzle.png" />
             </div> 											
@@ -174,7 +174,10 @@ if(isset($_POST['email']) && isset($_POST['password']))
                 <div id="pindex_loginbox">
                     <form id="login_form" action="" method="post">
                     	<input type="email" name="email" class="input_row" placeholder="Email" 
-                        	value="<?php echo $_POST['email'];?>" required/>
+                        	value="<?php 
+							if (isset($_POST['email']))
+								echo $_POST['email'];
+								?>" required/>
                         <input type="password" name="password" class="input_row" placeholder="Password" required />
                         
                         <!---------------------------------------------------------------
