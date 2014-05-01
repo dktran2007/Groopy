@@ -64,7 +64,6 @@
 				}
 			}
 		}	
-
 		DBConnection::closeConnection();
 	}
 	

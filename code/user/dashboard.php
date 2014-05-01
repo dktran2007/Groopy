@@ -89,19 +89,19 @@ php to add member when invite member button is clicked
 	<script src="../../includes/chart/chart.js"></script>
 	
     <!-- Bootstrap imports -->
-    <link href="../../includes/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="../../includes/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="../../includes/bootstrap/js/bootstrap.min.js" rel="stylesheet">
+    <link href="../../includes/bootstrap/css/bootstrap.min.css" rel="stylesheet"  />
+	<link href="../../includes/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"  />
+    <link href="../../includes/bootstrap/js/bootstrap.min.js" rel="stylesheet"  />
 
     <!-- jQuery imports -->
-    <link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+    <link href="../../includes/jquery/groopy/css/groopy/jquery-ui-1.10.4.custom.min.css" rel="stylesheet"  />
     <script src="../../includes/jquery/groopy/js/jquery-1.10.2.js"></script>
     <script src="../../includes/jquery/groopy/js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="../../includes/jquery.dataTables.js"></script>
 
     <!-- Page specific CSS -->
 
-   	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css">
+   	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css" />
 	
 	 <!-- Calendar specific jquery -->
     <link rel='stylesheet' href='../lib/cupertino/jquery-ui.min.css' />
@@ -195,6 +195,161 @@ php to add member when invite member button is clicked
 			width: 10px;
 		}
 	  
+		/*===========================================================
+								Tabs
+		=============================================================*/
+		#tasks
+		{
+			background-color:#F5F5F5;
+			margin-top:30px;
+			padding-top: 10px;
+		}
+		
+		/*===========================================================
+								 File Tab
+		=============================================================*/
+		.pfile_div
+		{
+			position:relative;
+			float:left;
+			width: 100%;
+			margin-top: 30px;
+			background-color:#F5F5F5;
+		}
+		/*===========================================================
+								 Vertical Nav
+		=============================================================*/
+		.pfile_vertical_nav
+		{
+			position:relative;
+			float:left;
+			width: 15%;
+			margin-top: 10px;
+			margin-left: 10px;
+			margin-right: 10px;
+			border:1px solid #CCC;
+			background-color:#F5F5F5;
+			padding: 10px;
+		}
+		
+		.pfile_vertical_nav .buttons_div
+		{
+			position:relative;
+			float:left;
+			width: 100%;
+			padding:5px;
+		}
+		.g_general_button
+		{
+			width: 100%;
+			background-color:#ECECEC;
+			border-radius: 3px;
+			cursor:pointer;
+			border:1px solid #5F5F5F;
+			color:#000;
+			font-size:12px;
+			margin-bottom: 5px;
+		}
+		
+		.g_general_button:hover
+		{
+			background-color:#CCC;
+		}
+		/*===========================================================
+								 Groopy File
+		=============================================================*/
+		.pgroopyfile_div
+		{
+			position:relative;
+			float:left;
+			width: 82%;
+			background-color:#F5F5F5;
+		}
+		.pgroopyfile_upload_div
+		{
+			position:relative;
+			float:left;
+			width: 98%;
+			padding: 10px;
+			border:1px solid #CCC;
+			margin: 10px 0px 10px 10px;
+		}
+		.newlineDiv
+		{
+			padding-bottom:5px;
+		}
+		
+		.submit_button
+		{
+			width: 100px;
+			margin-top:10px;
+		}
+		
+		.general_button
+		{
+			width: 70px;
+			background-color:#ECECEC;
+			border-radius: 3px;
+			cursor:pointer;
+			border:1px solid #5F5F5F;
+			color:#000;
+			font-size:16px;
+		}
+		
+		.general_button:hover
+		{
+			background-color:#CCC;
+		}
+		
+		.pgroopyfile_filecontainer
+		{
+			position:relative;
+			float:left;
+			width:100%;
+			padding:10px;
+			
+		}
+		.pgroopyfile_filecontainer .file_row
+		{
+			position:relative;
+			float:left;
+			width: 100%;
+			height: 30px;
+			padding: 4px 10px 0px 10px;
+			background-color:#ECECEC;
+			border:1px solid #DBDBDB;		
+		}
+		.pgroopyfile_filecontainer .file_row img
+		{
+			margin-right: 40px;
+		}
+		
+		/*===========================================================
+								 Google Drive File
+		=============================================================*/
+		.pgoogledrive_div
+		{
+			position:relative;
+			float:left;
+			width: 82%;
+			background-color:#F5F5F5;
+		}
+		.pgoogledrive_filecontainer
+		{
+			position:relative;
+			float:left;
+			width: 98%;
+			padding: 10px;
+			border:1px solid #CCC;
+			margin: 10px 0px 10px 10px;
+		}
+		.button_width
+		{
+			width: 250px;
+		}
+		.need_left_margin
+		{
+		}
 	</style>
 	<!--Calendar required script-->
 	<script>
@@ -226,6 +381,30 @@ php to add member when invite member button is clicked
                     }
                 }
             });    
+			
+			/////////////////////////////////////////////////////////
+			// Hide google drive div by default
+			/////////////////////////////////////////////////////////
+			
+		
+			$('#pgoogledrive_div').hide();
+			$('#buttons_div').hide();
+			$('#pgroopyfile_div').show();	
+		
+			 $('#googleDriveLink').click(function(){ 
+				  $('#pgroopyfile_div').hide();
+				  $('#pgoogledrive_div').show();
+				  $('#buttons_div').show();
+
+			  });
+			
+			 $('#groopyFileLink').click(function(){ 
+				  $('#pgoogledrive_div').hide();
+				  $('#buttons_div').hide();
+				  $('#pgroopyfile_div').show();		 
+			 }); 
+			 
+			
         });
     </script>
 	
@@ -235,7 +414,7 @@ php to add member when invite member button is clicked
 //			$('#datatables').dataTable(); todo table
 			$('#datatables2').dataTable(); // tasks table
 			$('#datatables3').dataTable(); // teams table
-			
+					
 		})
 		$(document).on("click", ".edit-MyTasks", function () {
 			 var taskId = $(this).data('id');
@@ -526,7 +705,8 @@ php to add member when invite member button is clicked
         <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">      
         <h3>
-        <button class="icons" data-toggle="modal" data-target="#addTaskModal"><img src="../../shared/images/addTask.png" title="Add Task"></button></h3>
+        <input type="button" value="Add Task" class="blue_button submit_button" data-target="#addTaskModal" data-toggle="modal"/>
+        </h3>
 		<!---
         <div class="onoffswitch"> //fancy toggle switch for Status field
             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
@@ -696,48 +876,427 @@ php to add member when invite member button is clicked
 		</div>
        
         <!-- //////////////////// UPLOADS TAB //////////////////////  -->
+         <div class="modal fade" id="shareDrivePermModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Share Folder Permission</h4>
+              </div>
+              <div class="modal-body">
+               <form method="post" action="">
+               			<input type="hidden" name="Share_Drive_Permission" value="true"/>
+                    <p>
+                        <label for="email">Email: </label>
+                        <input type="email" name="emailToShareDrive" id="email" required />
+                    </p>
+                    <p>
+                      <input type="submit" name="submit" id="submit" value="Share" class="btn btn-danger" />
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
+                    </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+            
         <div class="tab-pane" id="uploads">
-            <?php
-			/**
-			 * the class to upload files
-			 * @author lamlu
-			 */
-			if(isset($_FILES['uploadedFile']) && isset($_POST['userEmail']) && isset($_POST['projectId']))
-			{
-				$iFile = $_FILES['uploadedFile'];
-				$iEmail = $_POST['userEmail'];
-				$iID = $_POST['projectId'];
-				$resultArray = array();
-				require_once("FileProcessor.php");
-				$resultArray = FileProcessor::uploadFile($iFile,$iEmail,$iID);		
-			}
-	
-				$kUploadProjectID = $id[0];
-				if ($stmt = $connection->prepare("Select path, alias from files where project_id = ?")) 
+        	<div class="pfile_div">
+            	<div class="pfile_vertical_nav">
+            		<a href="#pgroopyfile_div" id="groopyFileLink"> Groopy Files</a>
+                    <br />
+                    <a href="#uploads" id="googleDriveLink">Google Drive</a>
+                    <div class="buttons_div" id="buttons_div">
+                   		 <form  action="" method="post" enctype="multipart/form-data">
+                         	<input type="hidden" value="Create_Folder" name="Create_Folder"  />
+                    		<input type="submit" value="Create Root Folder" class="g_general_button" />
+                           </form>
+                        <input type="button" value="Share Permission" class="g_general_button" data-toggle="modal" data-target="#shareDrivePermModal" />
+                    </div>
+            	</div>								<!-- end pfile_vertical_nav-->
+                
+                <!------------------------------------------------------------------------------------------------------------------->
+                <!----------------------------------------------------pgroopyfile_div------------------------------------------------>
+                <!------------------------------------------------------------------------------------------------------------------->
+                <div class="pgroopyfile_div" id="pgroopyfile_div">
+                    <div class="pgroopyfile_upload_div">
+                        <div class="newlineDiv"><span> Choose a file to upload </span></div>
+                        <span>
+                            <form id='uploadForm' action="" method="post" enctype="multipart/form-data">
+                                <div class="newlineDiv"><input type='file' id='uploadedFile' name='uploadedFile' /></div>
+                                 <input type="reset" value="Cancel" class="general_button" />
+                                 <input type="hidden" value="<?php echo $id[0];?>" name="projectId" />
+                                 <input type="hidden" value="<?php session_start(); echo $_SESSION['email'];?>" name="userEmail" />
+                                 <input type="submit" name="submit" value="Submit" class="blue_button submit_button"  />
+                               
+                            </form>
+                        </span>
+                    </div> 							<!-- end pgroopyfile_upload_div-->
+                    
+                    <div class="pgroopyfile_filecontainer">
+                        <?php
+                        /**
+                         * the class to upload files
+                         * @author lamlu
+                         */
+                        if(isset($_FILES['uploadedFile']) && isset($_POST['userEmail']) && isset($_POST['projectId']))
+                        {
+                            $iFile = $_FILES['uploadedFile'];
+                            $iEmail = $_POST['userEmail'];
+                            $iID = $_POST['projectId'];
+                            $resultArray = array();
+                            require_once("FileProcessor.php");
+                            $resultArray = FileProcessor::uploadFile($iFile,$iEmail,$iID);		
+                        }
+                
+                            $kUploadProjectID = $id[0];
+                            if ($stmt = $connection->prepare("Select path, alias from files where project_id = ?")) 
+                                {
+                                    if ($stmt->bind_param("d", $kUploadProjectID))
+                                    {
+                                        if ($stmt->execute()) 
+                                        {
+                                            if ($stmt->bind_result($kUploadPathResult, $kUploadAliasResult))
+                                            {
+                                                while($stmt->fetch())
+                                                {
+                                                    echo '<div class="file_row">'.'<img src="http://localhost:8888/shared/assets/download_icon.png" />'.'<a href="'.$kUploadPathResult.'"download="'.$kUploadAliasResult.'">'.$kUploadAliasResult.'</a>'.'</div>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                    
+                        ?>
+                        
+                    </div>							<!-- end pgroopyfile_filecontainer-->
+                </div>								<!-- end pgroopyfile_div-->
+                
+                <!------------------------------------------------------------------------------------------------------------------->
+                <!----------------------------------------------------pgoogledrive_div------------------------------------------------>
+                <!------------------------------------------------------------------------------------------------------------------->
+                
+				<?php
+					if(isset($_POST['needDriveAuthen']))
 					{
-						if ($stmt->bind_param("d", $kUploadProjectID))
+						require_once '../../includes/google-api-php-client/src/Google_Client.php';
+						require_once '../../includes/google-api-php-client/src/contrib/Google_DriveService.php';
+					
+						$client = new Google_Client();
+						$client->setClientId('509349210477-k7sfmbos0brvp7nse3ib357bq8f07krv.apps.googleusercontent.com');
+						$client->setClientSecret('vOXSHACk2rfdVV8d1VMcdds0');
+						$client->setRedirectUri('http://localhost:8888/code/user/googleAPIAuthentication.php');
+						$client->setScopes(array(
+									'https://www.googleapis.com/auth/drive',
+									'https://www.googleapis.com/auth/drive.file',
+									'https://www.googleapis.com/auth/drive.readonly',
+									'https://www.googleapis.com/auth/drive.readonly.metadata',
+									'https://www.googleapis.com/auth/drive.appdata'));
+						$authUrl = $client->createAuthUrl();
+						if(isset($_GET['code']))
 						{
-							if ($stmt->execute()) 
+							//already have access token, do something here
+							$accessToken = $client->authenticate($_GET['code']);
+							$email = $_SESSION['email'];
+							if ($email == NULL)
 							{
-								if ($stmt->bind_result($kUploadPathResult, $kUploadAliasResult))
+								//no login, redirect to login page
+								header('Location: '.filter_var('../account/signIn.php'));
+							}
+							
+							//store access token into the database
+							require_once("../../shared/php/DBConnection.php");
+							$connection = DBConnection::connectDB();
+							if ($connection != null)
 								{
-									while($stmt->fetch())
+									/* create a prepared statement */
+									if ($stmt = $connection->prepare("Update Users set driveAPI_Token = ? where email =?")) 
 									{
-										echo '<a href="'.$kUploadPathResult.'"download="'.$kUploadAliasResult.'">'.$kUploadAliasResult.'</a>'.'<br />';
+										//$accessToken = json_encode($accessToken);
+										if ($stmt->bind_param("ss", $accessToken, $email))
+										{
+											if ($stmt->execute()) 
+											{
+												//store token ok
+												
+												//echo "You can use Google Drive API now";
+												
+											}
+										}
 									}
 								}
-							}
+							DBConnection::closeConnection();
+						}
+						else
+						{
+							//if there is no access token yet, authenticate here
+							echo '<script type="text/javascript">
+					
+									window.open("'.$authUrl.'",\'_blank\');'.'
+									</script>';
 						}
 					}
-		
-			?>
-            <form id='uploadForm' action="" method="post" enctype="multipart/form-data">
-                <input type='file' id='uploadedFile' name='uploadedFile' />
-                <input type="reset" value="clear" />
-                <input type="hidden" value="<?php echo $id[0];?>" name="projectId" />
-                <input type="hidden" value="<?php session_start(); echo $_SESSION['email'];?>" name="userEmail" />
-                <input type="submit" name="submit" value="Submit" />
-            </form>
+				?>
+           
+                <div class="pgoogledrive_div" id="pgoogledrive_div">
+                	<div class="pgroopyfile_upload_div" id= "pgoogledrive_upload_div" style="display: none;">
+                        <div class="newlineDiv"><span> Choose a file to upload to Google Drive </span></div>
+                        <span>
+                            <form id='driveIntegration' action="" method="post" enctype="multipart/form-data">
+                                <div class="newlineDiv"><input type='file' id='uploadedToDriveFile' name='uploadedToDriveFile' /></div>
+                                 <input type="reset" value="Cancel" class="general_button" />
+                                 <input type="hidden" name="Upload_To_Drive" value="Upload_To_Drive" />
+                                 <input type="hidden" value="<?php session_start(); echo $_SESSION['email'];?>" name="userEmail" />
+                                 <input type="submit" name="submit" value="Submit" class="blue_button submit_button"  />
+                               
+                            </form>
+                            
+                        </span>
+                    </div> 							<!-- end pgroopyfile_upload_div-->
+                    
+                	<div class="pgoogledrive_filecontainer" id="pgoogledrive_filecontainer">
+                    	<span>Before you can use Google Drive service, you need to authorize Groopy to access your Google Drive</span><br />
+                        <form action="" method="post">
+                        	<input type="submit" class="blue_button submit_button button_width need_left_margin" value="Authorize Google Drive Access" />
+                            <input type="hidden" name="needDriveAuthen" value="needDriveAuthen" />
+                        </form>
+                    </div>
+                    <?php
+					
+					if(isset($_SESSION['isDriveAuthen']) && $_SESSION['isDriveAuthen'] == true)
+					{
+						//===================================================
+						// set up Google API client and 
+						// check token access for the client
+						//===================================================
+						require_once '../../includes/google-api-php-client/src/Google_Client.php';
+						require_once '../../includes/google-api-php-client/src/contrib/Google_DriveService.php';
+						require_once '../../includes/google-api-php-client/src/contrib/Google_Oauth2Service.php';
+						
+						$client = new Google_Client();
+						$client->setClientId('509349210477-k7sfmbos0brvp7nse3ib357bq8f07krv.apps.googleusercontent.com');
+						$client->setClientSecret('vOXSHACk2rfdVV8d1VMcdds0');
+						$client->setRedirectUri('http://localhost:8888');
+						$client->setScopes(array(
+									'https://www.googleapis.com/auth/drive',
+									'https://www.googleapis.com/auth/drive.file',
+									'https://www.googleapis.com/auth/drive.readonly',
+									'https://www.googleapis.com/auth/drive.readonly.metadata',
+									'https://www.googleapis.com/auth/drive.appdata'));
+						
+						$refreshToken = NULL;
+						//database connection
+						require_once("../../shared/php/DBConnection.php");
+						$connection = DBConnection::connectDB();
+						
+						$kEmailAuthen = $_SESSION['email'];
+						if ($connection != null)
+						{
+							$sql = mysqli_query($connection,"Select driveAPI_Token from users where email =  '$kEmailAuthen'");
+							$kdToken = mysqli_fetch_row($sql);
+							//decode the string into json
+							$jsonDriveAccessToken = json_decode($kdToken[0]);
+							//get the refreshToken
+							$refreshToken = $jsonDriveAccessToken->refresh_token;
+							
+							$client->setAccessToken($kdToken[0]);
+							if($kdToken != NULL)
+							{
+								$_SESSION['isDriveAuthen'] = true;
+								echo '<script type="text/javascript">
+									document.getElementById("pgoogledrive_upload_div").style.display = "inline";
+								</script>';
+								echo '<script type="text/javascript">
+									document.getElementById("pgoogledrive_filecontainer").style.display = "none";
+								</script>';
+								
+								if($client->isAccessTokenExpired()) 
+								{
+									$client->refreshToken($refreshToken);
+								}
+								
+								if ($client->getAccessToken()) 
+								{
+									  $kdProjectID = $_SESSION['projectID'];
+									  $sql = mysqli_query($connection,"Select drive_folder_id from project where id =  '$kdProjectID'");
+									  $kdfolderIDs = mysqli_fetch_row($sql);
+									  $kdfolderid = $kdfolderIDs[0];
+									  if($kdfolderid != NULL)
+									  {
+									  echo
+									  '<iframe src="https://drive.google.com/embeddedfolderview?id='.$kdfolderid.'#list" width="900" height="500" frameborder="0"></iframe>';
+			
+									  }
+
+							
+								}
+							}
+							
+							else $_SESSION['isDriveAuthen'] = false;
+						}	
+					}
+					?>
+           			
+                    <?php
+                    //===================================================
+					// Upload file to google drive
+					//===================================================
+					if(isset($_POST['Upload_To_Drive']))
+					{
+						$fileMIME =  $_FILES['uploadedToDriveFile']['type'];
+						$fileName = $_FILES['uploadedToDriveFile']['name'];
+						
+							$connection = DBConnection::connectDB();
+							$projectID = $_SESSION['projectID'];
+							$stmt = NULL;
+							$stmt = $connection->prepare("Select drive_folder_id from project where id =?");
+							$stmt->bind_param("s", $projectID);
+							$stmt->execute();
+							$stmt->bind_result($driveFolderID);
+							$stmt->fetch();				
+						if($client->isAccessTokenExpired()) 
+						{
+							$client->refreshToken($refreshToken);
+						}
+						if ($client->getAccessToken()) 
+						{
+								
+							$service = new Google_DriveService($client);
+								
+							$file = new Google_DriveFile();
+							$file->setTitle($fileName);
+							$file->setDescription('');
+							$file->setMimeType($fileMIME);
+									
+							$parent = new Google_ParentReference();
+									
+							$parent->setId($driveFolderID);
+									
+							$file->setParents(array($parent));
+							$data = file_get_contents($_FILES['uploadedToDriveFile']['tmp_name']); 
+									
+							$createdFile = $service->files->insert($file, array(
+								'data' => $data,
+								'mimeType' => $fileMIME,
+							));
+						}
+					}
+					?>
+                    
+					 <?php               
+                    //===================================================
+                    //create the Drive Root Folder
+                    //Possibly leave the subfolder creation to 
+                    //Google API Picker?
+                    //===================================================
+                    if(isset($_POST['Create_Folder']))
+                    {
+                        //check if there is a root folder for the project yet?
+                        //if not, create
+                        //if there is already, open warning?
+                        $projectID = $_SESSION['projectID'];
+                        $connection = DBConnection::connectDB();
+                        if ($connection != null)
+                        {
+                            /* create a prepared statement */
+                            if ($stmt = $connection->prepare("Select name, drive_folder_id from project where id =?")) 
+                            {
+                                if ($stmt->bind_param("s", $projectID))
+                                {
+                                    if ($stmt->execute()) 
+                                    { 
+                                        if ($stmt->bind_result($projectName,$driveFolderID))
+                                        {
+                                            if($stmt->fetch())
+                                            {
+                                                //drive folder exists, possible warn the user to continue
+                                                
+                                                if (!empty($driveFolderID) && $driveFolderID != NULL )
+                                                    return; //echo "there is a folder";
+                                            
+                                                else
+                                                {
+                                                    if($client->isAccessTokenExpired()) 
+                                                    {
+                                                        $client->refreshToken($refreshToken);
+                                                    }
+                                                    
+                                                    //drive folder is not exist, create one
+                                                    //access ok
+                                                    if ($client->getAccessToken()) 
+                                                    {
+                                            
+                                                        $service = new Google_DriveService($client);
+                                                    
+                                                        $file = new Google_DriveFile();
+                                                        $file->setTitle($projectName.' Root Folder'); //name of the folder
+                                                        $file->setDescription($projectName.' Root Folder');
+                                                        $file->setMimeType('application/vnd.google-apps.folder');
+                                                        $createdFile = $service->files->insert($file, array(
+                                                            'mimeType' => 'application/vnd.google-apps.folder',
+                                                        ));
+                                                        $stmt = NULL;
+                                                        $stmt = $connection->prepare("update project set drive_folder_id = ? where id = ?");
+                                                        $stmt->bind_param("ss",$createdFile['id'] ,$projectID);										
+                                                        $stmt->execute();
+                                                      		
+                                                    }
+                                                }
+                                            }	
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ?>
+                    
+                    <?php               
+                    //===================================================
+                    // share google drive permission
+                    //===================================================
+                    if(isset($_POST['Share_Drive_Permission']))
+                    {
+						function insertPermission($service, $fileId, $value, $type, $role) 
+						{
+								  $newPermission = new Google_Permission();
+								  $newPermission->setValue($value);
+								  $newPermission->setType($type);
+								  $newPermission->setRole($role);
+								  try {
+									return $service->permissions->insert($fileId, $newPermission);
+								  } catch (Exception $e) {
+									//print "An error occurred: " . $e->getMessage();
+								  }
+								  return NULL;
+						}
+         				if($client->isAccessTokenExpired()) 
+                        {
+                        	$client->refreshToken($refreshToken);
+						}
+                                                    
+                        //drive folder is not exist, create one
+                        //access ok
+                        if ($client->getAccessToken()) 
+                        {                
+							$kshareDriveEmail = $_POST['emailToShareDrive'];
+                            $service = new Google_DriveService($client);
+							$connection = DBConnection::connectDB();
+							$projectID = $_SESSION['projectID'];
+							$stmt = NULL;
+							$driveFolderID = NULL;
+							$stmt = $connection->prepare("Select drive_folder_id from project where id =?");
+							$stmt->bind_param("s", $projectID);
+							$stmt->execute();
+							$stmt->bind_result($driveFolderID);
+							$stmt->fetch();	
+							if($driveFolderID != NULL)
+								insertPermission($service,$driveFolderID,$kshareDriveEmail,"user","writer");  		
+                        }            	
+                    }
+                    ?>
+                </div>								<!-- end pgoogledrive_div-->
+            </div>									<!-- end pfile_div-->
         </div>
         
         <!-- //////////////////// FORUM TAB //////////////////////  -->

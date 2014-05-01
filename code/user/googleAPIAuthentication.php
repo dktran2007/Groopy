@@ -43,12 +43,13 @@
 						if ($stmt->execute()) 
 						{
 							//store token ok
+							$_SESSION['isDriveAuthen'] = true;
 							echo "You can use Google Drive API now";
 						}
 					}
 				}
 			}
-		DBConnection::connectDB();
+		DBConnection::closeConnection();
 	}
 	else
 	{
