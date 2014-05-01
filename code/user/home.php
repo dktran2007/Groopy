@@ -54,7 +54,10 @@ $email = $_SESSION['email'];
                         <a href="#">
                         <?php
 						if(isset($_SESSION['firstName']) || isset($_SESSION['lastName']))
-							echo $_SESSION['firstName']." ".$_SESSION['lastName'];
+						{
+							$lastInitial = $_SESSION['lastName'][0];
+							echo $_SESSION['firstName']." ".$lastInitial.".";
+						}
                         ?></a>
                         <div class="dropdownContain">
                             <div class="dropOut">
