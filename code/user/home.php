@@ -145,7 +145,8 @@ $email = $_SESSION['email'];
             <div class="right_div">
                 <h3 class="heading">Todo's List</h3>
                 <?php 
-                    $userSql = mysqli_query($connection, "SELECT first_name FROM users where email = 'shrutip25@yahoo.com'");
+	                $email = $_SESSION['email'];
+                    $userSql = mysqli_query($connection, "SELECT first_name FROM users where email = '$email'");
                     $userName = mysqli_fetch_row($userSql);
                     $taskStmt = mysqli_query($connection,"SELECT t.task, t.deadline, p.name FROM tasks t, project p where 
                                                         status = 'Incomplete' AND assignedTo = '$userName[0]' AND p.id = t.project_id ORDER BY t.deadline ASC;"); 								

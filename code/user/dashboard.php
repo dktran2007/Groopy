@@ -154,12 +154,12 @@ php to add member when invite member button is clicked
 			width: 1040px;
 		}
 		.replyBtn{
-			background: #F33;
-			border: 1px solid #F33;
-			padding: 4px 15px;
+			background: #005CE6;
+			border: 1px solid black;
+			padding: 2px 20px;
 			  border-radius: 5px;
 			  float: right;
-			  margin-top: -35px;
+			  margin-top: -40px;
 			  margin-right: 50px;
 			  color: white;
 		  }
@@ -198,7 +198,7 @@ php to add member when invite member button is clicked
 		/*===========================================================
 								Tabs
 		=============================================================*/
-		#tasks
+		#tasks, #forum, #collaborate, #calendar
 		{
 			background-color:#F5F5F5;
 			margin-top:30px;
@@ -565,6 +565,7 @@ php to add member when invite member button is clicked
         </div>											<!--end phome_nav-->
      
 	<?php 
+		$email = $_SESSION['email'];
 		$userSql = mysqli_query($connection,"SELECT first_name FROM v_user2project WHERE email = '$email'");
 		$userName = mysqli_fetch_row($userSql); /*UserName is used in the todo tab*/
 	?>
@@ -605,7 +606,7 @@ php to add member when invite member button is clicked
           <li><a href="#tasks" data-toggle="tab">Tasks</a></li>
           <li><a href="#uploads" data-toggle="tab">Files</a></li>
           <li><a href="#forum" data-toggle="tab">Forum</a></li>
-          <li><a href="#team" data-toggle="tab">Team Members</a></li>
+          <li><a href="#collaborate" data-toggle="tab">Collaborate</a></li>
 		  <li><a href="#calendar" data-toggle="tab">Calendar</a></li>
         </ul>
         <div id="tab-content" class="tab-content">
@@ -618,8 +619,10 @@ php to add member when invite member button is clicked
 				$completedTasks = mysqli_query($connection,"SELECT * FROM tasks WHERE project_id = $id[0] AND status = 'Complete'");
 				$completedTasksCount = mysqli_num_rows($completedTasks);
 				$incompletedTasksCount = $allTaskCount - $completedTasksCount;
-				$completed = ($completedTasksCount / $allTaskCount) * 100;
-				$incomplete = 100 - $completed;
+				if($allTaskCount != 0){ /*To prevent "Dividing by ZERO error"*/
+					$completed = ($completedTasksCount / $allTaskCount) * 100;
+					$incomplete = 100 - $completed;
+				}
 				
 				$teamMemberCount = mysqli_query($connection,"SELECT first_name FROM v_user2project WHERE project_id = $id[0]");
 				$numberOfUsers = mysqli_num_rows($teamMemberCount);
@@ -632,39 +635,66 @@ php to add member when invite member button is clicked
 						
 			?>
             
-            
+            <br/><br/>
 			 <div id="projectStatus">
                 <h4 style="padding-left: 85px;">PROJECT Status</h4>
+                <br/>
                 <canvas id="pieChart" height="300" width="300"></canvas> <!-- for pieChart-->
                 <div id="desc">
-                    <p>Total tasks = <?php echo $allTaskCount; ?></p>
-                    <p style="color: #38DF64;">Tasks Completed = <?php echo $completedTasksCount; ?></p>
-                    <p style="color: #f33;">Tasks Incomplete = <?php echo $incompletedTasksCount; ?></p>
+				<?php 
+					if($allTaskCount != 0){ /*If a task has been created!*/
+						if ($completedTasksCount >= 1){ // atleast one task is completed
+				?>
+                	<p style="color: #38DF64;  font-size: 15px;"> <strong><?php echo $completedTasksCount?></strong> of <strong><?php echo $allTaskCount?></strong>  tasks are completed!</p>
+                    <?php } // closing completedTasksCount if
+					else{
+					?>
+                    <p style="color: #FA8072;  font-size: 14px;"> <strong>NO</strong> tasks have been completed!</p>
+                <?php 
+						}// closing else
+					} // closing $allTaskCount if
+					else{?>
+						<i style="color: #FA8072; margin-left: -350px; font-size: 15px; text-decoration:underline;">NO TASKS</i> <i style="color: #FA8072; font-size: 15px;">has been assigned currently.Click on the "Tasks" tab to get started.</i>
+					<?php }
+				?>
                 </div>
             </div>
-            <div id="teamStatus">
+            <div id="teamStatus" style="margin-right:50px;">
            		<h4 style="padding-left: 150px;">TEAM Contribution</h4>
+                <br/>
                 <canvas id="doghnutChart" height="300" width="300"></canvas> 
                 <div id="desc2">
-                    <p>Team Count = <?php echo $numberOfUsers; ?></p>
-					<?php 
-					$i = 0;
-					
-					 while ($row = $teamMemberCount->fetch_assoc() ) {
-						 $user = $row['first_name'];
-						 $individualContribution = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = '$user' AND project_id = $id[0] AND status = 'Complete'");
-						$userCount = mysqli_num_rows($individualContribution);
-						$userArray[$i] = $userCount;
-//						$percent = ($userArray[$i]/ $allTaskCount) * 100;
-						$i++;
-					?>
-                    <div id="user2contribution">
-                    	<div id="user"><?php echo $user?>
-                        	<div id="contribution"><?php echo $userCount;?></div>
-                        </div>
-                    </div>
-                    <?php 
-					}// closing while loop  ?>
+                <?php 
+				if ($numberOfUsers > 1){ // for your project you have more than yourself!
+					if ($completedTasksCount != 0){ // if teams members haven't completed their tasks?>
+						<p>Team of <?php echo $numberOfUsers;?> contribution</p>
+						<?php 
+						$i = 0;
+						
+						 while ($row = $teamMemberCount->fetch_assoc() ) {
+							 $user = $row['first_name'];
+							 $individualContribution = mysqli_query($connection,"SELECT * FROM tasks WHERE assignedTo = '$user' AND project_id = $id[0] AND status = 'Complete'");
+							$userCount = mysqli_num_rows($individualContribution);
+							$userArray[$i] = $userCount;
+	//						$percent = ($userArray[$i]/ $allTaskCount) * 100;
+							$i++;
+						?>
+						<div id="user2contribution">
+							<div id="user"><?php echo $user?>
+								<div id="contribution"><?php echo $userCount;?></div>
+							</div>
+						</div>
+						<?php 
+						}// closing while loop 
+					}// closing if
+					else{?>
+					<p style="color: #FA8072;  margin-left: -350px;font-size: 15px;"> Sorry, <strong>NONE</strong> of the team members have contributed!</p>
+					<?php } // closing else
+				}// closing if
+				else{?>
+                <p style="color: #FA8072;  margin-left: -350px;font-size: 15px;"> Seems like you are working alone.</p> 
+                <p style="color: #FA8072;  margin-left: -350px;font-size: 15px;"> Click on the "Collaborate" tab and invite members to the project!</p>
+                <?php }// closing else?>
                 </div>
            </div>
 
@@ -707,18 +737,7 @@ php to add member when invite member button is clicked
                
         <!-- //////////////////// TASKS TAB //////////////////////  -->
         <div class="tab-pane" id="tasks">      
-        <h3>
-        <input type="button" value="Add Task" class="blue_button submit_button" data-target="#addTaskModal" data-toggle="modal"/>
-        </h3>
-		<!---
-        <div class="onoffswitch"> //fancy toggle switch for Status field
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
-            <label class="onoffswitch-label" for="myonoffswitch">
-                <div class="onoffswitch-inner"></div>
-                <div class="onoffswitch-switch"></div>
-            </label>
-        </div>
-        --->
+        <input type="button" value="Add Task" class="blue_button submit_button" data-target="#addTaskModal" data-toggle="modal" style=" margin: 10px 20px 20px 20px;"/>
       <!--ADD Task Modal -->
         <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -770,7 +789,7 @@ php to add member when invite member button is clicked
                         <input type="hidden" name="projectId" id="projectId" value="<?php echo $id[0];?>"/>
                     </p>
                     <p>
-                      <input type="submit" name="submit" id="submit" value="Add Task" class="btn btn-danger" />
+                      <input type="submit" name="submit" id="submit" value="Add Task"/>
                       <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 340px;">Cancel</button>
                     </p>
                 </form>
@@ -1356,7 +1375,7 @@ php to add member when invite member button is clicked
 						  $sql = mysqli_query($connection,"SELECT topic FROM discussion WHERE id = $idArray[$x]");
 						  $title = mysqli_fetch_row($sql);
 					  ?>
-                      <h2><?php echo $title[0];?></h2><button class="replyBtn" data-toggle="modal" data-target="#addPost<?php echo $idArray[$x];?>">REPLY</button>
+                      <h2><?php echo $title[0];?></h2><button class="replyBtn" data-toggle="modal" data-target="#addPost<?php echo $idArray[$x];?>">POST</button>
                       <hr/>
 					<!-- Add Post Modal -->
                     <div class="modal fade" id="addPost<?php echo $idArray[$x];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1420,8 +1439,8 @@ php to add member when invite member button is clicked
 			<?php } /*closing if loop*/	?>
         </div>
         
-        <!-- //////////////////// TEAM TAB //////////////////////  -->
-        <div class="tab-pane" id="team">
+        <!-- //////////////////// COLLABORATE TAB //////////////////////  -->
+        <div class="tab-pane" id="collaborate">
         	<div id="pteam_buttonDiv">
             	<div class="invite_member_icon">
              <button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
@@ -1467,7 +1486,7 @@ php to add member when invite member button is clicked
                 ?>
             </tbody>
         </table>
-        </div> <!--/team-->
+        </div> <!--/collaborate-->
 		
 		<!-- //////////////////// CALENDAR TAB //////////////////////  -->
 		<div class="tab-pane" id="calendar">
