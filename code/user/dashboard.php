@@ -118,7 +118,7 @@ php to add member when invite member button is clicked
 		.tab-pane{
 			padding-left: 10px;
 		}
-		.{
+		.inviteIcons{
 			margin-left: 20px;
 			margin-right: 15px;
 			background:none;
@@ -1445,7 +1445,7 @@ php to add member when invite member button is clicked
         <div class="tab-pane" id="collaborate">
         	<div id="pteam_buttonDiv">
             	<div class="invite_member_icon">
-             <button class="icons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
+             <button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
              </div>
             <!-- google hangout button-->
                 <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
