@@ -118,12 +118,14 @@ php to add member when invite member button is clicked
 		.tab-pane{
 			padding-left: 10px;
 		}
-		.inviteIcons{
+		.{
 			margin-left: 20px;
 			margin-right: 15px;
+			background:none;
 		}
 		.icons{
 			margin-right: 15px;
+			background:none;
 		}
 		#post{
 		  border: 2px solid #555;
@@ -882,7 +884,7 @@ php to add member when invite member button is clicked
                 ?>
                     <tr>
                         <td><a class="edit-MyTasks" data-toggle="modal" data-target="#editTaskModal"  data-id="<?=$row['id']?>" data-task="<?=$row['task']?>" data-assignee="<?=$row['assignedTo']?>" data-status="<?=$row['status']?>" data-priority="<?=$row['priority']?>" data-deadline="<?=$row['deadline']?>">
-                        		<img src="../../shared/images/edit.png" title="Edit Task <?=$row['id']?>">
+                        		<img src="../../shared/images/edit.png" title="Edit Task">
                             </a></td>
                         <td><?=$row['assignedTo']?></td>
                         <td><?=$row['task']?></td>
@@ -1365,7 +1367,7 @@ php to add member when invite member button is clicked
                 </ul>
                 <div class="tab-content" id="postArea">
                     <div class="tab-pane active" id="default">
-                      <h2>Discussion Board Manager &nbsp;&nbsp;&nbsp;<button class="icons" data-toggle="modal" data-target="#newDiscussion"><img src="../../shared/images/addTask.png" title="Start a new TOPIC"></button> </h2>
+                      <h2>Discussion Board Manager &nbsp;&nbsp;&nbsp;<button class="icons" data-toggle="modal" data-target="#newDiscussion"><img src="../../shared/images/addTask.png" title="Start a Discussion"></button> </h2>
                     </div>
                     <?php 
 					$count = count($idArray);
@@ -1376,7 +1378,7 @@ php to add member when invite member button is clicked
 						  $title = mysqli_fetch_row($sql);
 					  ?>
                       <h2><?php echo $title[0];?></h2><button class="replyBtn" data-toggle="modal" data-target="#addPost<?php echo $idArray[$x];?>">POST</button>
-                      <hr/>
+                      <hr style="border-top: 1px solid #bbb;"/>
 					<!-- Add Post Modal -->
                     <div class="modal fade" id="addPost<?php echo $idArray[$x];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
@@ -1443,7 +1445,7 @@ php to add member when invite member button is clicked
         <div class="tab-pane" id="collaborate">
         	<div id="pteam_buttonDiv">
             	<div class="invite_member_icon">
-             <button class="inviteIcons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
+             <button class="icons" data-toggle="modal" data-target="#addMemberModal"><img src="../../shared/images/addMember.png" title="Invite Members"></button>
              </div>
             <!-- google hangout button-->
                 <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>

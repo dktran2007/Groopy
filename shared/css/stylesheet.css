@@ -498,6 +498,7 @@ Navigation bar dropdown
 	padding-top:12px;
 	margin: 0 auto;
 	padding-left:25%;
+	color: #005CE6;
 }
 #phome_nav_titleDiv span
 {
@@ -583,7 +584,7 @@ Navigation bar dropdown
 	padding-top: 5px;
 	font-size: 20px;
 	padding-left: 20px;
-	color: #F33;
+	color: #AD0035;
 }
 	  
 #phome_projectsDiv .project h4
