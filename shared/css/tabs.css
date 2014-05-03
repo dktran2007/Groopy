@@ -1,7 +1,3 @@
-body {
-  padding-top: 50px;
-}
-
 /* Customize the nav-justified links to be fill the entire space of the .navbar */
 
 .nav-justified {
@@ -106,7 +102,7 @@ body {
 
 .tabs-below > .nav-tabs > li > a:hover,
 .tabs-below > .nav-tabs > li > a:focus {
-  border-top-color: #FA8072;
+  border-top-color: #005CE6;
   border-bottom-color: transparent;
 }
 
@@ -131,7 +127,7 @@ body {
 .tabs-left > .nav-tabs {
   float: left;
   margin-right: 19px;
-  border-right: 1px solid #FA8072;
+  border-right: 1px solid #005CE6;
 }
 
 .tabs-left > .nav-tabs > li > a {
@@ -144,23 +140,23 @@ body {
 
 .tabs-left > .nav-tabs > li > a:hover,
 .tabs-left > .nav-tabs > li > a:focus {
-  border-color: #FA8072 #dddddd #FA8072 #FA8072;
-  color: #f33;
+  border-color: #005CE6 #dddddd #005CE6 #005CE6;
+  color: #005CE6;
 }
 
 .tabs-left > .nav-tabs .active > a,
 .tabs-left > .nav-tabs .active > a:hover,
 .tabs-left > .nav-tabs .active > a:focus {
-  border-color: #FA8072 transparent #FA8072 #FA8072;
+  border-color: #005CE6 transparent #005CE6 #005CE6;
   *border-right-color: #ffffff;
-  background: #F33;
+  background: #005CE6;
   color: white;
 }
 
 .tabs-right > .nav-tabs {
   float: right;
   margin-left: 19px;
-  border-left: 1px solid #FA8072;
+  border-left: 1px solid #005CE6;
 }
 
 .tabs-right > .nav-tabs > li > a {
@@ -172,7 +168,7 @@ body {
 
 .tabs-right > .nav-tabs > li > a:hover,
 .tabs-right > .nav-tabs > li > a:focus {
-  border-color: #FA8072 #FA8072 #FA8072 #dddddd;
+  border-color: #005CE6 #005CE6 #005CE6 #dddddd;
 }
 
 .tabs-right > .nav-tabs .active > a,

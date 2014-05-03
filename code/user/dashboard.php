@@ -100,7 +100,7 @@ php to add member when invite member button is clicked
     <script src="../../includes/jquery.dataTables.js"></script>
 
     <!-- Page specific CSS -->
-
+	<link href="../../shared/css/tabs.css" rel="stylesheet"  type="text/css" >
    	<link rel="stylesheet" type="text/css" href="../../shared/css/user.css" />
 	
 	 <!-- Calendar specific jquery -->
@@ -128,7 +128,7 @@ php to add member when invite member button is clicked
 		#post{
 		  border: 2px solid #555;
 		  border-radius: 10px;
-		  width: 980px;
+		  width: 920px;
 		  height: 80px;
 		  margin-bottom: 10px;
 		  margin-top: 10px;
@@ -151,7 +151,7 @@ php to add member when invite member button is clicked
 		#postArea {
 			margin-top: 0px;
 			margin-left: 160px;
-			width: 1040px;
+			width: 950px;
 		}
 		.replyBtn{
 			background: #005CE6;
@@ -160,7 +160,7 @@ php to add member when invite member button is clicked
 			  border-radius: 5px;
 			  float: right;
 			  margin-top: -40px;
-			  margin-right: 50px;
+			  margin-right: 20px;
 			  color: white;
 		  }
 		  #taskId{
@@ -649,7 +649,7 @@ php to add member when invite member button is clicked
                     <?php } // closing completedTasksCount if
 					else{
 					?>
-                    <p style="color: #FA8072;  font-size: 14px;"> <strong>NO</strong> tasks have been completed!</p>
+                    <p style="color: #FA8072;  font-size: 14px;"> <strong>ZERO</strong> tasks completed!</p>
                 <?php 
 						}// closing else
 					} // closing $allTaskCount if
